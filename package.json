@@ -1,0 +1,67 @@
+{
+  "name": "pvp-posy-fnb",
+  "version": "0.1.0",
+  "private": true,
+  "author": "zaidanammar",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:fix": "eslint --ext .tsx --ext .ts . --fix",
+    "prepare": "husky install",
+    "pre:commit": "npm run lint"
+  },
+  "dependencies": {
+    "@fullhuman/postcss-purgecss": "^5.0.0",
+    "@tanstack/react-query": "^4.13.0",
+    "@tanstack/react-query-devtools": "^4.13.0",
+    "axios": "^1.1.3",
+    "cssnano": "^5.1.14",
+    "next": "^13.1.1",
+    "next-transpile-modules": "^10.0.0",
+    "posy-fnb-ds": "^1.2.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.6.0",
+    "react-svg": "^15.1.11",
+    "sharp": "^0.31.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.6",
+    "@types/node": "18.11.7",
+    "@types/react": "18.0.24",
+    "@types/react-dom": "18.0.8",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
+    "autoprefixer": "^10.4.13",
+    "babel-loader": "^8.2.5",
+    "critters": "^0.0.16",
+    "eslint": "^8.26.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-next": "13.0.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-storybook": "^0.6.6",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "postcss": "^8.4.18",
+    "prettier": "^2.8.1",
+    "tailwindcss": "^3.2.1",
+    "typescript": "4.8.4"
+  },
+  "lint-staged": {
+    "./**/*.{ts,tsx}": [
+      "eslint --ext .tsx --ext .ts . --fix"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}
