@@ -6,21 +6,18 @@
  */
 
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-
-import { BottomNavigation, BottomSheet, Button, Label, TimeLabel } from 'posy-fnb-ds'
+import { BottomNavigation, Button, DropdownMobile, Label, TimeLabel } from 'posy-fnb-ds'
 import { BiTimeFive } from 'react-icons/bi'
-import { HiChevronDown } from 'react-icons/hi'
 import { FiSearch } from 'react-icons/fi'
 import { MdCancel } from 'react-icons/md'
+
 import Bill from 'src/assets/bill'
+import { HiOutlineLocationMarker } from 'react-icons/hi'
 
 const PagesOrder: React.FC = () => {
-  const [open, setOpen] = useState(false)
   const router = useRouter()
-
-  const onToggle = () => setOpen(!open)
 
   const list = [
     {
@@ -54,14 +51,29 @@ const PagesOrder: React.FC = () => {
     },
   ]
 
+  const products = [
+    {
+      name: 'Fried Capcai',
+      price: '23.000',
+    },
+  ]
+
   const handleChange = (e: string) => {
     router.push(`/${e}`)
+  }
+
+  const getCategory = () => {
+    const category: any = router.asPath.match(/#(.*)/)
+    if (category && category[1]) {
+      return { label: category[1], value: category[1] }
+    }
+    return null
   }
 
   const [openSearch, setOpenSearch] = useState(false)
   const [search, setSearch] = useState('')
 
-  const [category, setCategory] = useState(listCategory[0])
+  const [category, setCategory] = useState({ label: '', value: '' })
 
   const onSearch = (e: { target: { value: React.SetStateAction<string> } }) => {
     setSearch(e.target.value)
@@ -74,38 +86,45 @@ const PagesOrder: React.FC = () => {
 
   const onChangeCategory = (e: { label: string; value: string }) => {
     setCategory(e)
-    setTimeout(() => {
-      setOpen(false)
-    }, 300)
     router.push(`#${e.value}`)
   }
 
+  useEffect(() => {
+    setCategory(getCategory() || listCategory[0])
+  }, [])
+
   return (
-    <main className="container mx-auto pt-4 shadow-md min-h-screen pb-20">
+    <main className="container mx-auto pt-4 shadow-md min-h-screen pb-28">
       <section className="bg-neutral-20 ml-4 flex items-center p-4 rounded-l-2xl">
         <div className="flex-1 gap-4">
           <p className="text-xl-semibold">Solaria</p>
-          <p className="text-m-medium">Gambir, Selatan</p>
+          <div className="flex items-center gap-1">
+            <HiOutlineLocationMarker />
+            <p className="text-m-medium">Gambir, Selatan</p>
+          </div>
         </div>
         <div>
           <Image src="/solaria.png" priority alt="logo" width={60} height={60} />
         </div>
       </section>
 
-      <section className="mt-2 flex gap-4 sticky top-0 z-50 bg-white p-4">
+      <section
+        // style={{ boxShadow: '0px 6px 24px rgb(0 0 0 / 10%)' }}
+        className="mt-2 flex gap-4 sticky top-0 z-50 bg-white p-4"
+      >
         <div
           className={`transition-all duration-500 ease-in-out ${
             openSearch ? 'opacity-0 w-0' : 'opacity-100 w-2/3'
           }`}
         >
-          <Button onClick={onToggle} variant="secondary" size="l" fullWidth>
-            <div className="flex items-center justify-between gap-2">
-              <p className="text-m-medium">
-                {category.value === 'all' ? 'Choose Category' : category.label}
-              </p>
-              <HiChevronDown size={20} />
-            </div>
-          </Button>
+          <DropdownMobile
+            options={listCategory}
+            value={category}
+            onChange={(e) => onChangeCategory(e)}
+            fullWidth
+            placeholder="Choose Category"
+            dropdownTitle="Choose Category"
+          />
         </div>
         <div
           className={`transition-all duration-500 ease-in-out ${
@@ -114,17 +133,18 @@ const PagesOrder: React.FC = () => {
         >
           <span className="relative h-full flex items-center justify-start">
             <div className="absolute left-4">
-              <FiSearch size={20} className="stroke-neutral-90" />
+              <FiSearch size={16} className="stroke-neutral-90" />
             </div>
             <input
               onFocus={() => setOpenSearch(true)}
-              onBlur={() => setTimeout(() => onClearSearch(), 100)}
+              // onBlur={() => setTimeout(() => onClearSearch(), 100)}
+              // onKeyDown={() => setOpenSearch(false)}
               onChange={onSearch}
               value={search}
               type="text"
               placeholder="Search"
-              className={`border border-neutral-70 pl-11 w-full h-11 rounded-full text-m-medium focus:outline-neutral-50 ${
-                openSearch ? 'pr-11' : ''
+              className={`border border-neutral-70 pl-10 w-full h-8 rounded-full text-m-medium focus:outline-neutral-50 ${
+                openSearch ? 'pr-10' : ''
               } `}
             />
             {search.length > 0 && (
@@ -153,7 +173,7 @@ const PagesOrder: React.FC = () => {
             )}
             <div>
               <div
-                onClick={() => router.push(`${router.asPath}/23`)}
+                onClick={() => router.push(`${router.pathname}/23`)}
                 role="presentation"
                 className="h-52 relative transition duration-300 ease-in-out"
               >
@@ -192,7 +212,7 @@ const PagesOrder: React.FC = () => {
       </section>
 
       <section className="mt-6" id="food">
-        <aside className="px-4">
+        <aside className="px-4 mb-2">
           <p className="text-xxl-semibold">Food</p>
         </aside>
         {new Array(4).fill(undefined).map((_, idx) => (
@@ -227,23 +247,52 @@ const PagesOrder: React.FC = () => {
         ))}
       </section>
 
-      <BottomSheet open={open} onClose={() => setOpen(false)} title="Choose Category">
-        <div className="flex flex-col gap-3 mt-4 overflow-auto max-h-[560px]">
-          {listCategory.map((el) => (
-            <Button
-              key={el.value}
-              fullWidth
-              value={el.value}
-              variant={el.value === category.value ? 'primary' : 'secondary'}
-              onClick={() => onChangeCategory(el)}
-            >
-              {el.label}
-            </Button>
-          ))}
-        </div>
-      </BottomSheet>
+      <section className="mt-6" id="drinks">
+        <aside className="px-4 mb-2">
+          <p className="text-xxl-semibold">Drinks</p>
+        </aside>
+        {new Array(4).fill(undefined).map((_, idx) => (
+          <aside
+            key={idx}
+            className="w-full flex gap-4 hover:bg-neutral-20 active:animate-pulse transition duration-300 ease-in-out p-4"
+          >
+            <div className="flex-1">
+              <p className="text-m-semibold">Teh Tarik</p>
+              <p className="text-m-regular mt-1">Teh tarik panas kalee</p>
+              <p className="text-l-medium mt-2">123.000</p>
+            </div>
 
-      <BottomNavigation list={list} onChange={handleChange} />
+            <div>
+              <div className="relative w-[78px] h-[78px] mb-4">
+                <Image
+                  src="/menu.png"
+                  alt="menu"
+                  fill
+                  sizes="100vw"
+                  loading="lazy"
+                  className="object-cover rounded-lg shadow-sm "
+                />
+              </div>
+              <Button variant="secondary" size="xs">
+                Add
+              </Button>
+            </div>
+          </aside>
+        ))}
+      </section>
+
+      <div className="px-4 w-full max-w-[576px] fixed bottom-20 z-30">
+        <Button fullWidth>
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 flex-1">
+              <p className="text-l-semibold">Basket</p>
+              <p className="text-m-regular truncate">14224 Item</p>
+            </div>
+            <p className="text-xxl-semibold flex flex-1 justify-end">Rp16.000.000</p>
+          </div>
+        </Button>
+      </div>
+      <BottomNavigation list={list} onChange={handleChange} className="z-30" />
     </main>
   )
 }

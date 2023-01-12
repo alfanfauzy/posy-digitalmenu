@@ -24,19 +24,19 @@ const MoleculesMetaHeader: React.FC<MoleculesMetaHeaderProps> = ({
       <link rel="canonical" href={process.env.NEXT_PUBLIC_URL + router.pathname} />
       <meta name="robots" content="index,follow" />
       <meta name="keywords" content={keywords} />
-      <meta name="theme-color" content="#0E78F9" />
+      <meta name="theme-color" content="#0A0A0A" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:image" content={image} />
-      <meta name="twitter:domain" content="www.pvg.com" />
-      <meta name="twitter:site" content="@pvg" />
-      <meta name="twitter:creator" content="@pvg" />
+      <meta name="twitter:domain" content="www.posyfnb.co.id" />
+      <meta name="twitter:site" content="@posyfnb" />
+      <meta name="twitter:creator" content="@posyfnb" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={process.env.NEXT_PUBLIC_URL + router.pathname} />
       <meta property="og:image" content={image} />
-      <meta property="og:site_name" content="pvg" />
+      <meta property="og:site_name" content="posyfnb" />
       <meta property="og:locale" content="id_ID" />
     </Head>
   )

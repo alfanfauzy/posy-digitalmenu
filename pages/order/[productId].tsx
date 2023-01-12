@@ -8,6 +8,9 @@ const Page = () => {
   const router = useRouter()
   const [count, setCount] = useState(0)
 
+  const [checked, setChecked] = useState(false)
+
+
   return (
     <main className="p-4 shadow-md">
       <section>
@@ -55,18 +58,24 @@ const Page = () => {
 
       <section className="divide-y">
         <aside className="divide-y text-neutral-100 pb-4">
-          <div className="flex justify-between items-center">
-            <p>Spicy lv 0</p>
-            <Checkbox onChange={() => undefined} label="0" />
-          </div>
-          <div className="flex justify-between items-center">
-            <p>Spicy lv 1</p>
-            <Checkbox onChange={() => undefined} label="2.000" />
-          </div>
-          <div className="flex justify-between items-center">
-            <p>Spicy lv 2</p>
-            <Checkbox onChange={() => undefined} label="4.000" />
-          </div>
+          <Checkbox
+            checked={checked}
+            onChange={() => setChecked(!checked)}
+            label="0"
+            title="Spicy lv 0"
+          />
+          <Checkbox
+            checked={checked}
+            onChange={() => setChecked(!checked)}
+            label="2.000"
+            title="Spicy lv 1"
+          />
+          <Checkbox
+            checked={checked}
+            onChange={() => setChecked(!checked)}
+            label="4.000"
+            title="Spicy lv 2"
+          />
         </aside>
         <div />
       </section>
@@ -80,7 +89,12 @@ const Page = () => {
         <p className="text-m-regular">0 / 200</p>
       </section>
 
-      <section className="-ml-4 rounded-t-2xl bg-neutral-10 shadow-inner fixed bottom-0 w-full max-w-[576px] px-4 pb-6 pt-8">
+      <section
+        style={{
+          boxShadow: '0px -6px 24px rgb(0 0 0 / 10%)',
+        }}
+        className="-ml-4 rounded-t-2xl bg-neutral-10 fixed bottom-0 w-full max-w-[576px] px-4 pb-6 pt-8"
+      >
         <div className="flex items-center">
           <p className="text-xl-semibold flex-1 gap-4">Item Quantity</p>
           <div className="flex gap-3">
