@@ -1,15 +1,15 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { Button, Checkbox, IconButton, Label, TimeLabel } from 'posy-fnb-ds'
 import React, { useState } from 'react'
+import { Button, Checkbox, IconButton, Label, Textarea, TimeLabel } from 'posy-fnb-ds'
 import { BiMinus, BiPlus, BiTimeFive } from 'react-icons/bi'
+import Recommended from 'src/assets/recommended'
 
 const Page = () => {
   const router = useRouter()
   const [count, setCount] = useState(0)
 
   const [checked, setChecked] = useState(false)
-
 
   return (
     <main className="p-4 shadow-md">
@@ -31,8 +31,10 @@ const Page = () => {
           <div className="absolute top-3">
             <Label size="l" title="Promo" />
           </div>
-          <div className="absolute bottom-3">
+
+          <div className="absolute bottom-3 flex items-center justify-between w-full pr-2">
             <TimeLabel startAdornment={<BiTimeFive />} size="l" title="in 15 min" />
+            <Recommended height={32} width={32} />
           </div>
         </div>
       </section>
@@ -81,12 +83,13 @@ const Page = () => {
       </section>
 
       <section className="mt-4 mb-44">
-        <p className="text-l-regular mb-1">Notes</p>
-        <textarea
+        <Textarea
+          className="h-32"
+          labelText="Notes"
+          fullwidth
           placeholder="Example: no onion, please"
-          className="w-full border border-neutral-50 shadow-sm rounded-md px-3 py-1.5 h-24 focus:outline-neutral-60"
+          helperText="0 / 200"
         />
-        <p className="text-m-regular">0 / 200</p>
       </section>
 
       <section
