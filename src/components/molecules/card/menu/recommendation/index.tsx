@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import { Button } from 'posy-fnb-ds'
-import ImageMenu from '@/atoms/image/menu'
+import ImageMenu from '@/molecules/image/menu'
 
 interface MoleculesCardMenuRecommendationProps {
   soldOut?: boolean

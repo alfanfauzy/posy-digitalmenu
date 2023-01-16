@@ -48,6 +48,31 @@ const menus = [
       },
     ],
   },
+  {
+    category: 'Dessert',
+    menus: [
+      {
+        name: 'Desserts 1',
+        price: '6.000',
+      },
+      {
+        name: 'Desserts 2',
+        price: '6.000',
+      },
+      {
+        name: 'Desserts 3',
+        price: '6.000',
+      },
+      {
+        name: 'Desserts 4',
+        price: '6.000',
+      },
+      {
+        name: 'Desserts',
+        price: '6.000',
+      },
+    ],
+  },
 ]
 
 const MoleculesSectionListMenu = () => (

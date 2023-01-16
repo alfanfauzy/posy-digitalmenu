@@ -19,6 +19,7 @@ const list = [
     icon: Bill,
   },
 ]
+
 const showBottomNavigationRoutes = ['/order', '/bill']
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -33,8 +34,8 @@ const App = ({ Component, pageProps }: AppProps) => {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <Component {...pageProps} />
-        {showBottomNavigationRoutes.includes(router.asPath) && (
-          <BottomNavigation list={list} onChange={handleChange} className="z-30" />
+        {showBottomNavigationRoutes.includes(router.pathname) && (
+          <BottomNavigation list={list} onChange={handleChange} className="z-40" />
         )}
       </Hydrate>
       <ReactQueryDevtools initialIsOpen={false} />

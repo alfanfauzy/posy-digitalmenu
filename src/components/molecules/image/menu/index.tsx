@@ -4,7 +4,7 @@ import { Label, TimeLabel } from 'posy-fnb-ds'
 import { BiTimeFive } from 'react-icons/bi'
 import Recommended from 'src/assets/recommended'
 
-interface AtomsImageMenuProps {
+interface MoleculesImageMenuProps {
   onClick?: () => void
   size?: 's' | 'm' | 'l'
   isRecommended?: boolean
@@ -19,7 +19,7 @@ type Image = {
   alt: string
 }
 
-const AtomsImageMenu = ({
+const MoleculesImageMenu = ({
   onClick,
   image,
   size = 'm',
@@ -27,7 +27,7 @@ const AtomsImageMenu = ({
   label,
   timeLabel,
   className,
-}: AtomsImageMenuProps) => {
+}: MoleculesImageMenuProps) => {
   const properties = {
     s: 'h-[78px] w-[78px]',
     m: 'h-52 w-auto',
@@ -36,7 +36,6 @@ const AtomsImageMenu = ({
   return (
     <div
       onClick={onClick}
-      // onClick={() => router.push(`${router.pathname}/23`)}
       role="presentation"
       className={`${properties[size]} ${className} relative transition duration-300 ease-in-out `}
     >
@@ -49,17 +48,27 @@ const AtomsImageMenu = ({
       />
       {size !== 's' && label && (
         <div className="absolute top-3">
-          <Label size="s" title={label} />
+          <Label size={size === 'm' ? 's' : 'l'} title={label} />
         </div>
       )}
-      <div className="absolute bottom-3 flex items-center justify-between w-full pr-2">
+      <div
+        className={`absolute bottom-3 flex items-center justify-between w-full ${
+          size === 'l' ? 'pr-4' : 'pr-2'
+        }`}
+      >
         {size !== 's' && timeLabel && (
-          <TimeLabel startAdornment={<BiTimeFive />} size="s" title={timeLabel} />
+          <TimeLabel
+            startAdornment={<BiTimeFive />}
+            size={size === 'm' ? 's' : 'l'}
+            title={timeLabel}
+          />
         )}
-        {size !== 's' && isRecommended && <Recommended />}
+        {size !== 's' && isRecommended && (
+          <Recommended height={size === 'l' ? 32 : 22} width={size === 'l' ? 32 : 22} />
+        )}
       </div>
     </div>
   )
 }
 
-export default AtomsImageMenu
+export default MoleculesImageMenu
