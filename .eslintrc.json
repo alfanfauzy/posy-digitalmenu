@@ -120,6 +120,7 @@
             "warn",
             "never"
         ],
-        "react/no-children-prop": "off"
+        "react/no-children-prop": "off",
+        "react/prop-types": "off"
     }
 }

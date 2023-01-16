@@ -1,7 +1,7 @@
 import React from 'react'
 import MetaHeader from '@/molecules/meta-header'
 import { SEO } from '@/constants/seo'
-import ContainerProductDetail from 'containers/order/product-detail'
+import ContainerOrderDetail from 'containers/order/order-detail'
 
 const Page = () => (
   <>
@@ -11,7 +11,7 @@ const Page = () => (
       keywords={SEO.keywords}
       image={SEO.image}
     />
-    <ContainerProductDetail />
+    <ContainerOrderDetail />
   </>
 )
 

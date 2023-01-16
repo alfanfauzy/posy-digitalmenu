@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
-import { QueryClientProvider, QueryClient, Hydrate } from '@tanstack/react-query'
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { BottomNavigation } from 'posy-fnb-ds'
 import '../styles/globals.css'
@@ -32,13 +32,13 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <Component {...pageProps} />
-        {showBottomNavigationRoutes.includes(router.pathname) && (
-          <BottomNavigation list={list} onChange={handleChange} className="z-40" />
-        )}
-      </Hydrate>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <Hydrate state={pageProps.dehydratedState}> */}
+      <Component {...pageProps} />
+      {showBottomNavigationRoutes.includes(router.pathname) && (
+        <BottomNavigation list={list} onChange={handleChange} className="z-20" />
+      )}
+      {/* </Hydrate> */}
+      <ReactQueryDevtools />
     </QueryClientProvider>
   )
 }

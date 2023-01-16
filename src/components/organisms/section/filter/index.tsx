@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import InputSearch from '@/atoms/input/search'
 import MoleculesSectionFilterCategory from '@/molecules/section/filter-category'
 import { useRouter } from 'next/router'
+import useShadowScroll from '@/hooks/shadow-scroll'
 
 const listCategories = [
   {
@@ -25,6 +26,8 @@ const listCategories = [
 
 const OrganismsSectionFilter = () => {
   const router = useRouter()
+  const shadow = useShadowScroll()
+
   const [openSearch, setOpenSearch] = useState(false)
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState({ label: '', value: '' })
@@ -43,7 +46,10 @@ const OrganismsSectionFilter = () => {
 
   return (
     <section
-      // style={{ boxShadow: '0px 6px 24px rgb(0 0 0 / 10%)' }}
+      style={{
+        boxShadow: shadow ? '0px 6px 24px rgb(0 0 0 / 15%)' : 'none',
+        transition: 'box-shadow 0.5s',
+      }}
       className="mt-2 flex gap-4 sticky top-0 z-50 bg-white p-4"
     >
       <MoleculesSectionFilterCategory
