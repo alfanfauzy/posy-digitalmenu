@@ -24,6 +24,7 @@ const MoleculesCardMenuRecommendation = ({ soldOut }: MoleculesCardMenuRecommend
           timeLabel="in 15 min"
           isRecommended
           image={{ url: '/menu.png', alt: 'menu' }}
+          // image={{ url: `data:image/jpeg;base64,${data}`, alt: 'menu' }}
         />
 
         <div className="mt-1">

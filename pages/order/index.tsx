@@ -1,7 +1,6 @@
-import { SEO } from '@/constants/seo'
 import MetaHeader from '@/molecules/meta-header'
-
 import ContainerOrder from 'containers/order'
+import { SEO } from '@/constants/seo'
 
 const Page = () => (
   <>

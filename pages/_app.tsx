@@ -35,7 +35,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       {/* <Hydrate state={pageProps.dehydratedState}> */}
       <Component {...pageProps} />
       {showBottomNavigationRoutes.includes(router.pathname) && (
-        <BottomNavigation list={list} onChange={handleChange} className="z-20" />
+        <BottomNavigation list={list} onChange={handleChange} className="z-10" />
       )}
       {/* </Hydrate> */}
       <ReactQueryDevtools />
