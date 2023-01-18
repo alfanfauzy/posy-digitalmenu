@@ -1,38 +1,43 @@
 import React from 'react'
 import ImageMenu from '@/molecules/image/menu'
 import { toRupiah } from 'utils/common'
+import { Product } from '@/types/product'
 
 interface MoleculesCardMenuDetailProps {
-  props: {
-    name: string
-    normal_price: number
-    discount_price: number
-    description: string
-  }
+  product: Product
 }
 
-const MoleculesCardMenuDetail = ({ props }: MoleculesCardMenuDetailProps) => {
-  const { description, name, discount_price, normal_price } = props
+const MoleculesCardMenuDetail = ({ product }: MoleculesCardMenuDetailProps) => {
+  const {
+    product_name,
+    product_description,
+    price_after_discount,
+    price_before_discount,
+    is_favourite,
+    cooking_duration,
+    is_discount,
+    // product_thumbnail,
+  } = product
 
   return (
     <article>
       <ImageMenu
-        image={{ url: '/menu.png', alt: 'menu' }}
-        timeLabel="in 15 min"
-        label="Discount"
+        image={{ url: '/menu.png', alt: product_name }}
+        timeLabel={`in ${cooking_duration} min`}
+        label={is_discount ? 'Discount' : ''}
         size="l"
-        isRecommended
+        isRecommended={!!is_favourite}
       />
       <aside className="mt-4 divide-y">
         <div className="pb-4">
-          <p className="text-xxl-bold">{name}</p>
+          <p className="text-xxl-bold">{product_name}</p>
           <div className="flex items-center gap-2">
-            <p className="text-xxl-regular">{toRupiah(discount_price)}</p>
+            <p className="text-xxl-regular">{toRupiah(price_after_discount)}</p>
             <p className="text-xxl-regular line-through text-neutral-70">
-              {toRupiah(normal_price)}
+              {toRupiah(price_before_discount)}
             </p>
           </div>
-          <p className="text-m-regular mt-0.5">{description}</p>
+          <p className="text-m-regular mt-0.5">{product_description}</p>
         </div>
         <div />
       </aside>

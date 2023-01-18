@@ -1,89 +1,20 @@
 import React from 'react'
 import CardMenuList from '@/molecules/card/menu/list'
+import type { Product } from '@/types/product'
 
-const menus = [
-  {
-    category: 'Food',
-    menus: [
-      {
-        name: 'Fried Cap cai 1',
-        price: '12.000',
-      },
-      {
-        name: 'Fried Cap cai 2',
-        price: '12.000',
-      },
-      {
-        name: 'Fried Cap cai 3',
-        price: '12.000',
-      },
-      {
-        name: 'Fried Cap cai 4',
-        price: '12.000',
-      },
-    ],
-  },
-  {
-    category: 'Drinks',
-    menus: [
-      {
-        name: 'Teh Tarik 1',
-        price: '6.000',
-      },
-      {
-        name: 'Teh Tarik 2',
-        price: '6.000',
-      },
-      {
-        name: 'Teh Tarik 3',
-        price: '6.000',
-      },
-      {
-        name: 'Teh Tarik 4',
-        price: '6.000',
-      },
-      {
-        name: 'Teh Tarik',
-        price: '6.000',
-      },
-    ],
-  },
-  {
-    category: 'Dessert',
-    menus: [
-      {
-        name: 'Desserts 1',
-        price: '6.000',
-      },
-      {
-        name: 'Desserts 2',
-        price: '6.000',
-      },
-      {
-        name: 'Desserts 3',
-        price: '6.000',
-      },
-      {
-        name: 'Desserts 4',
-        price: '6.000',
-      },
-      {
-        name: 'Desserts',
-        price: '6.000',
-      },
-    ],
-  },
-]
+interface MoleculesSectionListMenuProps {
+  data: { product: Product[]; category_name: string; category_uuid: string }[]
+}
 
-const MoleculesSectionListMenu = () => (
+const MoleculesSectionListMenu = ({ data }: MoleculesSectionListMenuProps) => (
   <>
-    {menus.map((el) => (
-      <section key={el.category} className="mt-6" id={el.category.toLowerCase()}>
+    {data.map((el) => (
+      <section key={el.category_name} className="mt-6" id={el.category_name.toLowerCase()}>
         <aside className="px-4 mb-2">
-          <p className="text-xxl-semibold">{el.category}</p>
+          <p className="text-xxl-semibold">{el.category_name}</p>
         </aside>
-        {el.menus.map((menu, idx) => (
-          <CardMenuList key={menu.name} soldOut={idx % 2 === 0} />
+        {el.product.map((product) => (
+          <CardMenuList key={product.product_name} product={product} />
         ))}
       </section>
     ))}

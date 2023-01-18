@@ -21,6 +21,7 @@
       "services/*": ["src/services/*"],
       "config/*": ["src/config/*"],
       "utils/*": ["src/utils/*"],
+      "store/*": ["src/store/*"],
       "containers/*": ["src/containers/*"],
       "@/atoms/*": ["src/components/atoms/*"],
       "@/molecules/*": ["src/components/molecules/*"],
