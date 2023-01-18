@@ -24,12 +24,17 @@ const listCategories = [
   },
 ]
 
-const OrganismsSectionFilter = () => {
+interface OrganismsSectionFilter {
+  search: string
+  setSearch: (search: string) => void
+  onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+const OrganismsSectionFilter = ({ search, onSearch, setSearch }: OrganismsSectionFilter) => {
   const router = useRouter()
   const shadow = useShadowScroll()
 
   const [openSearch, setOpenSearch] = useState(false)
-  const [search, setSearch] = useState('')
   const [category, setCategory] = useState({ label: '', value: '' })
 
   const getCategory = () => {
@@ -61,8 +66,9 @@ const OrganismsSectionFilter = () => {
       <InputSearch
         open={openSearch}
         setOpen={setOpenSearch}
-        search={search}
-        setSearch={setSearch}
+        value={search}
+        setValue={setSearch}
+        onSearch={onSearch}
       />
     </section>
   )

@@ -8,8 +8,6 @@ import React, { useEffect, useState } from 'react'
 import SectionBottomBar from '@/organisms/bottom-bar/item-quantity'
 import FormOrder from '@/organisms/form/order'
 import CardMenuDetail from '@/molecules/card/menu/detail'
-import { useSelector } from 'react-redux'
-import { RootState } from 'store/index'
 
 const detail = {
   product_uuid: '76915a37-188c-46a8-a432-dc111ef6ad6e',
@@ -79,7 +77,7 @@ const PagesOrderDetail: React.FC = () => {
     setQuantity(1)
   }, [])
 
-  console.log(notes, quantity, value)
+  // console.log(notes, quantity, value)
   // const count = useSelector((state: RootState) => state.basket)
   // console.log(count)
 

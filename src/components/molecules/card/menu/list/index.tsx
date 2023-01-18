@@ -16,9 +16,6 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
   const { basket } = useSelector((state: RootState) => state.basket)
   const selected = basket.filter((el) => el.product.product_uuid === product.product_uuid)
 
-  console.log(basket, '<<');
-  // console.log(product.product_uuid, 'id');
-
   const [openBottomBar, setOpenBottomBar] = useState(false)
 
   const calculate = useMemo(

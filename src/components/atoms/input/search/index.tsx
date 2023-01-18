@@ -5,16 +5,13 @@ import { MdCancel } from 'react-icons/md'
 interface AtomsInputSearchProps {
   open: boolean
   setOpen: (openSearch: boolean) => void
-  search: string
-  setSearch: (search: string) => void
+  value: string
+  setValue: (value: string) => void
+  onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
-const AtomsInputSearch = ({ open, setOpen, search, setSearch }: AtomsInputSearchProps) => {
-  const onSearch = (e: { target: { value: string } }) => {
-    setSearch(e.target.value)
-  }
-
+const AtomsInputSearch = ({ open, setOpen, value, setValue, onSearch }: AtomsInputSearchProps) => {
   const onClearSearch = () => {
-    setSearch('')
+    setValue('')
     setOpen(false)
   }
 
@@ -27,17 +24,17 @@ const AtomsInputSearch = ({ open, setOpen, search, setSearch }: AtomsInputSearch
         <input
           onFocus={() => setOpen(true)}
           onBlur={
-            search.length === 0 ? () => setTimeout(() => onClearSearch(), 100) : () => undefined
+            value.length === 0 ? () => setTimeout(() => onClearSearch(), 100) : () => undefined
           }
           onChange={onSearch}
-          value={search}
+          value={value}
           type="text"
           placeholder="Search"
           className={`border placeholder:text-neutral-80 border-neutral-70 pl-10 w-full h-8 rounded-full text-m-medium focus:outline-neutral-50 ${
             open ? 'pr-10' : ''
           } `}
         />
-        {search.length > 0 && (
+        {value.length > 0 && (
           <div className="absolute right-4">
             <MdCancel
               size={20}
