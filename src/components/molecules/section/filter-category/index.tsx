@@ -1,24 +1,26 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
 import { useRouter } from 'next/router'
 import { DropdownMobile } from 'posy-fnb-ds'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from 'store/index'
+import { onChangeCategory } from 'store/order'
 
 interface MoleculesSectionFilterCategoryProps {
   listCategories: any[]
   openSearch: boolean
-  category: { label: string; value: string }
-  setCategory: (category: { label: string; value: string }) => void
 }
 
 const MoleculesSectionFilterCategory = ({
   listCategories,
   openSearch,
-  category,
-  setCategory,
 }: MoleculesSectionFilterCategoryProps) => {
   const router = useRouter()
+  const dispatch = useDispatch()
+  const { category } = useSelector((state: RootState) => state.order)
 
-  const onChangeCategory = (e: { label: string; value: string }) => {
-    setCategory(e)
+  const onChange = (e: { label: string; value: string }) => {
+    dispatch(onChangeCategory(e))
     router.push(`#${e.value}`)
   }
 
@@ -31,7 +33,7 @@ const MoleculesSectionFilterCategory = ({
       <DropdownMobile
         options={listCategories}
         value={category}
-        onChange={(e) => onChangeCategory(e)}
+        onChange={onChange}
         fullWidth
         placeholder="Choose Category"
         dropdownTitle="Choose Category"

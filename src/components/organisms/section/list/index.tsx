@@ -12,10 +12,12 @@ interface OrganismsSectionListProps {
 }
 
 const OrganismsSectionList = ({ data }: OrganismsSectionListProps) => (
-  <>
+  <div>
     <SectionListRecommendation />
-    <SectionListMenu data={data} />
-  </>
+    {data.map((el) => (
+      <SectionListMenu data={el} key={el.category_uuid} />
+    ))}
+  </div>
 )
 
 export default OrganismsSectionList

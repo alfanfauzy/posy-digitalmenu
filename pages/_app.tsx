@@ -37,7 +37,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Provider store={store}>
         <Component {...pageProps} />
         {showBottomNavigationRoutes.includes(router.pathname) && (
-          <BottomNavigation list={list} onChange={handleChange} className="z-10" />
+          <BottomNavigation list={list} onChange={handleChange} className="z-40" />
         )}
       </Provider>
       <ReactQueryDevtools />
