@@ -57,10 +57,14 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
           className="w-full flex gap-4 hover:bg-neutral-20 active:animate-pulse transition duration-300 ease-in-out p-4"
         >
           <div className="flex-1">
-            <p className={`text-m-semibold ${selected.length > 0 ? 'text-red-accent' : ''}`}>
+            <p
+              className={`text-m-semibold line-clamp-3 ${
+                selected.length > 0 ? 'text-red-accent' : ''
+              }`}
+            >
               {product.product_name}
             </p>
-            <p className="text-m-regular mt-1">{product.product_description}</p>
+            <p className="text-m-regular mt-1 line-clamp-3">{product.product_description}</p>
             <p className="text-l-medium mt-2">
               {renderPrice(
                 product.is_available,

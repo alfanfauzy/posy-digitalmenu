@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Checkbox, Radio } from 'posy-fnb-ds'
-import { toRupiah } from 'utils/common'
 import { Addon } from '@/types/product'
 
 interface MoleculesSectionAddonProps {
@@ -10,7 +9,7 @@ interface MoleculesSectionAddonProps {
 }
 
 const MoleculesSectionAddon = ({ add_on, value, setValue }: MoleculesSectionAddonProps) => {
-  const [checked, setChecked] = useState(false)
+  const [checked] = useState(false)
 
   const handleChange = (e: any, key: string) => setValue({ ...value, [key]: e })
   const handleChangeMultiple = (e: any, key: string) => setValue({ ...value, [key]: [e] })
@@ -24,7 +23,7 @@ const MoleculesSectionAddon = ({ add_on, value, setValue }: MoleculesSectionAddo
   return (
     <article>
       {add_on.map((addon) => (
-        <aside key={addon.addon_uuid}>
+        <aside key={addon.addon_name}>
           <div className="mt-4">
             <p className="text-xl-semibold">{addon.addon_name}</p>
             <p className="text-m-regular">Required | select 1</p>

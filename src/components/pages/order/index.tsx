@@ -20,8 +20,10 @@ const data = [
     product: [
       {
         product_uuid: '76915a37-188c-46a8-a432-dc111ef6ad6e',
-        product_name: 'Rice + Chicken Crispy Black Pepper sauces',
-        product_description: 'lorem ipsum sip dolor amet',
+        product_name:
+          'Rice + Chicken Crispy Black Pepper sauces ice + Chicken Crispy Black Pepper sauces ice + Chicken Crispy Black Pepper sauces ck Pepper sauces ice + Chicken Crispy Black Pepper sauces ck Pepper sauces ice + Chicken Crispy Black Pepper sauces ck Pepper sauces ice + Chicken Crispy Black Pepper sauces ',
+        product_description:
+          'lorem ipsum sip dolor amet lorem ilorem ipsum sip dolor ametlorem ipsum sip dolor ametlorem ipsum sip dolor ametlorem ipsum sip dolor ametlorem ipsum sip dolor ametlorem ipsum sip dolor ametlorem ipsum sip dolor ametlorem ipsum sip dolor ametlorem ipsum sip dolor ametlorem ipsum sip dolor ametlorem ipsum sip dolor ametpsum sip dolor ametlorem ipsum sip dolor amet',
         is_favourite: true,
         is_discount: false,
         price_before_discount: 33000,
