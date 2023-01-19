@@ -19,10 +19,7 @@ const MoleculesSectionQuantityCounter = ({
     <div className="flex items-center">
       <p className="text-xl-semibold flex-1 gap-4">Item Quantity</p>
       <div className="flex gap-3">
-        <IconButton
-          disabled={quantity === 0}
-          onClick={() => quantity > 0 && handleDecreamentQuantity}
-        >
+        <IconButton disabled={quantity === 0} onClick={handleDecreamentQuantity}>
           <BiMinus />
         </IconButton>
         <div>{quantity}</div>
