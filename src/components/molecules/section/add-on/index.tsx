@@ -1,26 +1,28 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Checkbox, Radio } from 'posy-fnb-ds'
 import { Addon } from '@/types/product'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { onChangeAddOn } from 'store/slices/order'
 
 interface MoleculesSectionAddonProps {
   add_on: Addon[]
-  value: any
-  setValue: (value: any) => void
 }
 
-const MoleculesSectionAddon = ({ add_on, value, setValue }: MoleculesSectionAddonProps) => {
-  const [checked] = useState(false)
+const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
+  const dispatch = useAppDispatch()
+  const addOnVariant = useAppSelector((state) => state.order.orderForm.addOnVariant)
 
-  const handleChange = (e: any, key: string) => setValue({ ...value, [key]: e })
-  const handleChangeMultiple = (e: any, key: string) => setValue({ ...value, [key]: [e] })
-
-  // useEffect(() => {
-  //   const addonValue = add_on.map((el) => ({ [el.addon_name]: '' }))
-  //   // console.log(addonValue)
-  //   // setValue({ addonValue })
-  // }, [])
-
-  console.log(value)
+  const handleChangeAddon = (
+    type: 'radio' | 'checkbox',
+    variant: any,
+    addOn: { addOnName: string; addOnUuid: string },
+  ) =>
+    dispatch(
+      onChangeAddOn({
+        type,
+        addOnVariant: { addOnName: addOn.addOnName, addOnUuid: addOn.addOnUuid, ...variant },
+      }),
+    )
 
   return (
     <article>
@@ -37,9 +39,17 @@ const MoleculesSectionAddon = ({ add_on, value, setValue }: MoleculesSectionAddo
                   <>
                     <Checkbox
                       key={variant.variant_uuid}
-                      value={variant}
-                      checked={checked}
-                      onChange={() => handleChangeMultiple(variant, addon.addon_name)}
+                      value={variant.variant_uuid}
+                      checked={
+                        !!addOnVariant?.filter((el) => el.variant_uuid === variant.variant_uuid)[0]
+                          ?.variant_uuid
+                      }
+                      onChange={() =>
+                        handleChangeAddon('checkbox', variant, {
+                          addOnName: addon.addon_name,
+                          addOnUuid: addon.addon_uuid,
+                        })
+                      }
                       label={variant.price === 0 ? 'Free' : variant.price.toString()}
                       title={variant.variant_name}
                     />
@@ -50,9 +60,17 @@ const MoleculesSectionAddon = ({ add_on, value, setValue }: MoleculesSectionAddo
                   <>
                     <Radio
                       key={variant.variant_uuid}
-                      selectedValue={value[addon.addon_name]}
-                      value={variant}
-                      onChange={() => handleChange(variant, addon.addon_name)}
+                      selectedValue={
+                        addOnVariant?.filter((el) => el.variant_uuid === variant.variant_uuid)[0]
+                          ?.variant_uuid || ''
+                      }
+                      value={variant.variant_uuid}
+                      onChange={() =>
+                        handleChangeAddon('radio', variant, {
+                          addOnName: addon.addon_name,
+                          addOnUuid: addon.addon_uuid,
+                        })
+                      }
                       label={variant.price === 0 ? 'Free' : variant.price.toString()}
                       title={variant.variant_name}
                     />
@@ -64,8 +82,6 @@ const MoleculesSectionAddon = ({ add_on, value, setValue }: MoleculesSectionAddo
           </section>
         </aside>
       ))}
-
-      {/* */}
     </article>
   )
 }

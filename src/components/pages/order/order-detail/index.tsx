@@ -1,13 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /**
  *
  * PagesOrderDetail
  *
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import SectionBottomBar from '@/organisms/bottom-bar/item-quantity'
 import FormOrder from '@/organisms/form/order'
 import CardMenuDetail from '@/molecules/card/menu/detail'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { onEditOrder, onLeaveOrderPage } from 'store/slices/order'
+import { useRouter } from 'next/router'
 
 const detail = {
   product_uuid: '76915a37-188c-46a8-a432-dc111ef6ad6e',
@@ -33,6 +37,23 @@ const detail = {
         },
         {
           variant_uuid: 'a311bab-067d-48f3-8d17-fc00cd8e9d12',
+          variant_name: 'level 2',
+          price: 10000,
+        },
+      ],
+    },
+    {
+      addon_uuid: '813724fb-6549-4fd3-9d34-3413313232',
+      addon_name: 'Tingkat Kemanisan',
+      is_multiple: false,
+      variant: [
+        {
+          variant_uuid: '024fdd2f-a333-4ccb-86c0-22221442dd',
+          variant_name: 'level 0',
+          price: 0,
+        },
+        {
+          variant_uuid: 'a311bab-067d-48f3-8d17-134134133',
           variant_name: 'level 2',
           price: 10000,
         },
@@ -69,29 +90,41 @@ const detail = {
 }
 
 const PagesOrderDetail: React.FC = () => {
-  const [quantity, setQuantity] = useState(0)
-  const [notes, setNotes] = useState('')
-  const [value, setValue] = useState<any>({})
+  const router = useRouter()
+  const dispatch = useAppDispatch()
+  const basket = useAppSelector((state) => state.basket)
 
   useEffect(() => {
-    setQuantity(1)
+    const exitingFunction = () => dispatch(onLeaveOrderPage())
+
+    router.events.on('routeChangeStart', exitingFunction)
+
+    return () => {
+      router.events.off('routeChangeStart', exitingFunction)
+    }
   }, [])
 
-  // console.log(notes, quantity, value)
-  // const count = useSelector((state: RootState) => state.basket)
-  // console.log(count)
+  useEffect(() => {
+    const { counter } = router.query
+    if (counter) {
+      const filteredBasket = basket.basket.find((el) => el.counter.toString() === counter)
+      if (filteredBasket) {
+        dispatch(
+          onEditOrder({
+            addOnVariant: filteredBasket.addOnVariant,
+            quantity: filteredBasket.quantity,
+            notes: filteredBasket.notes,
+          }),
+        )
+      }
+    }
+  }, [])
 
   return (
     <main className="p-4 shadow-md">
       <CardMenuDetail product={detail} />
-      <FormOrder
-        add_on={detail.addon}
-        notes={notes}
-        setNotes={setNotes}
-        value={value}
-        setValue={setValue}
-      />
-      <SectionBottomBar product={detail} quantity={quantity} setQuantity={setQuantity} />
+      <FormOrder add_on={detail.addon} />
+      <SectionBottomBar product={detail} />
     </main>
   )
 }

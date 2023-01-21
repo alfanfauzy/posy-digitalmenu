@@ -5,23 +5,32 @@ import { toRupiah } from 'utils/common'
 import { addToBasket } from 'store/slices/basket'
 import { useRouter } from 'next/router'
 import type { Product } from '@/types/product'
-import { useAppDispatch } from 'store/hooks'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+
+export const calculateAddOn = (arr: any[]) =>
+  [...arr].map((el) => el.price).reduce((prev, current) => prev + current, 0)
 
 interface MoleculesSectionAddToBasketProps {
   product: Product
-  quantity: number
 }
 
-const MoleculesSectionAddToBasket = ({ product, quantity }: MoleculesSectionAddToBasketProps) => {
+const MoleculesSectionAddToBasket = ({ product }: MoleculesSectionAddToBasketProps) => {
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const calculate = useMemo(() => product.price_after_discount * quantity, [quantity])
+  const quantity = useAppSelector((state) => state.order.orderForm.quantity)
+  const addOnVariant = useAppSelector((state) => state.order.orderForm.addOnVariant)
+  const total = useMemo(
+    () => (calculateAddOn(addOnVariant) + product.price_after_discount) * quantity,
+    [quantity, addOnVariant],
+  )
 
   const handleAddToBasket = () => {
     dispatch(
       addToBasket({
         quantity,
         product,
+        addOnVariant,
+        counter: Math.floor(Math.random() * Date.now()),
       }),
     )
     setTimeout(() => {
@@ -34,7 +43,7 @@ const MoleculesSectionAddToBasket = ({ product, quantity }: MoleculesSectionAddT
       <Button onClick={handleAddToBasket} fullWidth disabled={quantity === 0}>
         <div className="flex items-center justify-between">
           <p className="text-l-semibold">Add to Basket</p>
-          <p className="text-xxl-semibold flex flex-1 justify-end">{toRupiah(calculate)}</p>
+          <p className="text-xxl-semibold flex flex-1 justify-end">{toRupiah(total)}</p>
         </div>
       </Button>
     </div>

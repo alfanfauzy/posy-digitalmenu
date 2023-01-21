@@ -6,10 +6,14 @@
 
 import { Product } from '@/types/product'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AddOnVariant } from './order'
 
 export interface BasketItem {
   product: Product
   quantity: number
+  addOnVariant: AddOnVariant[]
+  counter: number
+  notes?: string
 }
 
 export interface BasketState {

@@ -4,7 +4,14 @@ import { BottomSheet, Button } from 'posy-fnb-ds'
 import ImageMenu from '@/molecules/image/menu'
 import { Product } from '@/types/product'
 import { toRupiah } from 'utils/common'
-import { useAppSelector } from 'store/hooks'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { onChangeQuantity } from 'store/slices/order'
+import { BasketItem } from 'store/slices/basket'
+import { calculateAddOn } from '@/molecules/section/add-to-basket'
+import { calculateQuantity } from '@/atoms/button/float'
+
+const calculateTotalProduct = (el: BasketItem) =>
+  (calculateAddOn(el.addOnVariant) + el.product.price_after_discount) * el.quantity
 
 interface MoleculesCardMenuListProps {
   product: Product
@@ -12,15 +19,13 @@ interface MoleculesCardMenuListProps {
 
 const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
   const router = useRouter()
+  const dispatch = useAppDispatch()
   const { basket } = useAppSelector((state) => state.basket)
   const selected = basket.filter((el) => el.product.product_uuid === product.product_uuid)
 
-  const [openBottomBar, setOpenBottomBar] = useState(false)
+  const quantity = useMemo(() => calculateQuantity(selected), [selected])
 
-  const calculate = useMemo(
-    () => selected.length > 0 && selected[0].product.price_after_discount * selected[0].quantity,
-    [selected],
-  )
+  const [openBottomBar, setOpenBottomBar] = useState(false)
 
   const renderPrice = (
     available: boolean,
@@ -32,16 +37,30 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
     return toRupiah(price_before_discount)
   }
 
+  const handleMakesNewOrder = () => {
+    setTimeout(() => {
+      router.push('/order/23')
+    }, 500)
+    setOpenBottomBar(false)
+    dispatch(onChangeQuantity({ operator: 'plus', value: 1 }))
+  }
+
   const handleClick = () => {
     if (selected.length > 0) {
       setOpenBottomBar(true)
     } else {
-      router.push('/order/23')
+      handleMakesNewOrder()
     }
   }
 
-  const handleClickExisting = () => {
-    router.push('/order/23')
+  const handleClickExisting = (counter: number) => {
+    setTimeout(() => {
+      router.push({
+        pathname: '/order/23',
+        query: { counter },
+      })
+    }, 500)
+    setOpenBottomBar(false)
   }
 
   return (
@@ -76,7 +95,7 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
           <div className="flex flex-col items-end">
             <ImageMenu image={{ url: '/menu.png', alt: 'menu' }} size="s" className="mb-4" />
             <Button variant="secondary" size="xs">
-              {`${selected.length ? `${selected[0]?.quantity} item` : 'Add'}`}
+              {`${selected.length > 0 ? `${quantity} item${quantity > 1 ? 's' : ''}` : 'Add'}`}
             </Button>
           </div>
         </aside>
@@ -89,24 +108,29 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
           onClose={() => setOpenBottomBar(false)}
         >
           <div className="w-full mt-4 overflow-auto max-h-[560px] border-t">
-            <aside
-              role="presentation"
-              onClick={handleClickExisting}
-              className="flex gap-3 py-4 justify-between items-center"
-            >
-              <div>
-                <p className="text-m-semibold">{product.product_name}</p>
-                <p className=" text-m-medium">spicy level 1</p>
-              </div>
+            {selected.map((el) => (
+              <aside
+                key={el.product.product_uuid}
+                role="presentation"
+                onClick={() => handleClickExisting(el.counter)}
+                className="flex gap-3 py-4 justify-between items-center"
+              >
+                <div>
+                  <p className="text-m-semibold">{el.product.product_name}</p>
+                  {el.addOnVariant.length > 0 && (
+                    <p className=" text-m-medium">{`${el.addOnVariant[0].addOnName} : ${el.addOnVariant[0].variant_name}`}</p>
+                  )}
+                </div>
 
-              <div className="rounded-3xl border w-fit py-2 px-4 text-l-semibold">{`x${selected[0].quantity}`}</div>
+                <div className="rounded-3xl border w-fit py-2 px-4 text-l-semibold">{`x${el.quantity}`}</div>
 
-              <div>
-                <p className="text-m-regular">{toRupiah(calculate || 0)}</p>
-              </div>
-            </aside>
+                <div>
+                  <p className="text-m-regular">{toRupiah(calculateTotalProduct(el) || 0)}</p>
+                </div>
+              </aside>
+            ))}
             <aside className="pb-2">
-              <Button size="m" fullWidth>
+              <Button size="m" fullWidth onClick={handleMakesNewOrder}>
                 Make Another
               </Button>
             </aside>

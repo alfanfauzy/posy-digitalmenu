@@ -1,19 +1,24 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback } from 'react'
 import { IconButton } from 'posy-fnb-ds'
 import { BiMinus, BiPlus } from 'react-icons/bi'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { onChangeQuantity } from 'store/slices/order'
 
-interface MoleculesSectionQuantityCounterProps {
-  quantity: number
-  setQuantity: (quantity: number) => void
-}
+// interface MoleculesSectionQuantityCounterProps {}
 
-const MoleculesSectionQuantityCounter = ({
-  quantity,
-  setQuantity,
-}: MoleculesSectionQuantityCounterProps) => {
-  const handleIncreamentQuantity = useCallback(() => setQuantity(quantity + 1), [quantity])
-  const handleDecreamentQuantity = useCallback(() => setQuantity(quantity - 1), [quantity])
+const MoleculesSectionQuantityCounter = () => {
+  const dispatch = useAppDispatch()
+  const quantity = useAppSelector((state) => state.order.orderForm.quantity)
+
+  const handleIncreamentQuantity = useCallback(
+    () => dispatch(onChangeQuantity({ operator: 'plus', value: 1 })),
+    [dispatch],
+  )
+
+  const handleDecreamentQuantity = useCallback(
+    () => dispatch(onChangeQuantity({ operator: 'minus', value: 1 })),
+    [dispatch],
+  )
 
   return (
     <div className="flex items-center">

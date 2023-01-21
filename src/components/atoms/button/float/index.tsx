@@ -3,13 +3,14 @@ import { Button } from 'posy-fnb-ds'
 import { BasketItem } from 'store/slices/basket'
 import { toRupiah } from 'utils/common'
 import { useAppSelector } from 'store/hooks'
+import { calculateAddOn } from '@/molecules/section/add-to-basket'
 
 const calculateTotal = (arr: BasketItem[]) =>
   [...arr]
-    .map((el) => el.product.price_after_discount * el.quantity)
+    .map((el) => (calculateAddOn(el.addOnVariant) + el.product.price_after_discount) * el.quantity)
     .reduce((prev, current) => prev + current, 0)
 
-const calculateQuantity = (arr: BasketItem[]) =>
+export const calculateQuantity = (arr: { quantity: number }[]) =>
   [...arr].map((el) => el.quantity).reduce((prev, current) => prev + current, 0)
 
 const AtomsButtonFloating = () => {
