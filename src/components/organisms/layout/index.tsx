@@ -26,7 +26,6 @@ const showBottomNavigationRoutes = ['/order', '/bill']
 
 const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({ children }) => {
   const router = useRouter()
-
   const [value, setValue] = useState(0)
 
   const handleChange = (e: any, newValue: number) => {
@@ -44,7 +43,7 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({ children }) => {
       <Transition>
         {children}
         {showBottomNavigationRoutes.includes(router.pathname) && (
-          <div className="z-10 fixed">
+          <div className="z-10 bottom-0 fixed w-full max-w-[576px]">
             <BottomNavigation list={list} onChange={handleChange} value={value} />
           </div>
         )}

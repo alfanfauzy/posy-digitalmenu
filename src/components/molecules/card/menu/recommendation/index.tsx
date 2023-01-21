@@ -13,8 +13,8 @@ const MoleculesCardMenuRecommendation = ({ soldOut }: MoleculesCardMenuRecommend
   return (
     <div className="relative">
       {soldOut && (
-        <div className="bg-neutral-10 z-10 bg-opacity-40 absolute h-full w-full flex justify-center items-center pb-28">
-          <p className="text-l-semibold text-center">Sold out</p>
+        <div className="bg-neutral-10 z-10 bg-opacity-70 absolute h-full w-full flex justify-center items-center pb-28">
+          <p className="text-xxl-bold text-neutral-100 text-center">Sold out</p>
         </div>
       )}
       <div>

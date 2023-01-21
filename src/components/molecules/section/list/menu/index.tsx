@@ -11,7 +11,7 @@ interface MoleculesSectionListMenuProps {
 }
 
 const MoleculesSectionListMenu = ({ data }: MoleculesSectionListMenuProps) => {
-  const { ref, entry, inView } = useInView({ threshold: 1 })
+  const { ref, entry, inView } = useInView({ root: null, rootMargin: '0px', threshold: 0.9 })
   const dispatch = useDispatch()
 
   useEffect(() => {
