@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import { useInView } from 'react-intersection-observer'
 import CardMenuList from '@/molecules/card/menu/list'
 import type { Product } from '@/types/product'
-import { onChangeCategory } from 'store/order'
+import { onChangeCategory } from 'store/slices/order'
+import { useAppDispatch } from 'store/hooks'
 
 interface MoleculesSectionListMenuProps {
   data: { product: Product[]; category_name: string; category_uuid: string }
@@ -12,7 +12,7 @@ interface MoleculesSectionListMenuProps {
 
 const MoleculesSectionListMenu = ({ data }: MoleculesSectionListMenuProps) => {
   const { ref, entry, inView } = useInView({ root: null, rootMargin: '0px', threshold: 0.9 })
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (inView && entry?.target) {

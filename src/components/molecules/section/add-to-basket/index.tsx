@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo } from 'react'
-import { useDispatch } from 'react-redux'
 import { Button } from 'posy-fnb-ds'
 import { toRupiah } from 'utils/common'
-import { addToBasket } from 'store/basket'
+import { addToBasket } from 'store/slices/basket'
 import { useRouter } from 'next/router'
 import type { Product } from '@/types/product'
+import { useAppDispatch } from 'store/hooks'
 
 interface MoleculesSectionAddToBasketProps {
   product: Product
@@ -14,7 +14,7 @@ interface MoleculesSectionAddToBasketProps {
 
 const MoleculesSectionAddToBasket = ({ product, quantity }: MoleculesSectionAddToBasketProps) => {
   const router = useRouter()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const calculate = useMemo(() => product.price_after_discount * quantity, [quantity])
 
   const handleAddToBasket = () => {

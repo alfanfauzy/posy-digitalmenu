@@ -5,13 +5,12 @@
  */
 
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { RootState } from 'store/index'
 import SectionFilteredList from '@/organisms/section/list/filtered-list'
 import SectionFilter from '@/organisms/section/filter'
 import SectionList from '@/organisms/section/list'
 import HeaderOutletInfo from '@/molecules/header/outlet-info'
 import FloatingButton from '@/atoms/button/float'
+import { useAppSelector } from 'store/hooks'
 
 const data = [
   {
@@ -191,7 +190,7 @@ const data = [
 ]
 
 const PagesOrder: React.FC = () => {
-  const { basket } = useSelector((state: RootState) => state.basket)
+  const { basket } = useAppSelector((state) => state.basket)
   const [filteredData, setFilteredData] = useState<any[]>([])
   const [search, setSearch] = useState('')
 

@@ -1,18 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import logger from 'redux-logger'
-import type { BasketState } from './basket'
-import basket from './basket'
-import order from './order'
-
-export interface Reducer {
-  basket: BasketState
-}
+import reducer from './reducers'
 
 export const store = configureStore({
-  reducer: {
-    basket,
-    order,
-  },
+  reducer,
   middleware: (getDefaultMiddleware) => {
     if (process.env.NODE_ENV === 'production') return getDefaultMiddleware()
 

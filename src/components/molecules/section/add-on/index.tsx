@@ -20,6 +20,8 @@ const MoleculesSectionAddon = ({ add_on, value, setValue }: MoleculesSectionAddo
   //   // setValue({ addonValue })
   // }, [])
 
+  console.log(value)
+
   return (
     <article>
       {add_on.map((addon) => (

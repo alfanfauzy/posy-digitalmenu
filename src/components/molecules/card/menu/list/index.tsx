@@ -4,8 +4,7 @@ import { BottomSheet, Button } from 'posy-fnb-ds'
 import ImageMenu from '@/molecules/image/menu'
 import { Product } from '@/types/product'
 import { toRupiah } from 'utils/common'
-import { useSelector } from 'react-redux'
-import { RootState } from 'store/index'
+import { useAppSelector } from 'store/hooks'
 
 interface MoleculesCardMenuListProps {
   product: Product
@@ -13,7 +12,7 @@ interface MoleculesCardMenuListProps {
 
 const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
   const router = useRouter()
-  const { basket } = useSelector((state: RootState) => state.basket)
+  const { basket } = useAppSelector((state) => state.basket)
   const selected = basket.filter((el) => el.product.product_uuid === product.product_uuid)
 
   const [openBottomBar, setOpenBottomBar] = useState(false)

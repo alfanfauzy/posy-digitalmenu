@@ -2,9 +2,8 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import { DropdownMobile } from 'posy-fnb-ds'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from 'store/index'
-import { onChangeCategory } from 'store/order'
+import { onChangeCategory } from 'store/slices/order'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
 
 interface MoleculesSectionFilterCategoryProps {
   listCategories: any[]
@@ -16,8 +15,8 @@ const MoleculesSectionFilterCategory = ({
   openSearch,
 }: MoleculesSectionFilterCategoryProps) => {
   const router = useRouter()
-  const dispatch = useDispatch()
-  const { category } = useSelector((state: RootState) => state.order)
+  const dispatch = useAppDispatch()
+  const { category } = useAppSelector((state) => state.order)
 
   const onChange = (e: { label: string; value: string }) => {
     dispatch(onChangeCategory(e))

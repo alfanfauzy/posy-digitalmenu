@@ -5,9 +5,9 @@ const nextConfig = {
   images: {
     domains: ['aws3.image.com', 's3-ap-southeast-1.amazonaws.com'],
   },
-  experimental: {
-    optimizeCss: true,
-  },
+  // experimental: {
+  //   optimizeCss: true,
+  // },
   transpilePackages: ['posy-fnb-ds'],
 }
 

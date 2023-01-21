@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react'
 import { Button } from 'posy-fnb-ds'
-import { useSelector } from 'react-redux'
-import { RootState } from 'store/index'
-import { BasketItem } from 'store/basket'
+import { BasketItem } from 'store/slices/basket'
 import { toRupiah } from 'utils/common'
+import { useAppSelector } from 'store/hooks'
 
 const calculateTotal = (arr: BasketItem[]) =>
   [...arr]
@@ -14,7 +13,7 @@ const calculateQuantity = (arr: BasketItem[]) =>
   [...arr].map((el) => el.quantity).reduce((prev, current) => prev + current, 0)
 
 const AtomsButtonFloating = () => {
-  const { basket } = useSelector((state: RootState) => state.basket)
+  const { basket } = useAppSelector((state) => state.basket)
 
   const totalQuantity = useMemo(() => calculateQuantity(basket), [basket])
   const totalPrice = useMemo(() => calculateTotal(basket), [basket])
