@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
-import CardMenuList from '@/molecules/card/menu/list'
-import type { Product } from '@/types/product'
 import { onChangeCategory } from 'store/slices/order'
 import { useAppDispatch } from 'store/hooks'
+import CardMenuList from '@/molecules/card/menu/list'
+import type { Product } from '@/types/product'
 
 interface MoleculesSectionListMenuProps {
   data: { product: Product[]; category_name: string; category_uuid: string }

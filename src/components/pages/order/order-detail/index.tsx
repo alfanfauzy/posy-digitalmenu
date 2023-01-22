@@ -6,12 +6,12 @@
  */
 
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { onEditOrder, onLeaveOrderPage } from 'store/slices/order'
 import SectionBottomBar from '@/organisms/bottom-bar/item-quantity'
 import FormOrder from '@/organisms/form/order'
 import CardMenuDetail from '@/molecules/card/menu/detail'
-import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { onEditOrder, onLeaveOrderPage } from 'store/slices/order'
-import { useRouter } from 'next/router'
 
 const detail = {
   product_uuid: '76915a37-188c-46a8-a432-dc111ef6ad6e',
@@ -107,10 +107,10 @@ const PagesOrderDetail: React.FC = () => {
 
   useEffect(() => {
     const { counter } = router.query
-    setLoading(true)
     if (counter) {
       const filteredBasket = basket.basket.find((el) => el.counter.toString() === counter)
       if (filteredBasket) {
+        setLoading(true)
         dispatch(
           onEditOrder({
             addOnVariant: filteredBasket.addOnVariant,
@@ -118,11 +118,11 @@ const PagesOrderDetail: React.FC = () => {
             notes: filteredBasket.notes,
           }),
         )
+        setTimeout(() => {
+          setLoading(false)
+        }, 500)
       }
     }
-    setTimeout(() => {
-      setLoading(false)
-    }, 1000)
   }, [])
 
   if (loading) {

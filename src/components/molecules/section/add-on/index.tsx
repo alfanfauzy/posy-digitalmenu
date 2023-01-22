@@ -1,8 +1,9 @@
 import React from 'react'
 import { Checkbox, Radio } from 'posy-fnb-ds'
-import { Addon } from '@/types/product'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onChangeAddOn } from 'store/slices/order'
+import { toRupiah } from 'utils/common'
+import type { Addon } from '@/types/product'
 
 interface MoleculesSectionAddonProps {
   add_on: Addon[]
@@ -47,7 +48,7 @@ const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
                           addOnUuid: addon.addon_uuid,
                         })
                       }
-                      label={variant.price === 0 ? 'Free' : variant.price.toString()}
+                      label={variant.price === 0 ? 'Free' : toRupiah(variant.price)}
                       title={variant.variant_name}
                     />
                     <div />
@@ -68,7 +69,7 @@ const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
                           addOnUuid: addon.addon_uuid,
                         })
                       }
-                      label={variant.price === 0 ? 'Free' : variant.price.toString()}
+                      label={variant.price === 0 ? 'Free' : toRupiah(variant.price)}
                       title={variant.variant_name}
                     />
                     {addon.variant.length - 1 !== variant_idx && <div className="border-b" />}

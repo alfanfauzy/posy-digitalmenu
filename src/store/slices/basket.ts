@@ -4,9 +4,9 @@
  *
  */
 
-import { Product } from '@/types/product'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AddOnVariant } from './order'
+import type { Product } from '@/types/product'
 
 export interface BasketItem {
   product: Product

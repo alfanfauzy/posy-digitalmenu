@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo } from 'react'
+import { useRouter } from 'next/router'
 import { Button } from 'posy-fnb-ds'
 import { toRupiah } from 'utils/common'
 import { addToBasket, updateBasket } from 'store/slices/basket'
-import { useRouter } from 'next/router'
-import type { Product } from '@/types/product'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
+import type { Product } from '@/types/product'
 
 export const calculateAddOn = (arr: any[]) =>
   [...arr].map((el) => el.price).reduce((prev, current) => prev + current, 0)

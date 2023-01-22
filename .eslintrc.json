@@ -35,11 +35,20 @@
         "implicit-arrow-linebreak": "off",
         "import/extensions": "off",
         "import/no-anonymous-default-export": "off",
-        "import/no-cycle": "off",
-        "import/no-extraneous-dependencies": "off",
         "import/no-named-as-default": "off",
-        "import/no-unresolved": "off",
         "import/prefer-default-export": "off",
+        "import/order": [
+            "error",
+            {
+                "groups": [
+                    "builtin",
+                    "parent",
+                    "external",
+                    "sibling",
+                    "index"
+                ]
+            }
+        ],
         "jsx-a11y/anchor-is-valid": "off",
         "jsx-a11y/href-no-hash": "off",
         "jsx-a11y/label-has-associated-control": [
