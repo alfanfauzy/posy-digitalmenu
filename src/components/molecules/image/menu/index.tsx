@@ -44,6 +44,9 @@ const MoleculesImageMenu = ({
         alt={image.alt}
         fill
         priority
+        sizes="(max-width: 768px) 100vw,
+        (max-width: 1200px) 50vw,
+        33vw"
         className="object-cover rounded-lg shadow-sm hover:bg-opacity-70"
       />
       {size !== 's' && label && (

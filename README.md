@@ -33,10 +33,10 @@
     <img src="public/logo.jpg" alt="Logo" width="220" height="80">
   </a>
 
-  <h3 align="center">Pintu</h3>
+  <h3 align="center">Posy Fnb</h3>
 
   <p align="center">
-    An awesome token market list
+    An awesome qr digital menu
     <br />
     <a href="https://github.com/zaidanammar/pintu"><strong>Explore the docs »</strong></a>
     <br />
@@ -79,7 +79,6 @@
 
 ## About The Project
 
-
 - Web Preview
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
@@ -109,6 +108,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 - [![Next][next.js]][next-url]
 - [![Typescript][typescript]][typescript-url]
 - [![TailwindCSS][tailwindcss]][tailwindcss-url]
+- [![Redux][redux]][redux-url]
 - [![Eslint][eslint]][eslint-url]
 - [![Prettier][prettier]][prettier-url]
 - [![Vercel][vercel]][vercel-url]
@@ -139,7 +139,7 @@ _Below is an example of how you can instruct your audience on installing and set
    ```
 3. Enter your configuration project in `.env.local`, in a module you will work on
    ```js
-   NEXT_PUBLIC_API='ENTER YOUR SECRET KEY'
+   NEXT_PUBLIC_API = 'ENTER YOUR SECRET KEY'
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -151,6 +151,7 @@ _Below is an example of how you can instruct your audience on installing and set
 How to run a project, please follow the instructions below.
 
 1. Run the Project
+
 ```bash
 npm run dev or yarn dev
 ```
@@ -158,6 +159,7 @@ npm run dev or yarn dev
 How to run a `storybook`, please follow the instructions below.
 
 1. Run the `storybook` in local
+
 ```bash
 npm run dev:storybook or yarn dev:storybook
 ```
@@ -255,6 +257,8 @@ Use this space to list resources you find helpful and would like to give credit 
 [prettier-url]: https://prettier.io/
 [vercel]: https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white
 [vercel-url]: https://vercel.com/
+[redux]: https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white
+[redux-url]: https://redux.js.org/
 [react-query-url]: https://tanstack.com/query/v4
 [husky-url]: https://typicode.github.io/husky/#/
 [storybook-url]: https://storybook.js.org/

@@ -37,9 +37,8 @@ const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
             <aside className="text-neutral-100 pb-4">
               {addon.variant.map((variant, variant_idx) =>
                 addon.is_multiple ? (
-                  <>
+                  <div key={variant.variant_uuid}>
                     <Checkbox
-                      key={variant.variant_uuid}
                       value={variant.variant_uuid}
                       checked={addOnVariant?.some((el) => el.variant_uuid === variant.variant_uuid)}
                       onChange={() =>
@@ -53,11 +52,10 @@ const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
                     />
                     <div />
                     {addon.variant.length - 1 !== variant_idx && <div className="border-b" />}
-                  </>
+                  </div>
                 ) : (
-                  <>
+                  <div key={variant.variant_uuid}>
                     <Radio
-                      key={variant.variant_uuid}
                       selectedValue={
                         addOnVariant?.find((el) => el.variant_uuid === variant.variant_uuid)
                           ?.variant_uuid || ''
@@ -73,7 +71,7 @@ const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
                       title={variant.variant_name}
                     />
                     {addon.variant.length - 1 !== variant_idx && <div className="border-b" />}
-                  </>
+                  </div>
                 ),
               )}
             </aside>
