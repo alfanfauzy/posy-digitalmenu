@@ -3,7 +3,6 @@
  * Order reducer
  *
  */
-import { Product } from '@/types/product'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type AddOnVariant = {
@@ -120,7 +119,5 @@ export const {
   onEditOrder,
   onChangeAddOn,
 } = OrderSlice.actions
-
-export const getters = {}
 
 export default OrderSlice.reducer

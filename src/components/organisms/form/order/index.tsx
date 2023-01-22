@@ -23,7 +23,7 @@ const OrganismsFormOrder = ({ add_on }: OrganismsFormOrderProps) => {
           labelText="Notes"
           fullwidth
           placeholder="Example: no onion, please"
-          helperText={`${notes?.length} / ${maxText}`}
+          helperText={`${notes?.length || 0} / ${maxText}`}
           value={notes}
           onChange={(e) => dispatch(onChangeNotes(e.target.value))}
           maxLength={maxText}

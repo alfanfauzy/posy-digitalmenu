@@ -5,7 +5,7 @@
  *
  */
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import SectionBottomBar from '@/organisms/bottom-bar/item-quantity'
 import FormOrder from '@/organisms/form/order'
 import CardMenuDetail from '@/molecules/card/menu/detail'
@@ -93,6 +93,7 @@ const PagesOrderDetail: React.FC = () => {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const basket = useAppSelector((state) => state.basket)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const exitingFunction = () => dispatch(onLeaveOrderPage())
@@ -106,6 +107,7 @@ const PagesOrderDetail: React.FC = () => {
 
   useEffect(() => {
     const { counter } = router.query
+    setLoading(true)
     if (counter) {
       const filteredBasket = basket.basket.find((el) => el.counter.toString() === counter)
       if (filteredBasket) {
@@ -118,7 +120,14 @@ const PagesOrderDetail: React.FC = () => {
         )
       }
     }
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
   }, [])
+
+  if (loading) {
+    return <div>loading...</div>
+  }
 
   return (
     <main className="p-4 shadow-md">

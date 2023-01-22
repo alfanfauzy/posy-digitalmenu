@@ -31,18 +31,25 @@ export const BasketSlice = createSlice({
     addToBasket: (state, action: PayloadAction<BasketItem>) => {
       state.basket.push(action.payload)
     },
+    updateBasket: (state, action: PayloadAction<BasketItem>) => {
+      const prevBasket = state.basket
+      const newBasketItem = action.payload
+      if (
+        prevBasket.find(
+          (el) =>
+            el.product.product_uuid === newBasketItem.product.product_uuid &&
+            el.counter === newBasketItem.counter,
+        )
+      ) {
+        const filteredBasket = prevBasket.filter((el) => el.counter !== newBasketItem.counter)
+        state.basket = filteredBasket
+        state.basket.push(action.payload)
+      }
+    },
   },
 })
 
 // export the action from the slice
-export const { addToBasket } = BasketSlice.actions
-
-// export const actions = {
-//   onChangeLogin: (payload: boolean) => async (dispatch: any) => {
-//     dispatch(changeLogin(payload))
-//   },
-// }
-
-export const getters = {}
+export const { addToBasket, updateBasket } = BasketSlice.actions
 
 export default BasketSlice.reducer

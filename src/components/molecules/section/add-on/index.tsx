@@ -40,10 +40,7 @@ const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
                     <Checkbox
                       key={variant.variant_uuid}
                       value={variant.variant_uuid}
-                      checked={
-                        !!addOnVariant?.filter((el) => el.variant_uuid === variant.variant_uuid)[0]
-                          ?.variant_uuid
-                      }
+                      checked={addOnVariant?.some((el) => el.variant_uuid === variant.variant_uuid)}
                       onChange={() =>
                         handleChangeAddon('checkbox', variant, {
                           addOnName: addon.addon_name,
@@ -61,7 +58,7 @@ const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
                     <Radio
                       key={variant.variant_uuid}
                       selectedValue={
-                        addOnVariant?.filter((el) => el.variant_uuid === variant.variant_uuid)[0]
+                        addOnVariant?.find((el) => el.variant_uuid === variant.variant_uuid)
                           ?.variant_uuid || ''
                       }
                       value={variant.variant_uuid}
