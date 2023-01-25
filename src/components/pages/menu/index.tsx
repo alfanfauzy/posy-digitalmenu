@@ -1,6 +1,6 @@
 /**
  *
- * PagesOrder
+ * PagesMenu
  *
  */
 
@@ -187,7 +187,7 @@ const data = [
   },
 ]
 
-const PagesOrder: React.FC = () => {
+const PagesMenu: React.FC = () => {
   const { basket } = useAppSelector((state) => state.basket)
   const [filteredData, setFilteredData] = useState<any[]>([])
   const [search, setSearch] = useState('')
@@ -212,4 +212,4 @@ const PagesOrder: React.FC = () => {
   )
 }
 
-export default PagesOrder
+export default PagesMenu

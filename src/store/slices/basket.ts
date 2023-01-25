@@ -5,7 +5,7 @@
  */
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AddOnVariant } from './order'
+import { AddOnVariant } from './menu'
 import type { Product } from '@/types/product'
 
 export interface BasketItem {

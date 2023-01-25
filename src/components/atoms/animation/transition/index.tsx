@@ -36,7 +36,7 @@ const Transition: FC<{ children: ReactNode }> = ({ children }) => {
   const createKey = () => {
     asPath = asPath.split('#')[0]
     const path = asPath.split('/')
-    if (asPath.startsWith('/order')) {
+    if (asPath.startsWith('/menu')) {
       if (path.length === 4) {
         path.pop()
         return path.join('/')

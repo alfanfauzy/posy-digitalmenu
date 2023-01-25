@@ -12,8 +12,8 @@ interface OrganismsLayoutProps {
 
 const list = [
   {
-    label: 'Order',
-    value: 'order',
+    label: 'Menu',
+    value: 'menu',
     icon: Bill,
   },
   {
@@ -22,7 +22,7 @@ const list = [
     icon: Bill,
   },
 ]
-const showBottomNavigationRoutes = ['/order', '/bill']
+const showBottomNavigationRoutes = ['/menu', '/bill']
 
 const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({ children }) => {
   const router = useRouter()

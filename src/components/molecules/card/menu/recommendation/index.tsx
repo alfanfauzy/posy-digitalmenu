@@ -19,7 +19,7 @@ const MoleculesCardMenuRecommendation = ({ soldOut }: MoleculesCardMenuRecommend
       )}
       <div>
         <ImageMenu
-          onClick={() => router.push('/order/1')}
+          onClick={() => router.push('/menu/1')}
           label="Discount"
           timeLabel="in 15 min"
           isRecommended

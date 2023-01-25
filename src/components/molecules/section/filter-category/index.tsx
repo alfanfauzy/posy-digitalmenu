@@ -2,7 +2,7 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import { DropdownMobile } from 'posy-fnb-ds'
-import { onChangeCategory } from 'store/slices/order'
+import { onChangeCategory } from 'store/slices/menu'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 
 interface MoleculesSectionFilterCategoryProps {
@@ -16,7 +16,7 @@ const MoleculesSectionFilterCategory = ({
 }: MoleculesSectionFilterCategoryProps) => {
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const { category } = useAppSelector((state) => state.order)
+  const { category } = useAppSelector((state) => state.menu)
 
   const onChange = (e: { label: string; value: string }) => {
     dispatch(onChangeCategory(e))

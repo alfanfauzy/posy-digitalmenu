@@ -17,9 +17,9 @@ interface MoleculesSectionAddToBasketProps {
 const MoleculesSectionAddToBasket = ({ product }: MoleculesSectionAddToBasketProps) => {
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const quantity = useAppSelector((state) => state.order.orderForm.quantity)
-  const addOnVariant = useAppSelector((state) => state.order.orderForm.addOnVariant)
-  const notes = useAppSelector((state) => state.order.orderForm.notes)
+  const quantity = useAppSelector((state) => state.menu.orderForm.quantity)
+  const addOnVariant = useAppSelector((state) => state.menu.orderForm.addOnVariant)
+  const notes = useAppSelector((state) => state.menu.orderForm.notes)
   const total = useMemo(
     () => (calculateAddOn(addOnVariant) + product.price_after_discount) * quantity,
     [quantity, addOnVariant],

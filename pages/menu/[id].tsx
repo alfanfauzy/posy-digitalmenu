@@ -1,5 +1,5 @@
 import MetaHeader from '@/molecules/meta-header'
-import ContainerOrder from 'containers/order'
+import ContainerMenuDetail from 'containers/menu/menu-detail'
 import { SEO } from '@/constants/seo'
 
 const Page = () => (
@@ -10,7 +10,7 @@ const Page = () => (
       keywords={SEO.keywords}
       image={SEO.image}
     />
-    <ContainerOrder />
+    <ContainerMenuDetail />
   </>
 )
 

@@ -5,7 +5,7 @@ import ImageMenu from '@/molecules/image/menu'
 import { Product } from '@/types/product'
 import { toRupiah } from 'utils/common'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { onChangeQuantity } from 'store/slices/order'
+import { onChangeQuantity } from 'store/slices/menu'
 import { BasketItem } from 'store/slices/basket'
 import { calculateAddOn } from '@/molecules/section/add-to-basket'
 import { calculateQuantity } from '@/atoms/button/float'
@@ -39,7 +39,7 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
 
   const handleMakesNewOrder = () => {
     setTimeout(() => {
-      router.push('/order/23')
+      router.push('/menu/23')
     }, 500)
     setOpenBottomBar(false)
     dispatch(onChangeQuantity({ operator: 'plus', value: 1 }))
@@ -56,7 +56,7 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
   const handleClickExisting = (counter: number) => {
     setTimeout(() => {
       router.push({
-        pathname: '/order/23',
+        pathname: '/menu/23',
         query: { counter },
       })
     }, 500)

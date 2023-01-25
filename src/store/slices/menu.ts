@@ -1,6 +1,6 @@
 /**
  *
- * Order reducer
+ * Menu reducer
  *
  */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
@@ -12,7 +12,7 @@ export type AddOnVariant = {
   variant_uuid: string
   price: number
 }
-export interface OrderState {
+export interface MenuState {
   search: string
   category: { label: string; value: string }
   orderForm: {
@@ -22,7 +22,7 @@ export interface OrderState {
   }
 }
 
-const initialState: OrderState = {
+const initialState: MenuState = {
   search: '',
   category: { label: '', value: '' },
   orderForm: {
@@ -31,8 +31,8 @@ const initialState: OrderState = {
   },
 }
 
-export const OrderSlice = createSlice({
-  name: 'Order',
+export const MenuSlice = createSlice({
+  name: 'Menu',
   initialState,
   reducers: {
     onChangeCategory: (state, action: PayloadAction<{ label: string; value: string }>) => {
@@ -118,6 +118,6 @@ export const {
   onLeaveOrderPage,
   onEditOrder,
   onChangeAddOn,
-} = OrderSlice.actions
+} = MenuSlice.actions
 
-export default OrderSlice.reducer
+export default MenuSlice.reducer

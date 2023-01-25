@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
-import { onChangeCategory } from 'store/slices/order'
+import { onChangeCategory } from 'store/slices/menu'
 import { useAppDispatch } from 'store/hooks'
 import CardMenuList from '@/molecules/card/menu/list'
 import type { Product } from '@/types/product'

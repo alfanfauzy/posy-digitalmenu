@@ -1,8 +1,6 @@
 import { SEO } from '@/constants/seo'
 import MetaHeader from '@/molecules/meta-header'
 
-// import ContainerOrder from 'containers/order'
-
 const Page = () => (
   <>
     <MetaHeader
@@ -11,7 +9,6 @@ const Page = () => (
       keywords={SEO.keywords}
       image={SEO.image}
     />
-    {/* <ContainerOrder /> */}
     <p>Bill</p>
   </>
 )

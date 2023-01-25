@@ -1,7 +1,7 @@
 import React from 'react'
 import { Checkbox, Radio } from 'posy-fnb-ds'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { onChangeAddOn } from 'store/slices/order'
+import { onChangeAddOn } from 'store/slices/menu'
 import { toRupiah } from 'utils/common'
 import type { Addon } from '@/types/product'
 
@@ -11,7 +11,7 @@ interface MoleculesSectionAddonProps {
 
 const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
   const dispatch = useAppDispatch()
-  const addOnVariant = useAppSelector((state) => state.order.orderForm.addOnVariant)
+  const addOnVariant = useAppSelector((state) => state.menu.orderForm.addOnVariant)
 
   const handleChangeAddon = (
     type: 'radio' | 'checkbox',

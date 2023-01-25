@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /**
  *
- * PagesOrderDetail
+ * PagesMenuDetail
  *
  */
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { onEditOrder, onLeaveOrderPage } from 'store/slices/order'
+import { onEditOrder, onLeaveOrderPage } from 'store/slices/menu'
 import SectionBottomBar from '@/organisms/bottom-bar/item-quantity'
 import FormOrder from '@/organisms/form/order'
 import CardMenuDetail from '@/molecules/card/menu/detail'
@@ -89,7 +89,7 @@ const detail = {
   ],
 }
 
-const PagesOrderDetail: React.FC = () => {
+const PagesMenuDetail: React.FC = () => {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const basket = useAppSelector((state) => state.basket)
@@ -138,4 +138,4 @@ const PagesOrderDetail: React.FC = () => {
   )
 }
 
-export default PagesOrderDetail
+export default PagesMenuDetail

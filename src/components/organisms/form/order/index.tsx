@@ -3,7 +3,7 @@ import { Textarea } from 'posy-fnb-ds'
 import SectionAddon from '@/molecules/section/add-on'
 import { Addon } from '@/types/product'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { onChangeNotes } from 'store/slices/order'
+import { onChangeNotes } from 'store/slices/menu'
 
 interface OrganismsFormOrderProps {
   add_on: Addon[]
@@ -11,7 +11,7 @@ interface OrganismsFormOrderProps {
 
 const OrganismsFormOrder = ({ add_on }: OrganismsFormOrderProps) => {
   const dispatch = useAppDispatch()
-  const notes = useAppSelector((state) => state.order.orderForm.notes)
+  const notes = useAppSelector((state) => state.menu.orderForm.notes)
   const maxText = 200
 
   return (

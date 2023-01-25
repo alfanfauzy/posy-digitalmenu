@@ -1,8 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit'
 import basket from './slices/basket'
-import order from './slices/order'
+import menu from './slices/menu'
 
 export default combineReducers({
   basket,
-  order,
+  menu,
 })
