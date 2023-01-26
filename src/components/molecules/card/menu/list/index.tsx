@@ -67,12 +67,12 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
     <>
       <div className="relative">
         {!product?.is_available && (
-          <div className="bg-neutral-10 z-10 bg-opacity-40 absolute h-full w-full flex justify-center items-center pb-28" />
+          <div className="absolute z-10 flex h-full w-full items-center justify-center bg-neutral-10 bg-opacity-40 pb-28" />
         )}
         <aside
           role="presentation"
           onClick={handleClick}
-          className="w-full flex gap-4 hover:bg-neutral-20 active:animate-pulse transition duration-300 ease-in-out p-4"
+          className="flex w-full gap-4 p-4 transition duration-300 ease-in-out hover:bg-neutral-20 active:animate-pulse"
         >
           <div className="flex-1">
             <p
@@ -107,13 +107,13 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
           open={openBottomBar}
           onClose={() => setOpenBottomBar(false)}
         >
-          <div className="w-full mt-4 overflow-auto max-h-[560px] border-t">
+          <div className="mt-4 max-h-[560px] w-full overflow-auto border-t">
             {selected.map((el) => (
               <aside
                 key={el.product.product_uuid}
                 role="presentation"
                 onClick={() => handleClickExisting(el.counter)}
-                className="flex gap-3 py-4 justify-between items-center"
+                className="flex items-center justify-between gap-3 py-4"
               >
                 <div>
                   <p className="text-m-semibold">{el.product.product_name}</p>
@@ -122,7 +122,7 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
                   )}
                 </div>
 
-                <div className="rounded-3xl border w-fit py-2 px-4 text-l-semibold">{`x${el.quantity}`}</div>
+                <div className="text-l-semibold w-fit rounded-3xl border py-2 px-4">{`x${el.quantity}`}</div>
 
                 <div>
                   <p className="text-m-regular">{toRupiah(calculateTotalProduct(el) || 0)}</p>

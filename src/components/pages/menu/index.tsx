@@ -202,7 +202,7 @@ const PagesMenu: React.FC = () => {
   }
 
   return (
-    <main className="container mx-auto pt-4 shadow-md min-h-screen pb-28">
+    <main className="container mx-auto min-h-screen pt-4 pb-28 shadow-md">
       <HeaderOutletInfo />
       <SectionFilter onSearch={onSetSearch} search={search} setSearch={setSearch} />
       {search.length > 0 && <SectionFilteredList data={filteredData} />}

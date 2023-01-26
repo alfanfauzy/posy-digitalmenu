@@ -13,8 +13,8 @@ const MoleculesCardMenuRecommendation = ({ soldOut }: MoleculesCardMenuRecommend
   return (
     <div className="relative">
       {soldOut && (
-        <div className="bg-neutral-10 z-10 bg-opacity-70 absolute h-full w-full flex justify-center items-center pb-28">
-          <p className="text-xxl-bold text-neutral-100 text-center">Sold out</p>
+        <div className="absolute z-10 flex h-full w-full items-center justify-center bg-neutral-10 bg-opacity-70 pb-28">
+          <p className="text-xxl-bold text-center text-neutral-100">Sold out</p>
         </div>
       )}
       <div>
@@ -29,9 +29,9 @@ const MoleculesCardMenuRecommendation = ({ soldOut }: MoleculesCardMenuRecommend
 
         <div className="mt-1">
           <p className="text-m-semibold">Fried Cap Cay</p>
-          <div className="flex items-center gap-1 mt-1">
+          <div className="mt-1 flex items-center gap-1">
             <p className="text-l-medium">30.000</p>
-            <p className="text-s-medium line-through text-neutral-80">50.000</p>
+            <p className="text-s-medium text-neutral-80 line-through">50.000</p>
           </div>
         </div>
 

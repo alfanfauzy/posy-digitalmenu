@@ -3,8 +3,8 @@ import React from 'react'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
 
 const MoleculesHeaderOutletInfo = () => (
-  <section className="bg-neutral-20 ml-4 flex gap-2 items-center p-4 rounded-l-2xl">
-    <div className="flex-1 gap-4 w-2/3">
+  <section className="ml-4 flex items-center gap-2 rounded-l-2xl bg-neutral-20 p-4">
+    <div className="w-2/3 flex-1 gap-4">
       <p className="text-xl-semibold truncate">Solaria</p>
       <div className="flex items-center gap-1">
         <HiOutlineLocationMarker />

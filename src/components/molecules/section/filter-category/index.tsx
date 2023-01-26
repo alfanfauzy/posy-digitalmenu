@@ -26,7 +26,7 @@ const MoleculesSectionFilterCategory = ({
   return (
     <div
       className={`transition-all duration-500 ease-in-out ${
-        openSearch ? 'opacity-0 w-0' : 'opacity-100 w-2/3'
+        openSearch ? 'w-0 opacity-0' : 'w-2/3 opacity-100'
       }`}
     >
       <DropdownMobile

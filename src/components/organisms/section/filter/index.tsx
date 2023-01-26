@@ -38,7 +38,7 @@ const OrganismsSectionFilter = ({ search, onSearch, setSearch }: OrganismsSectio
         boxShadow: shadow ? '0px 6px 24px rgb(0 0 0 / 15%)' : 'none',
         transition: 'box-shadow 0.5s',
       }}
-      className="mt-2 flex gap-4 sticky top-0 z-50 bg-white p-4"
+      className="sticky top-0 z-50 mt-2 flex gap-4 bg-white p-4"
     >
       <MoleculesSectionFilterCategory listCategories={listCategories} openSearch={openSearch} />
       <InputSearch

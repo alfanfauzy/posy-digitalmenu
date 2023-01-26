@@ -47,7 +47,7 @@ const MoleculesImageMenu = ({
         sizes="(max-width: 768px) 100vw,
         (max-width: 1200px) 50vw,
         33vw"
-        className="object-cover rounded-lg shadow-sm hover:bg-opacity-70"
+        className="rounded-lg object-cover shadow-sm hover:bg-opacity-70"
       />
       {size !== 's' && label && (
         <div className="absolute top-3">
@@ -55,7 +55,7 @@ const MoleculesImageMenu = ({
         </div>
       )}
       <div
-        className={`absolute bottom-3 flex items-center justify-between w-full ${
+        className={`absolute bottom-3 flex w-full items-center justify-between ${
           size === 'l' ? 'pr-4' : 'pr-2'
         }`}
       >

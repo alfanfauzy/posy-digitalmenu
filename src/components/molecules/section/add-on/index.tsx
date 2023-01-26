@@ -34,7 +34,7 @@ const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
             <p className="text-m-regular">Required | select 1</p>
           </div>
           <section className="border-b">
-            <aside className="text-neutral-100 pb-4">
+            <aside className="pb-4 text-neutral-100">
               {addon.variant.map((variant, variant_idx) =>
                 addon.is_multiple ? (
                   <div key={variant.variant_uuid}>

@@ -43,7 +43,7 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({ children }) => {
       <Transition>
         {children}
         {showBottomNavigationRoutes.includes(router.pathname) && (
-          <div className="z-10 bottom-0 fixed w-full max-w-[576px]">
+          <div className="fixed bottom-0 z-10 w-full max-w-[576px]">
             <BottomNavigation list={list} onChange={handleChange} value={value} />
           </div>
         )}

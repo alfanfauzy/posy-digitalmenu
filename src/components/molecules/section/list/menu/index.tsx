@@ -33,7 +33,7 @@ const MoleculesSectionListMenu = ({ data }: MoleculesSectionListMenuProps) => {
       className="mt-6"
       id={data.category_name.toLowerCase()}
     >
-      <aside className="px-4 mb-2">
+      <aside className="mb-2 px-4">
         <p className="text-xxl-semibold">{data.category_name}</p>
       </aside>
       {data.product.map((product) => (

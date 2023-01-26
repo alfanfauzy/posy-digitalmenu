@@ -16,8 +16,8 @@ const AtomsInputSearch = ({ open, setOpen, value, setValue, onSearch }: AtomsInp
   }
 
   return (
-    <div className={`transition-all duration-500 ease-in-out ${open ? 'w-full -ml-4' : 'w-1/3'}`}>
-      <span className="relative h-full flex items-center justify-start">
+    <div className={`transition-all duration-500 ease-in-out ${open ? '-ml-4 w-full' : 'w-1/3'}`}>
+      <span className="relative flex h-full items-center justify-start">
         <div className="absolute left-4">
           <FiSearch size={16} className="stroke-neutral-90" />
         </div>
@@ -30,7 +30,7 @@ const AtomsInputSearch = ({ open, setOpen, value, setValue, onSearch }: AtomsInp
           value={value}
           type="text"
           placeholder="Search"
-          className={`border placeholder:text-neutral-80 border-neutral-70 pl-10 w-full h-8 rounded-full text-m-medium focus:outline-neutral-50 ${
+          className={`text-m-medium h-8 w-full rounded-full border border-neutral-70 pl-10 placeholder:text-neutral-80 focus:outline-neutral-50 ${
             open ? 'pr-10' : ''
           } `}
         />
@@ -38,7 +38,7 @@ const AtomsInputSearch = ({ open, setOpen, value, setValue, onSearch }: AtomsInp
           <div className="absolute right-4">
             <MdCancel
               size={20}
-              className="fill-neutral-60 cursor-pointer"
+              className="cursor-pointer fill-neutral-60"
               onClick={onClearSearch}
             />
           </div>

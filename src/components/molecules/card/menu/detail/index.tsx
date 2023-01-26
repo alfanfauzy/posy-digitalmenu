@@ -33,7 +33,7 @@ const MoleculesCardMenuDetail = ({ product }: MoleculesCardMenuDetailProps) => {
           <p className="text-xxl-bold">{product_name}</p>
           <div className="flex items-center gap-2">
             <p className="text-xxl-regular">{toRupiah(price_after_discount)}</p>
-            <p className="text-xxl-regular line-through text-neutral-70">
+            <p className="text-xxl-regular text-neutral-70 line-through">
               {toRupiah(price_before_discount)}
             </p>
           </div>
