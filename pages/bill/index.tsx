@@ -1,15 +1,16 @@
 import { SEO } from '@/constants/seo'
 import MetaHeader from '@/molecules/meta-header'
+import ContainerBill from 'containers/bill'
 
 const Page = () => (
   <>
     <MetaHeader
-      title={SEO.title}
+      title="Posy Fnb - Bill"
       description={SEO.description}
       keywords={SEO.keywords}
       image={SEO.image}
     />
-    <p>Bill</p>
+    <ContainerBill />
   </>
 )
 
