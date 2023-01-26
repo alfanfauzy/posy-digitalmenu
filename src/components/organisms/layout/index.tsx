@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { ReactNode, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { BottomNavigation } from 'posy-fnb-ds'
@@ -36,7 +35,7 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({ children }) => {
   useEffect(() => {
     const selected = list.findIndex((el) => el.value === router.pathname.slice(1))
     setValue(selected)
-  }, [])
+  }, [router.pathname])
 
   return (
     <AnimatePresence initial={false}>
