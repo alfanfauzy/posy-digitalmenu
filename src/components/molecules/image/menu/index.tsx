@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { Label, TimeLabel } from 'posy-fnb-ds'
 import { BiTimeFive } from 'react-icons/bi'
-import Recommended from 'src/assets/recommended'
+import Recommended from 'src/assets/icons/recommended'
 
 interface MoleculesImageMenuProps {
   onClick?: () => void

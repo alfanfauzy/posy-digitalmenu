@@ -3,15 +3,9 @@ import { useRouter } from 'next/router'
 import { BottomSheet, Button } from 'posy-fnb-ds'
 import ImageMenu from '@/molecules/image/menu'
 import { Product } from '@/types/product'
-import { toRupiah } from 'utils/common'
+import { calculateQuantity, calculateTotalProduct, toRupiah } from 'utils/common'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onChangeQuantity } from 'store/slices/menu'
-import { BasketItem } from 'store/slices/basket'
-import { calculateAddOn } from '@/molecules/section/add-to-basket'
-import { calculateQuantity } from '@/atoms/button/float'
-
-const calculateTotalProduct = (el: BasketItem) =>
-  (calculateAddOn(el.addOnVariant) + el.product.price_after_discount) * el.quantity
 
 interface MoleculesCardMenuListProps {
   product: Product

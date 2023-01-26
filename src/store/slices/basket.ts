@@ -46,10 +46,34 @@ export const BasketSlice = createSlice({
         state.basket.push(action.payload)
       }
     },
+    onChangeQuantity: (
+      state,
+      action: PayloadAction<{ operator: 'plus' | 'minus'; value: number; orderId: number }>,
+    ) => {
+      const prevBasket = state.basket.find((el) => el.counter === action.payload.orderId)
+      const basketIndex = state.basket.findIndex((el) => el.counter === action.payload.orderId)
+      const newBasket = state.basket
+
+      if (prevBasket) {
+        switch (action.payload.operator) {
+          case 'plus':
+            prevBasket.quantity += action.payload.value
+            break
+          case 'minus':
+            prevBasket.quantity -= action.payload.value
+            break
+          default:
+            break
+        }
+
+        newBasket[basketIndex] = prevBasket
+        state.basket = newBasket
+      }
+    },
   },
 })
 
 // export the action from the slice
-export const { addToBasket, updateBasket } = BasketSlice.actions
+export const { addToBasket, updateBasket, onChangeQuantity } = BasketSlice.actions
 
 export default BasketSlice.reducer

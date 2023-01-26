@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { BottomNavigation } from 'posy-fnb-ds'
 import { AnimatePresence } from 'framer-motion'
 import Transition from '@/atoms/animation/transition'
-import Bill from 'src/assets/bill'
+import Bill from 'src/assets/icons/bill'
 
 interface OrganismsLayoutProps {
   children: ReactNode
@@ -22,7 +22,7 @@ const list = [
     icon: Bill,
   },
 ]
-const showBottomNavigationRoutes = ['/menu', '/bill']
+const showBottomNavigationRoutes = ['/menu', '/basket', '/bill']
 
 const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({ children }) => {
   const router = useRouter()
