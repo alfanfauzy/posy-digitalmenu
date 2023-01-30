@@ -70,10 +70,21 @@ export const BasketSlice = createSlice({
         state.basket = newBasket
       }
     },
+    onChangeNotes: (state, action: PayloadAction<{ notes: string; orderId: number }>) => {
+      const prevBasket = state.basket.find((el) => el.counter === action.payload.orderId)
+      const basketIndex = state.basket.findIndex((el) => el.counter === action.payload.orderId)
+      const newBasket = state.basket
+
+      if (prevBasket) {
+        prevBasket.notes = action.payload.notes
+        newBasket[basketIndex] = prevBasket
+        state.basket = newBasket
+      }
+    },
   },
 })
 
 // export the action from the slice
-export const { addToBasket, updateBasket, onChangeQuantity } = BasketSlice.actions
+export const { addToBasket, updateBasket, onChangeQuantity, onChangeNotes } = BasketSlice.actions
 
 export default BasketSlice.reducer

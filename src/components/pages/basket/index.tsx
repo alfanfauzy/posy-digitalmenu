@@ -5,12 +5,12 @@
  */
 
 import { useRouter } from 'next/router'
-import { Button, IconButton, Modal } from 'posy-fnb-ds'
+import { Button, IconButton, Modal, Textarea } from 'posy-fnb-ds'
 import React, { useCallback, useMemo, useState } from 'react'
 import { BiMinus, BiPlus } from 'react-icons/bi'
 import { IoIosArrowBack } from 'react-icons/io'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { onChangeQuantity } from 'store/slices/basket'
+import { onChangeNotes, onChangeQuantity } from 'store/slices/basket'
 import { calculateTotal, toRupiah } from 'utils/common'
 import PencilEdit from 'src/assets/icons/pencilEdit'
 import Info from 'src/assets/icons/info'
@@ -20,6 +20,7 @@ const PagesBasket: React.FC = () => {
   const dispatch = useAppDispatch()
   const { basket } = useAppSelector((state) => state.basket)
   const [open, setOpen] = useState(false)
+  const [openNotes, setOpenNotes] = useState({ status: false, id: '' })
 
   const subtotal = useMemo(() => calculateTotal(basket), [basket])
 
@@ -75,13 +76,41 @@ const PagesBasket: React.FC = () => {
             </div>
 
             <div id="notes" className="mt-2">
-              <p className="text-s-regular text-neutral-70">
-                <span className="text-s-semibold">Notes:</span> {item.notes || '-'}
-              </p>
+              {openNotes.status && openNotes.id === item.counter.toString() ? (
+                <div className="-mt-1.5">
+                  <span className="text-s-semibold text-neutral-70">Notes:</span>
+                  <Textarea
+                    className="mt-2 h-20"
+                    fullwidth
+                    placeholder="Example: no onion, please"
+                    helperText={`${item.notes?.length || 0} / 200`}
+                    value={item.notes}
+                    onChange={(e) =>
+                      dispatch(onChangeNotes({ notes: e.target.value, orderId: item.counter }))
+                    }
+                    onBlur={() => setOpenNotes({ status: false, id: '' })}
+                    maxLength={200}
+                  />
+                </div>
+              ) : (
+                <p className="text-s-regular text-neutral-70">
+                  <span className="text-s-semibold">Notes:</span> {item.notes || '-'}
+                </p>
+              )}
             </div>
 
             <div className="mt-4 flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() =>
+                  setOpenNotes({ status: !openNotes.status, id: item.counter.toString() })
+                }
+                onKeyDown={() =>
+                  setOpenNotes({ status: !openNotes.status, id: item.counter.toString() })
+                }
+                className="flex items-center gap-1.5"
+              >
                 <PencilEdit />
                 <p className="text-s-semibold">Notes</p>
               </div>
