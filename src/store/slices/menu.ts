@@ -32,7 +32,7 @@ const initialState: MenuState = {
 }
 
 export const MenuSlice = createSlice({
-  name: 'Menu',
+  name: 'menu',
   initialState,
   reducers: {
     onChangeCategory: (state, action: PayloadAction<{ label: string; value: string }>) => {

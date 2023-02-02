@@ -108,6 +108,7 @@
     "react/prop-types": "off",
     "tailwindcss/classnames-order": "warn",
     "tailwindcss/no-custom-classname": "off",
-    "tailwindcss/no-contradicting-classname": "error"
+    "tailwindcss/no-contradicting-classname": "error",
+    "import/no-extraneous-dependencies": "off"
   }
 }

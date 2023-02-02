@@ -4,21 +4,23 @@
  *
  */
 
+import dynamic from 'next/dynamic'
 import React, { useState } from 'react'
 import SectionFilteredList from '@/organisms/section/list/filtered-list'
 import SectionFilter from '@/organisms/section/filter'
 import SectionList from '@/organisms/section/list'
 import HeaderOutletInfo from '@/molecules/header/outlet-info'
-import FloatingButton from '@/atoms/button/float'
 import { useAppSelector } from 'store/hooks'
+
+const FloatingButton = dynamic(() => import('@/atoms/button/float'), { ssr: false })
 
 const data = [
   {
-    category_uuid: '76915a37-188c-46a8-a432-dc111ef6ad6e',
+    category_uuid: '76915a37-188c-46a8-a432-dc111ef6ad622e',
     category_name: 'Food',
     product: [
       {
-        product_uuid: '76915a37-188c-46a8-a432-dc111ef6ad6e',
+        product_uuid: '76915a37-188c-46a8-a432-dc1112211ef6ad6e',
         product_name: 'Rice + Chicken Crispy Black Pepper sauces ice ',
         product_description: 'lorem ipsum sip dolor amet lorem ilorem ipsum sip dolor amet amet',
         is_favourite: true,

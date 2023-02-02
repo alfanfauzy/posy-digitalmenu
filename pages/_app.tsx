@@ -1,25 +1,36 @@
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import type { AppProps } from 'next/app'
-import { Provider } from 'react-redux'
+import withRedux from 'next-redux-wrapper'
+import { PersistGate } from 'redux-persist/integration/react'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { store } from 'store/index'
+import type { NextPageWithLayout } from '@/types/index'
+import { persistor, store } from 'store/index'
 import Layout from '@/organisms/layout'
 import '../styles/globals.css'
 
-const App = ({ Component, pageProps }: AppProps) => {
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const [queryClient] = useState(() => new QueryClient())
+
+  const getLayout =
+    Component.getLayout ??
+    ((page) => (
+      <Suspense fallback={page}>
+        <Layout>{page}</Layout>
+      </Suspense>
+    ))
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </Provider>
+      <PersistGate persistor={persistor}>{getLayout(<Component {...pageProps} />)}</PersistGate>
       <ReactQueryDevtools />
     </QueryClientProvider>
   )
 }
 
-export default App
+const makeStore = () => store
+export default withRedux(makeStore)(App)
