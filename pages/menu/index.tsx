@@ -5,7 +5,7 @@ import { SEO } from '@/constants/seo'
 const Page = () => (
   <>
     <MetaHeader
-      title={SEO.title}
+      title="Posy fnb - Menu"
       description={SEO.description}
       keywords={SEO.keywords}
       image={SEO.image}

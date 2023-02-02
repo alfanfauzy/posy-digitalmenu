@@ -20,7 +20,7 @@ const detail = {
   product_thumbnail: 'https://aws3.image.com/thumbnail.png',
   is_favourite: true,
   is_discount: true,
-  price_before_discount: 33000,
+  price_before_discount: 40000,
   price_after_discount: 33000,
   is_available: true,
   cooking_duration: 0,

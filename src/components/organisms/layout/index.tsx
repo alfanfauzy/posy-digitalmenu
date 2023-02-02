@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { BottomNavigation } from 'posy-fnb-ds'
 import { AnimatePresence } from 'framer-motion'
-import Transition from '@/atoms/animation/transition'
+import Transition from '@/atoms/animations/transition'
 import Bill from 'src/assets/icons/bill'
 
 interface OrganismsLayoutProps {

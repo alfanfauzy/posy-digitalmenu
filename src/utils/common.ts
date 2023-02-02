@@ -21,5 +21,8 @@ export const calculateTotal = (arr: BasketItem[]) =>
 export const calculateQuantity = (arr: { quantity: number }[]) =>
   [...arr].map((el) => el.quantity).reduce((prev, current) => prev + current, 0)
 
-export const calculateTotalProduct = (el: BasketItem) =>
+export const calculateOrder = (el: BasketItem) =>
   (calculateAddOn(el.addOnVariant) + el.product.price_after_discount) * el.quantity
+
+export const calculateOrderBeforeDiscount = (el: BasketItem) =>
+  (calculateAddOn(el.addOnVariant) + el.product.price_before_discount) * el.quantity

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { BottomSheet, Button } from 'posy-fnb-ds'
 import ImageMenu from '@/molecules/image/menu'
 import { Product } from '@/types/product'
-import { calculateQuantity, calculateTotalProduct, toRupiah } from 'utils/common'
+import { calculateQuantity, calculateOrder, toRupiah } from 'utils/common'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onChangeQuantity } from 'store/slices/menu'
 
@@ -53,7 +53,7 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
         pathname: '/menu/23',
         query: { counter },
       })
-    }, 500)
+    }, 300)
     setOpenBottomBar(false)
   }
 
@@ -119,7 +119,7 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
                 <div className="text-l-semibold w-fit rounded-3xl border py-2 px-4">{`x${el.quantity}`}</div>
 
                 <div>
-                  <p className="text-m-regular">{toRupiah(calculateTotalProduct(el) || 0)}</p>
+                  <p className="text-m-regular">{toRupiah(calculateOrder(el) || 0)}</p>
                 </div>
               </aside>
             ))}

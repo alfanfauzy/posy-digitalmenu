@@ -5,40 +5,39 @@
  */
 
 import { useRouter } from 'next/router'
-import { Button, IconButton, Modal, Textarea } from 'posy-fnb-ds'
-import React, { useCallback, useMemo, useState } from 'react'
-import { BiMinus, BiPlus } from 'react-icons/bi'
+import { Button, Modal } from 'posy-fnb-ds'
+import React, { useMemo, useState } from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
-import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { onChangeNotes, onChangeQuantity } from 'store/slices/basket'
-import { calculateTotal, toRupiah } from 'utils/common'
+import { useAppSelector } from 'store/hooks'
+import {
+  calculateOrder,
+  calculateOrderBeforeDiscount,
+  calculateTotal,
+  toRupiah,
+} from 'utils/common'
 import PencilEdit from 'src/assets/icons/pencilEdit'
 import Info from 'src/assets/icons/info'
 
 const PagesBasket: React.FC = () => {
   const router = useRouter()
-  const dispatch = useAppDispatch()
   const { basket } = useAppSelector((state) => state.basket)
   const [open, setOpen] = useState(false)
-  const [openNotes, setOpenNotes] = useState({ status: false, id: '' })
-
   const subtotal = useMemo(() => calculateTotal(basket), [basket])
 
   const goBack = () => router.push('/menu')
 
-  const handleIncreamentQuantity = useCallback(
-    (orderId: number) => dispatch(onChangeQuantity({ operator: 'plus', value: 1, orderId })),
-    [dispatch],
-  )
-
-  const handleDecreamentQuantity = useCallback(
-    (orderId: number) => dispatch(onChangeQuantity({ operator: 'minus', value: 1, orderId })),
-    [dispatch],
-  )
-
   const handleConfirm = () => {
     setOpen(false)
     router.push('/bill')
+  }
+
+  const editOrder = (productId: string, orderId: string) => {
+    setTimeout(() => {
+      router.push({
+        pathname: `/menu/${productId}`,
+        query: { counter: orderId },
+      })
+    }, 300)
   }
   return (
     <main className="container mx-auto min-h-screen pt-4 pb-40 shadow-md">
@@ -56,76 +55,39 @@ const PagesBasket: React.FC = () => {
         {basket.map((item) => (
           <aside key={item.counter} className="pb-4">
             <div id="product-info" className="flex justify-between">
+              <p className="text-l-regular mr-2">x{item.quantity}</p>
               <p className="text-l-regular flex-1">{item.product.product_name}</p>
               <div className="flex flex-col items-end">
-                <p className="text-l-regular">{toRupiah(item.product.price_after_discount)}</p>
+                <p className="text-l-regular">{toRupiah(calculateOrder(item) || 0)}</p>
                 <p className="text-s-regular text-neutral-60 line-through">
-                  {toRupiah(item.product.price_before_discount)}
+                  {toRupiah(calculateOrderBeforeDiscount(item) || 0)}
                 </p>
               </div>
             </div>
-            <div id="addon" className="mt-2 flex flex-col gap-1">
+            <div id="addon" className="mt-2 ml-6 flex flex-col gap-1">
               {item.addOnVariant.map((addon) => (
                 <div key={addon.variant_uuid} className="flex items-start justify-between">
-                  <p className="text-s-regular w-3/4 line-clamp-2">{`- ${addon.variant_name}`}</p>
-                  <p className="text-s-regular">
-                    {addon.price === 0 ? 'Free' : toRupiah(addon.price)}
-                  </p>
+                  <p className="text-s-regular w-3/4 text-neutral-90 line-clamp-1">{`${addon.addOnName} ${addon.variant_name}`}</p>
                 </div>
               ))}
             </div>
 
-            <div id="notes" className="mt-2">
-              {openNotes.status && openNotes.id === item.counter.toString() ? (
-                <div className="-mt-1.5">
-                  <span className="text-s-semibold text-neutral-70">Notes:</span>
-                  <Textarea
-                    className="mt-2 h-20"
-                    fullwidth
-                    placeholder="Example: no onion, please"
-                    helperText={`${item.notes?.length || 0} / 200`}
-                    value={item.notes}
-                    onChange={(e) =>
-                      dispatch(onChangeNotes({ notes: e.target.value, orderId: item.counter }))
-                    }
-                    onBlur={() => setOpenNotes({ status: false, id: '' })}
-                    maxLength={200}
-                  />
-                </div>
-              ) : (
-                <p className="text-s-regular text-neutral-70">
-                  <span className="text-s-semibold">Notes:</span> {item.notes || '-'}
-                </p>
-              )}
+            <div id="notes" className="ml-6 mt-0.5">
+              <p className="text-s-regular text-neutral-70">
+                <span className="text-s-semibold">Notes:</span> {item.notes || '-'}
+              </p>
             </div>
 
-            <div className="mt-4 flex items-center justify-between">
+            <div className="mt-4 ml-6 flex items-center justify-between">
               <div
                 role="button"
                 tabIndex={0}
-                onClick={() =>
-                  setOpenNotes({ status: !openNotes.status, id: item.counter.toString() })
-                }
-                onKeyDown={() =>
-                  setOpenNotes({ status: !openNotes.status, id: item.counter.toString() })
-                }
+                onClick={() => editOrder(item.product.product_uuid, item.counter.toString())}
+                onKeyDown={() => editOrder(item.product.product_uuid, item.counter.toString())}
                 className="flex items-center gap-1.5"
               >
                 <PencilEdit />
-                <p className="text-s-semibold">Notes</p>
-              </div>
-
-              <div className="flex gap-3">
-                <IconButton
-                  disabled={item.quantity === 0}
-                  onClick={() => handleDecreamentQuantity(item.counter)}
-                >
-                  <BiMinus />
-                </IconButton>
-                <div>{item.quantity}</div>
-                <IconButton onClick={() => handleIncreamentQuantity(item.counter)}>
-                  <BiPlus />
-                </IconButton>
+                <p className="text-s-semibold">Edit Order</p>
               </div>
             </div>
             <div className="mt-4 border-t border-neutral-30" />
@@ -185,10 +147,10 @@ const PagesBasket: React.FC = () => {
           <p className="text-m-regular mt-[10px] text-center">Are you sure you want to proceed?</p>
           <div className="mt-8 flex gap-2">
             <Button variant="secondary" size="m" onClick={() => setOpen(false)}>
-              No, check again
+              No
             </Button>
             <Button variant="primary" size="m" onClick={handleConfirm}>
-              Yes, confirm
+              Yes
             </Button>
           </div>
         </section>

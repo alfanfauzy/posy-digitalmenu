@@ -9,7 +9,12 @@ import { Button } from 'posy-fnb-ds'
 import React, { useMemo } from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
 import { useAppSelector } from 'store/hooks'
-import { calculateTotal, toRupiah } from 'utils/common'
+import {
+  calculateOrder,
+  calculateOrderBeforeDiscount,
+  calculateTotal,
+  toRupiah,
+} from 'utils/common'
 import User from 'src/assets/icons/user'
 
 const PagesBill: React.FC = () => {
@@ -59,34 +64,32 @@ const PagesBill: React.FC = () => {
         {basket.map((item) => (
           <aside key={item.counter} className="pb-4">
             <div id="product-info" className="flex justify-between">
+              <p className="text-l-regular mr-2">x{item.quantity}</p>
               <p className="text-l-regular flex-1">{item.product.product_name}</p>
               <div className="flex flex-col items-end">
-                <p className="text-l-regular">{toRupiah(item.product.price_after_discount)}</p>
+                <p className="text-l-regular">{toRupiah(calculateOrder(item) || 0)}</p>
                 <p className="text-s-regular text-neutral-60 line-through">
-                  {toRupiah(item.product.price_before_discount)}
+                  {toRupiah(calculateOrderBeforeDiscount(item) || 0)}
                 </p>
               </div>
             </div>
-            <div id="addon" className="mt-2 flex flex-col gap-1">
+            <div id="addon" className="mt-2 ml-6 flex flex-col gap-1">
               {item.addOnVariant.map((addon) => (
                 <div key={addon.variant_uuid} className="flex items-start justify-between">
-                  <p className="text-s-regular w-3/4 line-clamp-2">{`- ${addon.variant_name}`}</p>
-                  <p className="text-s-regular">
-                    {addon.price === 0 ? 'Free' : toRupiah(addon.price)}
-                  </p>
+                  <p className="text-s-regular w-3/4 text-neutral-90 line-clamp-1">{`${addon.addOnName} ${addon.variant_name}`}</p>
                 </div>
               ))}
             </div>
 
             {item.notes && (
-              <div id="notes" className="mt-2">
+              <div id="notes" className="ml-6 mt-0.5">
                 <p className="text-s-regular text-neutral-70">
                   <span className="text-s-semibold">Notes:</span> {item.notes || '-'}
                 </p>
               </div>
             )}
 
-            <div className="mt-4 flex items-center justify-between">
+            <div className="mt-4 ml-6 flex items-center justify-between">
               <p className="text-m-semibold">Status</p>
               <p className="text-m-semibold text-[#003BD4]">Order Processed</p>
             </div>
