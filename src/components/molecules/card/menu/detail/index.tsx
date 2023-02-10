@@ -37,7 +37,7 @@ const MoleculesCardMenuDetail = ({ product }: MoleculesCardMenuDetailProps) => {
               {toRupiah(price_before_discount)}
             </p>
           </div>
-          <p className="text-m-regular mt-0.5">{product_description}</p>
+          <p className="mt-0.5 text-m-regular">{product_description}</p>
         </div>
         <div />
       </aside>
