@@ -1,11 +1,11 @@
 import { Suspense, useState } from 'react'
 import type { AppProps } from 'next/app'
-import withRedux from 'next-redux-wrapper'
+import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import type { NextPageWithLayout } from '@/types/index'
-import { persistor, store } from 'store/index'
+import { persistor, wrapper } from 'store/index'
 import Layout from '@/organisms/layout'
 import 'posy-fnb-core/dist/index.css'
 import 'posy-fnb-core/dist/style.css'
@@ -15,8 +15,9 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-const App = ({ Component, pageProps }: AppPropsWithLayout) => {
+const App = ({ Component, pageProps, ...rest }: AppPropsWithLayout) => {
   const [queryClient] = useState(() => new QueryClient())
+  const { store } = wrapper.useWrappedStore(rest)
 
   const getLayout =
     Component.getLayout ??
@@ -28,11 +29,12 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <PersistGate persistor={persistor}>{getLayout(<Component {...pageProps} />)}</PersistGate>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>{getLayout(<Component {...pageProps} />)}</PersistGate>
+      </Provider>
       <ReactQueryDevtools />
     </QueryClientProvider>
   )
 }
 
-const makeStore = () => store
-export default withRedux(makeStore)(App)
+export default App

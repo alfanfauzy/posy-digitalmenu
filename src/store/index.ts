@@ -1,5 +1,6 @@
 import logger from 'redux-logger'
 import { configureStore } from '@reduxjs/toolkit'
+import { createWrapper } from 'next-redux-wrapper'
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist'
 import persistedReducer from './reducers'
 
@@ -16,7 +17,10 @@ const store = configureStore({
 
 const persistor = persistStore(store)
 
-export { store, persistor }
+const makeStore = () => store
+const wrapper = createWrapper(makeStore)
+
+export { wrapper, persistor }
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

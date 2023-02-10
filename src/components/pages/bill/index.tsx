@@ -55,88 +55,96 @@ const PagesBill: React.FC = () => {
         </div>
       </section>
 
-      {/* organims */}
-      <div className="mt-4 flex items-center justify-between bg-neutral-30 px-4 py-2">
-        <p className="text-l-semibold">Order 1</p>
-        <p className="text-l-regular">Unpaid</p>
-      </div>
-      <section className="px-4 pt-4">
-        {basket.map((item) => (
-          <aside key={item.counter} className="pb-4">
-            <div id="product-info" className="flex justify-between">
-              <p className="mr-2 text-l-regular">x{item.quantity}</p>
-              <p className="flex-1 text-l-regular">{item.product.product_name}</p>
-              <div className="flex flex-col items-end">
-                <p className="text-l-regular">{toRupiah(calculateOrder(item) || 0)}</p>
-                <p className="text-s-regular text-neutral-60 line-through">
-                  {toRupiah(calculateOrderBeforeDiscount(item) || 0)}
-                </p>
-              </div>
-            </div>
-            <div id="addon" className="mt-2 ml-6 flex flex-col gap-1">
-              {item.addOnVariant.map((addon) => (
-                <div key={addon.variant_uuid} className="flex items-start justify-between">
-                  <p className="w-3/4 text-s-regular text-neutral-90 line-clamp-1">{`${addon.addOnName} ${addon.variant_name}`}</p>
+      {basket.length === 0 && (
+        <div className="mt-10 flex justify-center text-m-semibold">Your order is still empty!</div>
+      )}
+
+      {basket.length > 0 && (
+        <>
+          {/* organims */}
+          <div className="mt-4 flex items-center justify-between bg-neutral-30 px-4 py-2">
+            <p className="text-l-semibold">Order 1</p>
+            <p className="text-l-regular">Unpaid</p>
+          </div>
+          <section className="px-4 pt-4">
+            {basket.map((item) => (
+              <aside key={item.counter} className="pb-4">
+                <div id="product-info" className="flex justify-between">
+                  <p className="mr-2 text-l-regular">x{item.quantity}</p>
+                  <p className="flex-1 text-l-regular">{item.product.product_name}</p>
+                  <div className="flex flex-col items-end">
+                    <p className="text-l-regular">{toRupiah(calculateOrder(item) || 0)}</p>
+                    <p className="text-s-regular text-neutral-60 line-through">
+                      {toRupiah(calculateOrderBeforeDiscount(item) || 0)}
+                    </p>
+                  </div>
                 </div>
-              ))}
-            </div>
+                <div id="addon" className="mt-2 ml-6 flex flex-col gap-1">
+                  {item.addOnVariant.map((addon) => (
+                    <div key={addon.variant_uuid} className="flex items-start justify-between">
+                      <p className="w-3/4 text-s-regular text-neutral-90 line-clamp-1">{`${addon.addOnName} ${addon.variant_name}`}</p>
+                    </div>
+                  ))}
+                </div>
 
-            {item.notes && (
-              <div id="notes" className="ml-6 mt-0.5">
-                <p className="text-s-regular text-neutral-70">
-                  <span className="text-s-semibold">Notes:</span> {item.notes || '-'}
-                </p>
+                {item.notes && (
+                  <div id="notes" className="ml-6 mt-0.5">
+                    <p className="text-s-regular text-neutral-70">
+                      <span className="text-s-semibold">Notes:</span> {item.notes || '-'}
+                    </p>
+                  </div>
+                )}
+
+                <div className="mt-4 ml-6 flex items-center justify-between">
+                  <p className="text-m-semibold">Status</p>
+                  <p className="text-m-semibold text-[#003BD4]">Order Processed</p>
+                </div>
+                <div className="mt-4 border-t border-neutral-30" />
+              </aside>
+            ))}
+          </section>
+
+          <section className="mt-2 px-4">
+            <Button variant="secondary" size="m" fullWidth onClick={goBack}>
+              + Add more order
+            </Button>
+
+            <div className="mt-6 flex flex-col gap-2">
+              <p className="text-m-semibold">Payment Details</p>
+              <div className="flex items-center justify-between text-m-medium">
+                <p>Subtotal</p>
+                <p>{toRupiah(subtotal)}</p>
               </div>
-            )}
-
-            <div className="mt-4 ml-6 flex items-center justify-between">
-              <p className="text-m-semibold">Status</p>
-              <p className="text-m-semibold text-[#003BD4]">Order Processed</p>
+              <div className="flex items-center justify-between text-m-medium">
+                <p>Discount</p>
+                <p>{toRupiah(0)}</p>
+              </div>
+              <div className="flex items-center justify-between text-m-medium">
+                <p>Service</p>
+                <p>{toRupiah(0)}</p>
+              </div>
+              <div className="flex items-center justify-between text-m-medium">
+                <p>Tax 10%</p>
+                <p>{toRupiah(0)}</p>
+              </div>
+              <div className="flex items-center justify-between text-l-semibold">
+                <p>Total</p>
+                <p>{toRupiah(subtotal)}</p>
+              </div>
             </div>
-            <div className="mt-4 border-t border-neutral-30" />
-          </aside>
-        ))}
-      </section>
+          </section>
 
-      <section className="mt-2 px-4">
-        <Button variant="secondary" size="m" fullWidth onClick={goBack}>
-          + Add more order
-        </Button>
-
-        <div className="mt-6 flex flex-col gap-2">
-          <p className="text-m-semibold">Payment Details</p>
-          <div className="flex items-center justify-between text-m-medium">
-            <p>Subtotal</p>
-            <p>{toRupiah(subtotal)}</p>
-          </div>
-          <div className="flex items-center justify-between text-m-medium">
-            <p>Discount</p>
-            <p>{toRupiah(0)}</p>
-          </div>
-          <div className="flex items-center justify-between text-m-medium">
-            <p>Service</p>
-            <p>{toRupiah(0)}</p>
-          </div>
-          <div className="flex items-center justify-between text-m-medium">
-            <p>Tax 10%</p>
-            <p>{toRupiah(0)}</p>
-          </div>
-          <div className="flex items-center justify-between text-l-semibold">
-            <p>Total</p>
-            <p>{toRupiah(subtotal)}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* molecules */}
-      <section
-        style={{
-          boxShadow: '0px -6px 24px rgb(0 0 0 / 10%)',
-        }}
-        className="fixed bottom-0 w-full max-w-[576px] rounded-t-2xl bg-neutral-10 px-4 pb-20 pt-6"
-      >
-        <Button fullWidth>Payment</Button>
-      </section>
+          {/* molecules */}
+          <section
+            style={{
+              boxShadow: '0px -6px 24px rgb(0 0 0 / 10%)',
+            }}
+            className="fixed bottom-0 w-full max-w-[576px] rounded-t-2xl bg-neutral-10 px-4 pb-20 pt-6"
+          >
+            <Button fullWidth>Payment</Button>
+          </section>
+        </>
+      )}
     </main>
   )
 }

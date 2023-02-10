@@ -8,6 +8,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   whiteList: ['basket'],
+  // blacklist: ['menu'],
   storage: PersistStorage,
 }
 
