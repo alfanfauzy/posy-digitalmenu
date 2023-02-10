@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { BottomNavigation } from 'posy-fnb-ds'
+import { BottomNavigation } from 'posy-fnb-core'
 import { AnimatePresence } from 'framer-motion'
 import Transition from '@/atoms/animations/transition'
 import Bill from 'src/assets/icons/bill'

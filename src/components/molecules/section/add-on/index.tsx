@@ -1,5 +1,5 @@
 import React from 'react'
-import { Checkbox, Radio } from 'posy-fnb-ds'
+import { Checkbox, Radio } from 'posy-fnb-core'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onChangeAddOn } from 'store/slices/menu'
 import { toRupiah } from 'utils/common'
@@ -39,6 +39,7 @@ const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
                 addon.is_multiple ? (
                   <div key={variant.variant_uuid}>
                     <Checkbox
+                      size="m"
                       value={variant.variant_uuid}
                       checked={addOnVariant?.some((el) => el.variant_uuid === variant.variant_uuid)}
                       onChange={() =>

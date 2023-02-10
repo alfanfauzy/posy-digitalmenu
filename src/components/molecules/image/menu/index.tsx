@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { Label, TimeLabel } from 'posy-fnb-ds'
+import { Label, TimeLabel } from 'posy-fnb-core'
 import { BiTimeFive } from 'react-icons/bi'
 import Recommended from 'src/assets/icons/recommended'
 

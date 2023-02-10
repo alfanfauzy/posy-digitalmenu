@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { IconButton } from 'posy-fnb-ds'
+import { IconButton } from 'posy-fnb-core'
 import { BiMinus, BiPlus } from 'react-icons/bi'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onChangeQuantity } from 'store/slices/menu'
@@ -22,7 +22,7 @@ const MoleculesSectionQuantityCounter = () => {
 
   return (
     <div className="flex items-center">
-      <p className="text-xl-semibold flex-1 gap-4">Item Quantity</p>
+      <p className="flex-1 gap-4 text-xl-semibold">Item Quantity</p>
       <div className="flex gap-3">
         <IconButton disabled={quantity === 0} onClick={handleDecreamentQuantity}>
           <BiMinus />

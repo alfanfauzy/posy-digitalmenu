@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo } from 'react'
 import { useRouter } from 'next/router'
-import { Button } from 'posy-fnb-ds'
+import { Button } from 'posy-fnb-core'
 import { calculateAddOn, toRupiah } from 'utils/common'
 import { addToBasket, updateBasket } from 'store/slices/basket'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
@@ -51,12 +51,12 @@ const MoleculesSectionAddToBasket = ({ product }: MoleculesSectionAddToBasketPro
 
   return (
     <div className="mt-6">
-      <Button onClick={handleAddToBasket} fullWidth disabled={quantity === 0}>
+      <Button onClick={handleAddToBasket} fullWidth variant="primary">
         <div className="flex items-center justify-between">
           <p className="text-l-semibold">
             {router.query.counter ? 'Update a Basket' : 'Add to Basket'}
           </p>
-          <p className="text-xxl-semibold flex flex-1 justify-end">{toRupiah(total)}</p>
+          <p className="flex flex-1 justify-end text-xxl-semibold">{toRupiah(total)}</p>
         </div>
       </Button>
     </div>

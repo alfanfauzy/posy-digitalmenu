@@ -30,7 +30,7 @@ const AtomsInputSearch = ({ open, setOpen, value, setValue, onSearch }: AtomsInp
           value={value}
           type="text"
           placeholder="Search"
-          className={`text-m-medium h-8 w-full rounded-full border border-neutral-70 pl-10 placeholder:text-neutral-80 focus:outline-neutral-50 ${
+          className={`h-8 w-full rounded-full border border-neutral-70 pl-10 text-m-medium placeholder:text-neutral-80 focus:outline-neutral-50 ${
             open ? 'pr-10' : ''
           } `}
         />

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { useRouter } from 'next/router'
-import { Button } from 'posy-fnb-ds'
+import { Button } from 'posy-fnb-core'
 import { calculateQuantity, calculateTotal, toRupiah } from 'utils/common'
 import { useAppSelector } from 'store/hooks'
 
@@ -19,11 +19,11 @@ const AtomsButtonFloating = () => {
         <div className="flex items-center justify-between gap-2">
           <div className="flex flex-1 items-center gap-2">
             <p className="text-l-semibold">Basket</p>
-            <p className="text-m-regular truncate">{`${totalQuantity} ${
+            <p className="truncate text-m-regular">{`${totalQuantity} ${
               totalQuantity > 1 ? 'items' : 'item'
             }`}</p>
           </div>
-          <p className="text-xxl-semibold flex flex-1 justify-end">{toRupiah(totalPrice)}</p>
+          <p className="flex flex-1 justify-end text-xxl-semibold">{toRupiah(totalPrice)}</p>
         </div>
       </Button>
     </div>

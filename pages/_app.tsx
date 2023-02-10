@@ -7,6 +7,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import type { NextPageWithLayout } from '@/types/index'
 import { persistor, store } from 'store/index'
 import Layout from '@/organisms/layout'
+import 'posy-fnb-core/dist/index.css'
+import 'posy-fnb-core/dist/style.css'
 import '../styles/globals.css'
 
 type AppPropsWithLayout = AppProps & {

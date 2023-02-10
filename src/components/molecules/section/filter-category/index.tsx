@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
 import { useRouter } from 'next/router'
-import { DropdownMobile } from 'posy-fnb-ds'
+import { DropdownMobile } from 'posy-fnb-core'
 import { onChangeCategory } from 'store/slices/menu'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 

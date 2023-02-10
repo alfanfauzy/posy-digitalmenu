@@ -1,5 +1,5 @@
 import React from 'react'
-import { Textarea } from 'posy-fnb-ds'
+import { Textarea } from 'posy-fnb-core'
 import SectionAddon from '@/molecules/section/add-on'
 import { Addon } from '@/types/product'
 import { useAppDispatch, useAppSelector } from 'store/hooks'

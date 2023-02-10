@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
-import { BottomSheet, Button } from 'posy-fnb-ds'
+import { BottomSheet, Button } from 'posy-fnb-core'
 import ImageMenu from '@/molecules/image/menu'
 import { Product } from '@/types/product'
 import { calculateQuantity, calculateOrder, toRupiah } from 'utils/common'
@@ -76,8 +76,8 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
             >
               {product.product_name}
             </p>
-            <p className="text-m-regular mt-1 line-clamp-3">{product.product_description}</p>
-            <p className="text-l-medium mt-2">
+            <p className="mt-1 text-m-regular line-clamp-3">{product.product_description}</p>
+            <p className="mt-2 text-l-medium">
               {renderPrice(
                 product.is_available,
                 product.price_after_discount,
@@ -116,7 +116,7 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
                   )}
                 </div>
 
-                <div className="text-l-semibold w-fit rounded-3xl border py-2 px-4">{`x${el.quantity}`}</div>
+                <div className="w-fit rounded-3xl border py-2 px-4 text-l-semibold">{`x${el.quantity}`}</div>
 
                 <div>
                   <p className="text-m-regular">{toRupiah(calculateOrder(el) || 0)}</p>

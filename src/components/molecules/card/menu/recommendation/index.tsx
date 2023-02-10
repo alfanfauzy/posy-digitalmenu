@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { Button } from 'posy-fnb-ds'
+import { Button } from 'posy-fnb-core'
 import ImageMenu from '@/molecules/image/menu'
 
 interface MoleculesCardMenuRecommendationProps {
@@ -14,7 +14,7 @@ const MoleculesCardMenuRecommendation = ({ soldOut }: MoleculesCardMenuRecommend
     <div className="relative">
       {soldOut && (
         <div className="absolute z-10 flex h-full w-full items-center justify-center bg-neutral-10 bg-opacity-70 pb-28">
-          <p className="text-xxl-bold text-center text-neutral-100">Sold out</p>
+          <p className="text-center text-xxl-bold text-neutral-100">Sold out</p>
         </div>
       )}
       <div>

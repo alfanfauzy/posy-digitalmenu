@@ -5,7 +5,7 @@
  */
 
 import { useRouter } from 'next/router'
-import { Button } from 'posy-fnb-ds'
+import { Button } from 'posy-fnb-core'
 import React, { useMemo } from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
 import { useAppSelector } from 'store/hooks'
@@ -40,16 +40,16 @@ const PagesBill: React.FC = () => {
       <section className="mt-4 flex items-center justify-between px-4">
         <div className="flex flex-col items-start">
           <p className="text-m-medium text-neutral-60">Trx ID</p>
-          <p className="text-m-semibold mt-0.5 text-neutral-80">2134</p>
+          <p className="mt-0.5 text-m-semibold text-neutral-80">2134</p>
         </div>
         <div className="flex flex-col items-center">
           <p className="text-m-medium text-neutral-60">Table</p>
-          <p className="text-m-semibold mt-0.5 text-neutral-80">4</p>
+          <p className="mt-0.5 text-m-semibold text-neutral-80">4</p>
         </div>
         <div className="flex flex-col items-end">
           <p className="text-m-medium text-neutral-60">Total Pax</p>
           <div className="flex items-center gap-1.5">
-            <p className="text-m-semibold mt-0.5 text-neutral-80">2</p>
+            <p className="mt-0.5 text-m-semibold text-neutral-80">2</p>
             <User />
           </div>
         </div>
@@ -64,8 +64,8 @@ const PagesBill: React.FC = () => {
         {basket.map((item) => (
           <aside key={item.counter} className="pb-4">
             <div id="product-info" className="flex justify-between">
-              <p className="text-l-regular mr-2">x{item.quantity}</p>
-              <p className="text-l-regular flex-1">{item.product.product_name}</p>
+              <p className="mr-2 text-l-regular">x{item.quantity}</p>
+              <p className="flex-1 text-l-regular">{item.product.product_name}</p>
               <div className="flex flex-col items-end">
                 <p className="text-l-regular">{toRupiah(calculateOrder(item) || 0)}</p>
                 <p className="text-s-regular text-neutral-60 line-through">
@@ -76,7 +76,7 @@ const PagesBill: React.FC = () => {
             <div id="addon" className="mt-2 ml-6 flex flex-col gap-1">
               {item.addOnVariant.map((addon) => (
                 <div key={addon.variant_uuid} className="flex items-start justify-between">
-                  <p className="text-s-regular w-3/4 text-neutral-90 line-clamp-1">{`${addon.addOnName} ${addon.variant_name}`}</p>
+                  <p className="w-3/4 text-s-regular text-neutral-90 line-clamp-1">{`${addon.addOnName} ${addon.variant_name}`}</p>
                 </div>
               ))}
             </div>
@@ -105,23 +105,23 @@ const PagesBill: React.FC = () => {
 
         <div className="mt-6 flex flex-col gap-2">
           <p className="text-m-semibold">Payment Details</p>
-          <div className="text-m-medium flex items-center justify-between">
+          <div className="flex items-center justify-between text-m-medium">
             <p>Subtotal</p>
             <p>{toRupiah(subtotal)}</p>
           </div>
-          <div className="text-m-medium flex items-center justify-between">
+          <div className="flex items-center justify-between text-m-medium">
             <p>Discount</p>
             <p>{toRupiah(0)}</p>
           </div>
-          <div className="text-m-medium flex items-center justify-between">
+          <div className="flex items-center justify-between text-m-medium">
             <p>Service</p>
             <p>{toRupiah(0)}</p>
           </div>
-          <div className="text-m-medium flex items-center justify-between">
+          <div className="flex items-center justify-between text-m-medium">
             <p>Tax 10%</p>
             <p>{toRupiah(0)}</p>
           </div>
-          <div className="text-l-semibold flex items-center justify-between">
+          <div className="flex items-center justify-between text-l-semibold">
             <p>Total</p>
             <p>{toRupiah(subtotal)}</p>
           </div>
