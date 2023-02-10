@@ -7,6 +7,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { Loading } from 'posy-fnb-core'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onEditOrder, onLeaveOrderPage } from 'store/slices/menu'
 import SectionBottomBar from '@/organisms/bottom-bar/item-quantity'
@@ -126,7 +127,11 @@ const PagesMenuDetail: React.FC = () => {
   }, [])
 
   if (loading) {
-    return <div>loading...</div>
+    return (
+      <div className="flex h-screen items-center justify-center overflow-hidden">
+        <Loading size={60} />
+      </div>
+    )
   }
 
   return (

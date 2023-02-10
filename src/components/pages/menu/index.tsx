@@ -20,7 +20,7 @@ const data = [
     category_name: 'Food',
     product: [
       {
-        product_uuid: '76915a37-188c-46a8-a432-dc1112211ef6ad6e',
+        product_uuid: '76915a37-188c-46a8-a432-dc111ef6ad6e',
         product_name: 'Rice + Chicken Crispy Black Pepper sauces ice ',
         product_description: 'lorem ipsum sip dolor amet lorem ilorem ipsum sip dolor amet amet',
         is_favourite: true,
