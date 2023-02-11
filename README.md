@@ -33,7 +33,7 @@
     <img src="public/logo.jpg" alt="Logo" width="220" height="80">
   </a>
 
-  <h3 align="center">Posy Fnb</h3>
+  <h3 align="center">Posy Resto</h3>
 
   <p align="center">
     An awesome qr digital menu

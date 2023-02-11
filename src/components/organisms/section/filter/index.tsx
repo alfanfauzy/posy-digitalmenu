@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
+import useDisclosure from '@/hooks/useDisclosure'
 import useShadowScroll from '@/hooks/shadow-scroll'
 import MoleculesSectionFilterCategory from '@/molecules/section/filter-category'
 import InputSearch from '@/atoms/input/search'
@@ -22,15 +23,13 @@ const listCategories = [
   },
 ]
 
-interface OrganismsSectionFilter {
-  search: string
-  setSearch: (search: string) => void
-  onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
+interface OrganismsSectionFilterProps {
+  menus: any[]
 }
 
-const OrganismsSectionFilter = ({ search, onSearch, setSearch }: OrganismsSectionFilter) => {
+const OrganismsSectionFilter = ({ menus }: OrganismsSectionFilterProps) => {
   const shadow = useShadowScroll()
-  const [openSearch, setOpenSearch] = useState(false)
+  const [openSearch, { open, close }] = useDisclosure({ initialState: false })
 
   return (
     <section
@@ -41,13 +40,7 @@ const OrganismsSectionFilter = ({ search, onSearch, setSearch }: OrganismsSectio
       className="sticky top-0 z-50 mt-2 flex gap-4 bg-white p-4"
     >
       <MoleculesSectionFilterCategory listCategories={listCategories} openSearch={openSearch} />
-      <InputSearch
-        open={openSearch}
-        setOpen={setOpenSearch}
-        value={search}
-        setValue={setSearch}
-        onSearch={onSearch}
-      />
+      <InputSearch isOpen={openSearch} open={open} close={close} menus={menus} />
     </section>
   )
 }

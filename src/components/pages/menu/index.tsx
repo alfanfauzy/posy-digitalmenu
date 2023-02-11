@@ -5,12 +5,11 @@
  */
 
 import dynamic from 'next/dynamic'
-import React, { useState } from 'react'
-import SectionFilteredList from '@/organisms/section/list/filtered-list'
+import React from 'react'
+import { useAppSelector } from 'store/hooks'
 import SectionFilter from '@/organisms/section/filter'
 import SectionList from '@/organisms/section/list'
 import HeaderOutletInfo from '@/molecules/header/outlet-info'
-import { useAppSelector } from 'store/hooks'
 
 const FloatingButton = dynamic(() => import('@/atoms/button/float'), { ssr: false })
 
@@ -191,24 +190,13 @@ const data = [
 
 const PagesMenu: React.FC = () => {
   const { basket } = useAppSelector((state) => state.basket)
-  const [filteredData, setFilteredData] = useState<any[]>([])
-  const [search, setSearch] = useState('')
-
-  const onSetSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const regex = new RegExp(e.target.value, 'i')
-    const newData = data
-      .flatMap((el) => el.product)
-      .filter(({ product_name }) => product_name.match(regex))
-    setFilteredData(newData)
-    setSearch(e.target.value)
-  }
+  const { filteredMenu } = useAppSelector((state) => state.menu)
 
   return (
     <main className="container mx-auto min-h-screen pt-4 pb-28 shadow-md">
       <HeaderOutletInfo />
-      <SectionFilter onSearch={onSetSearch} search={search} setSearch={setSearch} />
-      {search.length > 0 && <SectionFilteredList data={filteredData} />}
-      {!search.length && <SectionList data={data} />}
+      <SectionFilter menus={data} />
+      <SectionList data={data} filteredData={filteredMenu} />
       {basket.length > 0 && <FloatingButton />}
     </main>
   )

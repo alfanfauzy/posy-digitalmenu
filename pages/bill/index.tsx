@@ -5,7 +5,7 @@ import ContainerBill from 'containers/bill'
 const Page = () => (
   <>
     <MetaHeader
-      title="Posy Fnb - Bill"
+      title="Posy Resto - Bill"
       description={SEO.description}
       keywords={SEO.keywords}
       image={SEO.image}

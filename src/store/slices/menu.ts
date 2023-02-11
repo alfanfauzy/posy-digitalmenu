@@ -20,6 +20,7 @@ export interface MenuState {
     addOnVariant: AddOnVariant[]
     notes?: string
   }
+  filteredMenu: any[]
 }
 
 const initialState: MenuState = {
@@ -29,6 +30,7 @@ const initialState: MenuState = {
     quantity: 0,
     addOnVariant: [],
   },
+  filteredMenu: [],
 }
 
 export const MenuSlice = createSlice({
@@ -107,6 +109,18 @@ export const MenuSlice = createSlice({
           break
       }
     },
+    onChangeSearch: (state, action: PayloadAction<{ search: string; menus: any[] }>) => {
+      const { menus, search } = action.payload
+      const regex = new RegExp(search, 'i')
+      const filteredMenu = menus
+        .flatMap((el) => el.product)
+        .filter(({ product_name }) => product_name.match(regex))
+      state.filteredMenu = filteredMenu
+      state.search = search
+    },
+    onClearSearch: (state) => {
+      state.search = ''
+    },
   },
 })
 
@@ -118,6 +132,8 @@ export const {
   onLeaveOrderPage,
   onEditOrder,
   onChangeAddOn,
+  onChangeSearch,
+  onClearSearch,
 } = MenuSlice.actions
 
 export default MenuSlice.reducer

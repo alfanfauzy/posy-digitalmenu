@@ -5,7 +5,7 @@ import ContainerBasket from 'containers/basket'
 const Page = () => (
   <>
     <MetaHeader
-      title="Posy Fnb - Basket"
+      title="Posy Resto - Basket"
       description={SEO.description}
       keywords={SEO.keywords}
       image={SEO.image}

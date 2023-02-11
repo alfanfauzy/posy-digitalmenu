@@ -7,8 +7,7 @@ import menu from './slices/menu'
 const persistConfig = {
   key: 'root',
   version: 1,
-  whiteList: ['basket'],
-  // blacklist: ['menu'],
+  whitelist: ['basket'],
   storage: PersistStorage,
 }
 
