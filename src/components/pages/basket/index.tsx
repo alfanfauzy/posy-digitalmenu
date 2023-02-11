@@ -7,7 +7,7 @@
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { Button } from 'posy-fnb-core'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
 import { useAppSelector } from 'store/hooks'
 import {
@@ -18,6 +18,7 @@ import {
 } from 'utils/common'
 import PencilEdit from 'src/assets/icons/pencilEdit'
 import Info from 'src/assets/icons/info'
+import useDisclosure from '@/hooks/useDisclosure'
 
 const Modal = dynamic(() => import('posy-fnb-core').then((el) => el.Modal), {
   loading: () => <div />,
@@ -26,13 +27,13 @@ const Modal = dynamic(() => import('posy-fnb-core').then((el) => el.Modal), {
 const PagesBasket: React.FC = () => {
   const router = useRouter()
   const { basket } = useAppSelector((state) => state.basket)
-  const [open, setOpen] = useState(false)
+  const [isOpen, { open, close }] = useDisclosure({ initialState: false })
   const subtotal = useMemo(() => calculateTotal(basket), [basket])
 
   const goBack = () => router.push('/menu')
 
   const handleConfirm = () => {
-    setOpen(false)
+    close()
     router.push('/bill')
   }
 
@@ -143,7 +144,7 @@ const PagesBasket: React.FC = () => {
             }}
             className="fixed bottom-0 w-full max-w-[576px] rounded-t-2xl bg-neutral-10 px-4 pb-20 pt-6"
           >
-            <Button onClick={() => setOpen(true)} fullWidth>
+            <Button onClick={open} fullWidth>
               Submit Order
             </Button>
           </section>
@@ -151,7 +152,7 @@ const PagesBasket: React.FC = () => {
       )}
 
       {/* molecules */}
-      <Modal open={open} handleClose={() => setOpen(false)}>
+      <Modal open={isOpen} handleClose={close}>
         <section className="flex flex-col items-center justify-center pt-2">
           <Info />
           <div className="mt-4 px-4">
@@ -159,7 +160,7 @@ const PagesBasket: React.FC = () => {
           </div>
           <p className="mt-[10px] text-center text-m-regular">Are you sure you want to proceed?</p>
           <div className="mt-8 flex gap-2">
-            <Button variant="secondary" size="m" onClick={() => setOpen(false)}>
+            <Button variant="secondary" size="m" onClick={close}>
               No
             </Button>
             <Button variant="primary" size="m" onClick={handleConfirm}>
