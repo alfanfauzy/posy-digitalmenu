@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useMemo, useState } from 'react'
+import Highlighter from 'react-highlight-words'
 import { BottomSheet, Button } from 'posy-fnb-core'
 import { calculateQuantity, calculateOrder, toRupiah } from 'utils/common'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
@@ -15,6 +16,7 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const { basket } = useAppSelector((state) => state.basket)
+  const { search } = useAppSelector((state) => state.menu)
   const selected = basket.filter((el) => el.product.product_uuid === product.product_uuid)
 
   const quantity = useMemo(() => calculateQuantity(selected), [selected])
@@ -74,7 +76,12 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
                 selected.length > 0 ? 'text-red-accent' : ''
               }`}
             >
-              {product.product_name}
+              <Highlighter
+                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                searchWords={[search]}
+                autoEscape
+                textToHighlight={product.product_name ? product.product_name.toString() : ''}
+              />
             </p>
             <p className="mt-1 text-m-regular line-clamp-3">{product.product_description}</p>
             <p className="mt-2 text-l-medium">
