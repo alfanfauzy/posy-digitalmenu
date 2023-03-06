@@ -12,6 +12,7 @@ export type AddOnVariant = {
   variant_uuid: string
   price: number
 }
+
 export interface MenuState {
   search: string
   category: { label: string; value: string }
@@ -41,8 +42,6 @@ export const MenuSlice = createSlice({
       state.category = action.payload
     },
     onChangeNotes: (state, action: PayloadAction<string>) => {
-      state.orderForm.notes = action.payload
-      state.orderForm.notes = action.payload
       state.orderForm.notes = action.payload
     },
     onChangeQuantity: (

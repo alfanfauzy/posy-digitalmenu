@@ -71,10 +71,16 @@ const PagesBasket: React.FC = () => {
                   <p className="mr-2 text-l-regular">x{item.quantity}</p>
                   <p className="flex-1 text-l-regular">{item.product.product_name}</p>
                   <div className="flex flex-col items-end">
-                    <p className="text-l-regular">{toRupiah(calculateOrder(item) || 0)}</p>
-                    <p className="text-s-regular text-neutral-60 line-through">
-                      {toRupiah(calculateOrderBeforeDiscount(item) || 0)}
+                    <p className="text-l-regular">
+                      {item.product.price_after_discount
+                        ? toRupiah(calculateOrder(item) || 0)
+                        : toRupiah(calculateOrderBeforeDiscount(item) || 0)}
                     </p>
+                    {item.product.price_after_discount && (
+                      <p className="text-s-regular text-neutral-60 line-through">
+                        {toRupiah(calculateOrderBeforeDiscount(item) || 0)}
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div id="addon" className="mt-2 ml-6 flex flex-col gap-1">

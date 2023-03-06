@@ -1,13 +1,17 @@
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useMemo, useState } from 'react'
 import Highlighter from 'react-highlight-words'
-import { BottomSheet, Button } from 'posy-fnb-core'
+import { Button } from 'posy-fnb-core'
 import { calculateQuantity, calculateOrder, toRupiah } from 'utils/common'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onChangeQuantity } from 'store/slices/menu'
 import ImageMenu from '@/molecules/image/menu'
 import type { Product } from '@/types/product'
 
+const BottomSheet = dynamic(() => import('posy-fnb-core').then((el) => el.BottomSheet), {
+  loading: () => <div />,
+})
 interface MoleculesCardMenuListProps {
   product: Product
 }

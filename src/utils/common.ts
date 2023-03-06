@@ -1,4 +1,4 @@
-import { BasketItem } from 'store/slices/basket'
+import type { BasketItem } from 'store/slices/basket'
 
 export const toRupiah = (number: number | bigint | string) =>
   new Intl.NumberFormat('en-US', {
