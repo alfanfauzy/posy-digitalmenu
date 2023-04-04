@@ -4,10 +4,10 @@ import { useInView } from 'react-intersection-observer'
 import { onChangeCategory } from 'store/slices/menu'
 import { useAppDispatch } from 'store/hooks'
 import CardMenuList from '@/molecules/card/menu/list'
-import type { Product } from '@/types/product'
+import { ProductMenu } from 'core/domain/product/models'
 
 interface MoleculesSectionListMenuProps {
-  data: { product: Product[]; category_name: string; category_uuid: string }
+  data: ProductMenu
 }
 
 const MoleculesSectionListMenu = ({ data }: MoleculesSectionListMenuProps) => {
@@ -36,7 +36,7 @@ const MoleculesSectionListMenu = ({ data }: MoleculesSectionListMenuProps) => {
       <aside className="mb-2 px-4">
         <p className="text-xxl-semibold">{data.category_name}</p>
       </aside>
-      {data.product.map((product) => (
+      {data.products.map((product) => (
         <CardMenuList key={product.product_name} product={product} />
       ))}
     </section>

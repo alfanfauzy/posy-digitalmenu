@@ -1,0 +1,20 @@
+import { GetProductMenuResponse } from '../types'
+import { AxiosError } from 'axios'
+import { ResponseObj } from 'core/domain/vo/BaseResponse'
+import Get from 'api/get'
+
+export const GetProductMenu = async (id: string): Promise<ResponseObj<GetProductMenuResponse>> => {
+  try {
+    const response = await Get({
+      endpoint: `/api/fnb-product-service/menu/get-product-list`,
+      headers: {
+        'X-Transaction-Uuid': id,
+      },
+    })
+
+    return response
+  } catch (error) {
+    const err = error as AxiosError
+    throw err.response?.data
+  }
+}

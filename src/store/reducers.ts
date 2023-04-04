@@ -3,6 +3,8 @@ import { persistReducer } from 'redux-persist'
 import PersistStorage from 'redux-persist/lib/storage'
 import basket from './slices/basket'
 import menu from './slices/menu'
+import category from './slices/category'
+import product from './slices/product'
 
 const persistConfig = {
   key: 'root',
@@ -16,6 +18,8 @@ const persistedReducer = persistReducer(
   combineReducers({
     basket,
     menu,
+    category,
+    product,
   }),
 )
 
