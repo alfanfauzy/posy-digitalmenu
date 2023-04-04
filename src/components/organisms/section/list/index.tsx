@@ -3,33 +3,30 @@ import { useAppSelector } from 'store/hooks'
 import SectionListRecommendation from '@/molecules/section/list/recommendation'
 import SectionListMenu from '@/molecules/section/list/menu'
 import CardMenuList from '@/molecules/card/menu/list'
-import { Products, ProductsMenu } from 'core/domain/product/models'
 
-interface OrganismsSectionListProps {
-  data: ProductsMenu
-  filteredData: Products
-}
-
-const OrganismsSectionList = ({ data, filteredData }: OrganismsSectionListProps) => {
+const OrganismsSectionList = () => {
   const { search } = useAppSelector((state) => state.menu)
-
-  if (search.length > 0) {
-    return (
-      <div>
-        {filteredData.map((el) => (
-          <CardMenuList key={el.product_name} product={el} />
-        ))}
-      </div>
-    )
-  }
+  const { filteredMenu: filteredData } = useAppSelector((state) => state.menu)
+  const { objs: data } = useAppSelector((state) => state.product)
 
   return (
-    <div>
-      <SectionListRecommendation data={data} />
-      {data.map((el) => (
-        <SectionListMenu data={el} key={el.category_uuid} />
-      ))}
-    </div>
+    <>
+      {search.length > 0 && (
+        <div>
+          {filteredData.map((product) => (
+            <CardMenuList key={product.uuid} product={product} />
+          ))}
+        </div>
+      )}
+      {search.length === 0 && (
+        <div>
+          <SectionListRecommendation data={data} />
+          {data.map((datas) => (
+            <SectionListMenu data={datas} key={datas.category_uuid} />
+          ))}
+        </div>
+      )}
+    </>
   )
 }
 

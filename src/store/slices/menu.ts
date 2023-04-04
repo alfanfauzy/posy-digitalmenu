@@ -4,6 +4,7 @@
  *
  */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Products, ProductsMenu } from 'core/domain/product/models'
 
 export type AddOnVariant = {
   addOnName: string
@@ -21,7 +22,7 @@ export interface MenuState {
     addOnVariant: AddOnVariant[]
     notes?: string
   }
-  filteredMenu: any[]
+  filteredMenu: Products
 }
 
 const initialState: MenuState = {
@@ -108,12 +109,14 @@ export const MenuSlice = createSlice({
           break
       }
     },
-    onChangeSearch: (state, action: PayloadAction<{ search: string; menus: any[] }>) => {
+    onChangeSearch: (state, action: PayloadAction<{ search: string; menus: ProductsMenu }>) => {
       const { menus, search } = action.payload
       const regex = new RegExp(search, 'i')
+
       const filteredMenu = menus
-        .flatMap((el) => el.product)
+        .flatMap((menu) => menu.products)
         .filter(({ product_name }) => product_name.match(regex))
+
       state.filteredMenu = filteredMenu
       state.search = search
     },

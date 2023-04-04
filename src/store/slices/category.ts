@@ -11,11 +11,11 @@ export const CategorySlice = createSlice({
   name: 'category',
   initialState,
   reducers: {
-    categoryList: (state: CategoryState, action: PayloadAction<Categorys | undefined>) => {
+    onChangeCategoryList: (state: CategoryState, action: PayloadAction<Categorys | undefined>) => {
       state.category = action.payload
     },
   },
 })
 
-export const { categoryList } = CategorySlice.actions
+export const { onChangeCategoryList } = CategorySlice.actions
 export default CategorySlice.reducer

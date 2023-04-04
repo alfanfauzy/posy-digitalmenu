@@ -5,13 +5,9 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onChangeSearch, onClearSearch } from 'store/slices/menu'
 import MoleculesSectionFilterCategory from '@/molecules/section/filter-category'
 import InputSearch from '@/atoms/input/search'
-import { ProductsMenu } from 'core/domain/product/models'
 
-interface OrganismsSectionFilterProps {
-  menus: ProductsMenu
-}
-
-const OrganismsSectionFilter = ({ menus }: OrganismsSectionFilterProps) => {
+const OrganismsSectionFilter = () => {
+  const { objs: menus } = useAppSelector((state) => state.product)
   const [listCategories, setListCategories] = useState([
     {
       label: 'All',

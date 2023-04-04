@@ -14,7 +14,7 @@ const AtomsButtonFloating = () => {
   const goToBasket = () => router.push('/basket')
 
   return (
-    <div className="fixed bottom-20 z-30 w-full max-w-[576px] px-4">
+    <div className="fixed bottom-10 z-30 w-full max-w-[576px] px-4">
       <Button onClick={goToBasket} style={{ boxShadow: '0px 6px 24px rgb(0 0 0 / 15%)' }} fullWidth>
         <div className="flex items-center justify-between gap-2">
           <div className="flex flex-1 items-center gap-2">
