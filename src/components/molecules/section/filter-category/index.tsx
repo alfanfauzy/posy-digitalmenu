@@ -4,9 +4,10 @@ import { useRouter } from 'next/router'
 import { DropdownMobile } from 'posy-fnb-core'
 import { onChangeCategory } from 'store/slices/menu'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { Item } from 'core/domain/vo/BaseItem'
 
 interface MoleculesSectionFilterCategoryProps {
-  listCategories: any[] | undefined
+  listCategories: Item[]
   openSearch: boolean
 }
 

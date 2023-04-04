@@ -1,7 +1,7 @@
 import { GetCategoryListResponse } from '../types'
-import { Categorys } from 'core/domain/category/models'
+import { Categories } from 'core/domain/category/models'
 
-export const mapToCategoryModel = (datas: Array<GetCategoryListResponse>): Categorys =>
+export const mapToCategoryModel = (datas: Array<GetCategoryListResponse>): Categories =>
   datas.map((data) => ({
     uuid: data.uuid,
     category_name: data.category_name,

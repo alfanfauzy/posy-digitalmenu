@@ -4,5 +4,5 @@ export type CategoryBased = {
   is_active: boolean
 }
 
-export type Categorys = Array<CategoryBased>
+export type Categories = Array<CategoryBased>
 export type Category = CategoryBased

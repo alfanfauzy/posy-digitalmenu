@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Category, Categorys } from 'core/domain/category/models'
+import { Category, Categories } from 'core/domain/category/models'
 
 export type CategoryState = { category: Array<Category> | undefined }
 
@@ -11,7 +11,7 @@ export const CategorySlice = createSlice({
   name: 'category',
   initialState,
   reducers: {
-    onChangeCategoryList: (state: CategoryState, action: PayloadAction<Categorys | undefined>) => {
+    onChangeCategoryList: (state: CategoryState, action: PayloadAction<Categories | undefined>) => {
       state.category = action.payload
     },
   },
