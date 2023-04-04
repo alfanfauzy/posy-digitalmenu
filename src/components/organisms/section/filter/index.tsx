@@ -1,37 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useDisclosure from '@/hooks/useDisclosure'
 import useShadowScroll from '@/hooks/shadow-scroll'
-import { useAppDispatch } from 'store/hooks'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onChangeSearch, onClearSearch } from 'store/slices/menu'
 import MoleculesSectionFilterCategory from '@/molecules/section/filter-category'
 import InputSearch from '@/atoms/input/search'
-
-const listCategories = [
-  {
-    label: 'All',
-    value: 'all',
-  },
-  {
-    label: 'Food',
-    value: 'food',
-  },
-  {
-    label: 'Drinks',
-    value: 'drinks',
-  },
-  {
-    label: 'Dessert',
-    value: 'dessert',
-  },
-]
+import { ProductsMenu } from 'core/domain/product/models'
 
 interface OrganismsSectionFilterProps {
-  menus: any[]
+  menus: ProductsMenu
 }
 
 const OrganismsSectionFilter = ({ menus }: OrganismsSectionFilterProps) => {
+  const [listCategories, setListCategories] = useState([
+    {
+      label: 'All',
+      value: 'all',
+    },
+  ])
   const dispatch = useAppDispatch()
+  const { category } = useAppSelector((state) => state.category)
   const shadow = useShadowScroll()
+
   const [openSearch, { open, close }] = useDisclosure({ initialState: false })
 
   const onClear = () => {
@@ -42,6 +32,17 @@ const OrganismsSectionFilter = ({ menus }: OrganismsSectionFilterProps) => {
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(onChangeSearch({ search: e.target.value, menus }))
   }
+
+  useEffect(() => {
+    if (category) {
+      const convertCategory = category?.map((cat) => ({
+        label: cat.category_name,
+        value: cat.category_name.toLowerCase(),
+      }))
+
+      setListCategories((prevState) => [...prevState, ...convertCategory])
+    }
+  }, [category])
 
   return (
     <section

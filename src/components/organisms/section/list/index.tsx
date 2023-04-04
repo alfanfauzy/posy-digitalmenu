@@ -3,15 +3,11 @@ import { useAppSelector } from 'store/hooks'
 import SectionListRecommendation from '@/molecules/section/list/recommendation'
 import SectionListMenu from '@/molecules/section/list/menu'
 import CardMenuList from '@/molecules/card/menu/list'
-import type { Product } from '@/types/product'
+import { Products, ProductsMenu } from 'core/domain/product/models'
 
 interface OrganismsSectionListProps {
-  data: {
-    category_name: string
-    category_uuid: string
-    product: Product[]
-  }[]
-  filteredData: Product[]
+  data: ProductsMenu
+  filteredData: Products
 }
 
 const OrganismsSectionList = ({ data, filteredData }: OrganismsSectionListProps) => {
@@ -29,7 +25,7 @@ const OrganismsSectionList = ({ data, filteredData }: OrganismsSectionListProps)
 
   return (
     <div>
-      <SectionListRecommendation />
+      <SectionListRecommendation data={data} />
       {data.map((el) => (
         <SectionListMenu data={el} key={el.category_uuid} />
       ))}

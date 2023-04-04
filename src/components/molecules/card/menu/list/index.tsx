@@ -3,11 +3,11 @@ import { useRouter } from 'next/router'
 import React, { useMemo, useState } from 'react'
 import Highlighter from 'react-highlight-words'
 import { Button } from 'posy-fnb-core'
-import { calculateQuantity, calculateOrder, toRupiah } from 'utils/common'
+import { calculateQuantity, calculateOrder, toRupiah, renderPrice } from 'utils/common'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onChangeQuantity } from 'store/slices/menu'
 import ImageMenu from '@/molecules/image/menu'
-import type { Product } from '@/types/product'
+import { Product } from 'core/domain/product/models'
 
 const BottomSheet = dynamic(() => import('posy-fnb-core').then((el) => el.BottomSheet), {
   loading: () => <div />,
@@ -21,21 +21,11 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
   const dispatch = useAppDispatch()
   const { basket } = useAppSelector((state) => state.basket)
   const { search } = useAppSelector((state) => state.menu)
-  const selected = basket.filter((el) => el.product.product_uuid === product.product_uuid)
+  const selected = basket.filter((el) => el.product.product_uuid === product.uuid)
 
   const quantity = useMemo(() => calculateQuantity(selected), [selected])
 
   const [openBottomBar, setOpenBottomBar] = useState(false)
-
-  const renderPrice = (
-    available: boolean,
-    price_after_discount: number,
-    price_before_discount: number,
-  ) => {
-    if (!available) return 'Sold out'
-    if (price_after_discount > 0) return toRupiah(price_after_discount)
-    return toRupiah(price_before_discount)
-  }
 
   const handleMakesNewOrder = () => {
     setTimeout(() => {
@@ -89,16 +79,16 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
             </p>
             <p className="mt-1 text-m-regular line-clamp-3">{product.product_description}</p>
             <p className="mt-2 text-l-medium">
-              {renderPrice(
-                product.is_available,
-                product.price_after_discount,
-                product.price_before_discount,
-              )}
+              {renderPrice(product.is_available, product.price_after_discount, product.price)}
             </p>
           </div>
 
           <div className="flex flex-col items-end">
-            <ImageMenu image={{ url: '/menu.png', alt: 'menu' }} size="s" className="mb-4" />
+            <ImageMenu
+              image={{ url: product.product_image_url, alt: 'menu' }}
+              size="s"
+              className="mb-4"
+            />
             <Button variant="secondary" size="xs">
               {`${selected.length > 0 ? `${quantity} item${quantity > 1 ? 's' : ''}` : 'Add'}`}
             </Button>

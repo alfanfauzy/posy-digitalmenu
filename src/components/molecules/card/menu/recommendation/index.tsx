@@ -2,17 +2,19 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { Button } from 'posy-fnb-core'
 import ImageMenu from '@/molecules/image/menu'
+import { Product } from 'core/domain/product/models'
+import { renderPrice, toRupiah } from 'utils/common'
 
 interface MoleculesCardMenuRecommendationProps {
-  soldOut?: boolean
+  data: Product
 }
 
-const MoleculesCardMenuRecommendation = ({ soldOut }: MoleculesCardMenuRecommendationProps) => {
+const MoleculesCardMenuRecommendation = ({ data }: MoleculesCardMenuRecommendationProps) => {
   const router = useRouter()
 
   return (
     <div className="relative">
-      {soldOut && (
+      {!data.is_available && (
         <div className="absolute z-10 flex h-full w-full items-center justify-center bg-neutral-10 bg-opacity-70 pb-28">
           <p className="text-center text-xxl-bold text-neutral-100">Sold out</p>
         </div>
@@ -20,18 +22,27 @@ const MoleculesCardMenuRecommendation = ({ soldOut }: MoleculesCardMenuRecommend
       <div>
         <ImageMenu
           onClick={() => router.push('/menu/1')}
-          label="Discount"
-          timeLabel="in 15 min"
-          isRecommended
-          image={{ url: '/menu.png', alt: 'menu' }}
-          // image={{ url: `data:image/jpeg;base64,${data}`, alt: 'menu' }}
+          label={data.is_discount ? 'Discount' : undefined}
+          timeLabel={`in ${data.cooking_duration} min`}
+          isRecommended={data.is_favourite}
+          image={{ url: data.product_image_url, alt: 'menu' }}
         />
 
         <div className="mt-1">
-          <p className="text-m-semibold">Fried Cap Cay</p>
+          <p className="text-m-semibold">{data.product_name}</p>
           <div className="mt-1 flex items-center gap-1">
-            <p className="text-l-medium">30.000</p>
-            <p className="text-s-medium text-neutral-80 line-through">50.000</p>
+            {data.is_discount ? (
+              <>
+                <p className="text-l-medium">
+                  {renderPrice(data.is_available, data.price_after_discount, data.price)}
+                </p>
+                <p className="text-s-medium text-neutral-80 line-through">{toRupiah(data.price)}</p>
+              </>
+            ) : (
+              <p>
+                <p className="text-l-medium">{toRupiah(data.price)}</p>
+              </p>
+            )}
           </div>
         </div>
 

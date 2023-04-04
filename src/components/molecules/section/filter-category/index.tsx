@@ -6,7 +6,7 @@ import { onChangeCategory } from 'store/slices/menu'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 
 interface MoleculesSectionFilterCategoryProps {
-  listCategories: any[]
+  listCategories: any[] | undefined
   openSearch: boolean
 }
 

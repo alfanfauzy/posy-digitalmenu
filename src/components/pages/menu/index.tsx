@@ -191,12 +191,13 @@ const data = [
 const PagesMenu: React.FC = () => {
   const { basket } = useAppSelector((state) => state.basket)
   const { filteredMenu } = useAppSelector((state) => state.menu)
+  const { objs: product } = useAppSelector((state) => state.product)
 
   return (
     <main className="container mx-auto min-h-screen pt-4 pb-28 shadow-md">
       <HeaderOutletInfo />
-      <SectionFilter menus={data} />
-      <SectionList data={data} filteredData={filteredMenu} />
+      <SectionFilter menus={product} />
+      <SectionList data={product} filteredData={filteredMenu} />
       {basket.length > 0 && <FloatingButton />}
     </main>
   )

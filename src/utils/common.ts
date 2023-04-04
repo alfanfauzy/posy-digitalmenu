@@ -26,3 +26,13 @@ export const calculateOrder = (el: BasketItem) =>
 
 export const calculateOrderBeforeDiscount = (el: BasketItem) =>
   (calculateAddOn(el.addOnVariant) + el.product.price_before_discount) * el.quantity
+
+export const renderPrice = (
+  available: boolean,
+  price_after_discount: number,
+  price_before_discount: number,
+) => {
+  if (!available) return 'Sold out'
+  if (price_after_discount > 0) return toRupiah(price_after_discount)
+  return toRupiah(price_before_discount)
+}
