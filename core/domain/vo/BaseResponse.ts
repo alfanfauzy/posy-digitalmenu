@@ -8,7 +8,7 @@ export type Response<TData = unknown> = {
 }
 
 export type DataObj<TData = unknown> = {
-  obj: Array<TData>
+  objs: Array<TData>
 }
 
 export type ResultQuery<TData = unknown, TError = unknown> = Omit<

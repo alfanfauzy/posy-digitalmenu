@@ -3,7 +3,9 @@ import { GetCategoryListResponse } from '../types'
 import { AxiosError } from 'axios'
 import Get from 'api/get'
 
-export const GetCategory = async (id: string): Promise<Response<GetCategoryListResponse>> => {
+export const GetCategory = async (
+  id: string,
+): Promise<Response<Array<GetCategoryListResponse>>> => {
   try {
     const response = await Get({
       endpoint: `/api/fnb-product-service/menu/get-category-list`,

@@ -21,7 +21,7 @@ const OrganismsSectionList = () => {
       {search.length === 0 && (
         <div>
           <SectionListRecommendation data={data} />
-          {data.map((datas) => (
+          {data?.map((datas) => (
             <SectionListMenu data={datas} key={datas.category_uuid} />
           ))}
         </div>

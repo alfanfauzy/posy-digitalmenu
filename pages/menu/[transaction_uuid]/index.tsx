@@ -38,12 +38,12 @@ const Page = ({ transaction_uuid }: PageProps) => {
     ['product/list'],
     async () => {
       const response = await GetProductMenu(transaction_uuid)
-      const getResponseProduct = response.data
+      const getResponseProduct = response.data.objs
       return getResponseProduct
     },
     {
       onSuccess: (data) => {
-        if (data) dispatch(onChangeProductMenu(data.objs))
+        if (data) dispatch(onChangeProductMenu(data))
       },
     },
   )
