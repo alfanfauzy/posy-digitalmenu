@@ -12,7 +12,7 @@ export type AddOnVariant = {
   addOnUuid: string
   variant_name: string
   variant_uuid: string
-  price: number
+  variant_price: number
 }
 
 export interface MenuState {

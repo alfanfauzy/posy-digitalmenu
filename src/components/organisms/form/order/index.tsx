@@ -1,10 +1,9 @@
 import React from 'react'
 import { Textarea } from 'posy-fnb-core'
 import SectionAddon from '@/molecules/section/add-on'
-import { Addon } from '@/types/product'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onChangeNotes } from 'store/slices/menu'
-import { Addons } from 'core/domain/product/models'
+import { Addons } from 'core/domain/addon/model'
 
 interface OrganismsFormOrderProps {
   add_on: Addons

@@ -1,4 +1,5 @@
 import type { BasketItem } from 'store/slices/basket'
+import { AddOnVariant } from 'store/slices/menu'
 
 export const toRupiah = (number: number | bigint | string) =>
   new Intl.NumberFormat('en-US', {
@@ -10,12 +11,12 @@ export const toRupiah = (number: number | bigint | string) =>
     .replaceAll(',', '.')
     .replaceAll('IDR', 'Rp')
 
-export const calculateAddOn = (arr: any[]) =>
-  [...arr].map((el) => el.price).reduce((prev, current) => prev + current, 0)
+export const calculateAddOn = (arr: AddOnVariant[]) =>
+  [...arr].map((el) => el.variant_price).reduce((prev, current) => prev + current, 0)
 
-export const calculateTotal = (arr: BasketItem[]) =>
+export const calculateTotal = (arr: Array<BasketItem>) =>
   [...arr]
-    .map((el) => (calculateAddOn(el.addOnVariant) + el.product.detail.price) * el.quantity)
+    .map((el) => (calculateAddOn(el.addOnVariant) + el.product.detail.price_final) * el.quantity)
     .reduce((prev, current) => prev + current, 0)
 
 export const calculateQuantity = (arr: { quantity: number }[]) =>
@@ -27,7 +28,7 @@ export const calculateOrder = (el: BasketItem) =>
 export const calculateOrderBeforeDiscount = (el: BasketItem) =>
   (calculateAddOn(el.addOnVariant) + el.product.detail.price) * el.quantity
 
-export const calculateDiscount = (arr: BasketItem[]) =>
+export const calculateDiscount = (arr: Array<BasketItem>) =>
   [...arr]
     .map((el) => (calculateAddOn(el.addOnVariant) + el.product.detail.price_discount) * el.quantity)
     .reduce((prev, current) => prev + current, 0)
