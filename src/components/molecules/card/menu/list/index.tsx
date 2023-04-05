@@ -18,6 +18,7 @@ interface MoleculesCardMenuListProps {
 
 const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
   const router = useRouter()
+  const { transaction_uuid } = router.query
   const dispatch = useAppDispatch()
   const { basket } = useAppSelector((state) => state.basket)
   const { search } = useAppSelector((state) => state.menu)
@@ -29,7 +30,7 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
 
   const handleMakesNewOrder = () => {
     setTimeout(() => {
-      router.push('/menu/23')
+      router.push(`/menu/${transaction_uuid}/${product.uuid}`)
     }, 500)
     setOpenBottomBar(false)
     dispatch(onChangeQuantity({ operator: 'plus', value: 1 }))
@@ -46,7 +47,7 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
   const handleClickExisting = (counter: number) => {
     setTimeout(() => {
       router.push({
-        pathname: '/menu/23',
+        pathname: `/menu/${transaction_uuid}`,
         query: { counter },
       })
     }, 300)

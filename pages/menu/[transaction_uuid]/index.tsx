@@ -2,7 +2,6 @@
 import { GetServerSideProps } from 'next'
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { GetProductMenu } from 'core/data/product/sources/GetProductMenuListQuery'
 import MetaHeader from '@/molecules/meta-header'
 import ContainerMenu from 'containers/menu'
 import { SEO } from '@/constants/seo'
@@ -10,33 +9,43 @@ import { GetCategory } from 'core/data/category/sources/GetCategoryQuery'
 import { useAppDispatch } from 'store/hooks'
 import { onChangeCategoryList } from 'store/slices/category'
 import { onChangeProductMenu } from 'store/slices/product'
+import { GetProductMenu } from 'core/data/product/sources/GetProductMenuQuery'
 
 type PageProps = {
-  outlet_id: string
+  transaction_uuid: string
 }
 
-const Page = ({ outlet_id }: PageProps) => {
+const Page = ({ transaction_uuid }: PageProps) => {
   const dispatch = useAppDispatch()
 
   // Use useQuery hook to fetch data client-side
-  const { data: category } = useQuery(['category/list'], async () => {
-    const response = await GetCategory(outlet_id)
-    const getResponseCategory = response.data
-    return getResponseCategory
-  })
+  const { data: category } = useQuery(
+    ['category/list'],
+    async () => {
+      const response = await GetCategory(transaction_uuid)
+      const getResponseCategory = response.data
+      return getResponseCategory
+    },
+    {
+      onSuccess: (data) => {
+        dispatch(onChangeCategoryList(data))
+      },
+    },
+  )
 
-  const { data: product } = useQuery(['product/list'], async () => {
-    const response = await GetProductMenu(outlet_id)
-    const getResponseProduct = response.data
-    return getResponseProduct
-  })
-
-  useEffect(() => {
-    if (category && product) {
-      dispatch(onChangeCategoryList(category))
-      dispatch(onChangeProductMenu(product.objs))
-    }
-  }, [category, product])
+  const { data: product } = useQuery(
+    ['product/list'],
+    async () => {
+      const response = await GetProductMenu(transaction_uuid)
+      const getResponseProduct = response.data
+      return getResponseProduct
+    },
+    {
+      onSuccess: (data) => {
+        dispatch(onChangeProductMenu(data.objs))
+      },
+    },
+  )
 
   return (
     <>
@@ -51,19 +60,18 @@ const Page = ({ outlet_id }: PageProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const queryClient = new QueryClient()
-  const path = req.url as string
-  const outlet_id = path.split('/')[2]
+  const transaction_uuid = query.transaction_uuid as string
 
   const fetchCategory = async () => {
-    const response = await GetCategory(outlet_id)
+    const response = await GetCategory(transaction_uuid)
     const dataCategory = response.data
     return dataCategory
   }
 
   const fetchProduct = async () => {
-    const response = await GetProductMenu(outlet_id)
+    const response = await GetProductMenu(transaction_uuid)
     const dataProduct = response.data
     return dataProduct
   }
@@ -80,7 +88,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
   return {
     props: {
-      outlet_id,
+      transaction_uuid,
       dehydratedState,
     },
   }

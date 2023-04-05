@@ -94,6 +94,7 @@ const PagesMenuDetail: React.FC = () => {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const basket = useAppSelector((state) => state.basket)
+  const productDetail = useAppSelector((state) => state.product.detail)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -136,8 +137,8 @@ const PagesMenuDetail: React.FC = () => {
 
   return (
     <main className="p-4 shadow-md">
-      <CardMenuDetail product={detail} />
-      <FormOrder add_on={detail.addon} />
+      <CardMenuDetail product={productDetail} />
+      <FormOrder add_on={productDetail.addons} />
       <SectionBottomBar product={detail} />
     </main>
   )
