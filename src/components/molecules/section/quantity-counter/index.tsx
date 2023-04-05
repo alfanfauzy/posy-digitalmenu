@@ -4,8 +4,6 @@ import { BiMinus, BiPlus } from 'react-icons/bi'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onChangeQuantity } from 'store/slices/menu'
 
-// interface MoleculesSectionQuantityCounterProps {}
-
 const MoleculesSectionQuantityCounter = () => {
   const dispatch = useAppDispatch()
   const quantity = useAppSelector((state) => state.menu.orderForm.quantity)

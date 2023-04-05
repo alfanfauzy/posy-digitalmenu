@@ -10,6 +10,7 @@ import { useAppDispatch } from 'store/hooks'
 import { onChangeCategoryList } from 'store/slices/category'
 import { onChangeProductMenu } from 'store/slices/product'
 import { GetProductMenu } from 'core/data/product/sources/GetProductMenuQuery'
+import { onChangeTransactionId } from 'store/slices/transaction'
 
 type PageProps = {
   transaction_uuid: string
@@ -28,7 +29,7 @@ const Page = ({ transaction_uuid }: PageProps) => {
     },
     {
       onSuccess: (data) => {
-        dispatch(onChangeCategoryList(data))
+        if (data) dispatch(onChangeCategoryList(data))
       },
     },
   )
@@ -42,10 +43,14 @@ const Page = ({ transaction_uuid }: PageProps) => {
     },
     {
       onSuccess: (data) => {
-        dispatch(onChangeProductMenu(data.objs))
+        if (data) dispatch(onChangeProductMenu(data.objs))
       },
     },
   )
+
+  useEffect(() => {
+    if (transaction_uuid) dispatch(onChangeTransactionId(transaction_uuid))
+  }, [transaction_uuid])
 
   return (
     <>

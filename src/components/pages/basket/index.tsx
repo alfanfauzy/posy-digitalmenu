@@ -11,6 +11,7 @@ import React, { useMemo } from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
 import { useAppSelector } from 'store/hooks'
 import {
+  calculateDiscount,
   calculateOrder,
   calculateOrderBeforeDiscount,
   calculateTotal,
@@ -19,6 +20,8 @@ import {
 import PencilEdit from 'src/assets/icons/pencilEdit'
 import Info from 'src/assets/icons/info'
 import useDisclosure from '@/hooks/useDisclosure'
+import { OrderDetail, OrderParam } from 'core/domain/order/models'
+import { useCreateOrderViewModal } from 'core/view/order/view-modals/CreateOrderViewModel'
 
 const Modal = dynamic(() => import('posy-fnb-core').then((el) => el.Modal), {
   loading: () => <div />,
@@ -27,20 +30,43 @@ const Modal = dynamic(() => import('posy-fnb-core').then((el) => el.Modal), {
 const PagesBasket: React.FC = () => {
   const router = useRouter()
   const { basket } = useAppSelector((state) => state.basket)
+  const { transaction_uuid } = useAppSelector((state) => state.transaction)
   const [isOpen, { open, close }] = useDisclosure({ initialState: false })
   const subtotal = useMemo(() => calculateTotal(basket), [basket])
+  const subdiscount = useMemo(() => calculateDiscount(basket), [basket])
+  const grandTotal = useMemo(() => subtotal - subdiscount, [subtotal, subdiscount])
 
-  const goBack = () => router.push('/menu')
+  const goBack = () => router.push(`/menu/${transaction_uuid}`)
+
+  const { createOrder, isLoading: isLoadingCreate } = useCreateOrderViewModal({
+    onSuccess(data) {
+      if (data) {
+        close()
+        router.push('/bill')
+      }
+    },
+  })
 
   const handleConfirm = () => {
-    close()
-    router.push('/bill')
+    const orderBasket: Array<OrderDetail> = basket.map((data) => ({
+      product_uuid: data.product.detail.product.uuid,
+      qty: data.quantity,
+      order_note: data.notes,
+      addon: data.addOnVariant.map((variant) => ({
+        uuid: variant.addOnUuid,
+        variant_uuids: data.addOnVariant.map((addon) => addon.uuid),
+      })),
+    }))
+
+    const payload: OrderParam = { id: transaction_uuid, payload: { order: orderBasket } }
+
+    createOrder(payload)
   }
 
-  const editOrder = (productId: string, orderId: string) => {
+  const editOrder = (orderId: string) => {
     setTimeout(() => {
       router.push({
-        pathname: `/menu/${productId}`,
+        pathname: `/menu/${transaction_uuid}`,
         query: { counter: orderId },
       })
     }, 100)
@@ -69,14 +95,16 @@ const PagesBasket: React.FC = () => {
               <aside key={item.counter} className="pb-4">
                 <div id="product-info" className="flex justify-between">
                   <p className="mr-2 text-l-regular">x{item.quantity}</p>
-                  <p className="flex-1 text-l-regular">{item.product.product_name}</p>
+                  <p className="flex-1 text-l-regular">
+                    {item.product.detail.product.product_name}
+                  </p>
                   <div className="flex flex-col items-end">
                     <p className="text-l-regular">
-                      {item.product.price_after_discount
+                      {item.product.detail.price_final
                         ? toRupiah(calculateOrder(item) || 0)
                         : toRupiah(calculateOrderBeforeDiscount(item) || 0)}
                     </p>
-                    {item.product.price_after_discount && (
+                    {item.product.detail.is_discount && (
                       <p className="text-s-regular text-neutral-60 line-through">
                         {toRupiah(calculateOrderBeforeDiscount(item) || 0)}
                       </p>
@@ -101,8 +129,8 @@ const PagesBasket: React.FC = () => {
                   <div
                     role="button"
                     tabIndex={0}
-                    onClick={() => editOrder(item.product.product_uuid, item.counter.toString())}
-                    onKeyDown={() => editOrder(item.product.product_uuid, item.counter.toString())}
+                    onClick={() => editOrder(item.counter.toString())}
+                    onKeyDown={() => editOrder(item.counter.toString())}
                     className="flex items-center gap-1.5"
                   >
                     <PencilEdit />
@@ -127,19 +155,11 @@ const PagesBasket: React.FC = () => {
               </div>
               <div className="flex items-center justify-between text-m-medium">
                 <p>Discount</p>
-                <p>{toRupiah(0)}</p>
-              </div>
-              <div className="flex items-center justify-between text-m-medium">
-                <p>Service</p>
-                <p>{toRupiah(0)}</p>
-              </div>
-              <div className="flex items-center justify-between text-m-medium">
-                <p>Tax 10%</p>
-                <p>{toRupiah(0)}</p>
+                <p>{toRupiah(subdiscount)}</p>
               </div>
               <div className="flex items-center justify-between text-l-semibold">
                 <p>Total</p>
-                <p>{toRupiah(subtotal)}</p>
+                <p>{toRupiah(grandTotal)}</p>
               </div>
             </div>
           </section>
@@ -169,7 +189,7 @@ const PagesBasket: React.FC = () => {
             <Button variant="secondary" size="m" onClick={close}>
               No
             </Button>
-            <Button variant="primary" size="m" onClick={handleConfirm}>
+            <Button variant="primary" size="m" onClick={handleConfirm} isLoading={isLoadingCreate}>
               Yes
             </Button>
           </div>

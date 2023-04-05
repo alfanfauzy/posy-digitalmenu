@@ -22,7 +22,7 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
   const dispatch = useAppDispatch()
   const { basket } = useAppSelector((state) => state.basket)
   const { search } = useAppSelector((state) => state.menu)
-  const selected = basket.filter((el) => el.product.product_uuid === product.uuid)
+  const selected = basket.filter((el) => el.product.detail.product.uuid === product.uuid)
 
   const quantity = useMemo(() => calculateQuantity(selected), [selected])
 
@@ -106,13 +106,13 @@ const MoleculesCardMenuList = ({ product }: MoleculesCardMenuListProps) => {
           <div className="mt-4 max-h-[560px] w-full overflow-auto border-t">
             {selected.map((el) => (
               <aside
-                key={el.product.product_uuid}
+                key={el.product.detail.product.uuid}
                 role="presentation"
                 onClick={() => handleClickExisting(el.counter)}
                 className="flex items-center justify-between gap-3 py-4"
               >
                 <div>
-                  <p className="text-m-semibold">{el.product.product_name}</p>
+                  <p className="text-m-semibold">{el.product.detail.product.uuid}</p>
                   {el.addOnVariant.length > 0 && (
                     <p className=" text-m-medium">{`${el.addOnVariant[0].addOnName} : ${el.addOnVariant[0].variant_name}`}</p>
                   )}

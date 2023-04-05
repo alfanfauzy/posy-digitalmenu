@@ -1,10 +1,10 @@
 import React from 'react'
 import SectionQuantityCounter from '@/molecules/section/quantity-counter'
 import SectionAddToBasket from '@/molecules/section/add-to-basket'
-import type { Product } from '@/types/product'
+import { ProductDetail } from 'core/domain/product/models'
 
 interface OrganismsBottomBarItemQuantityProps {
-  product: Product
+  product: ProductDetail
 }
 
 const OrganismsBottomBarItemQuantity = ({ product }: OrganismsBottomBarItemQuantityProps) => (

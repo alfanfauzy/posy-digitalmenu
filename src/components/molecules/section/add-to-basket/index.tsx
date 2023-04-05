@@ -5,10 +5,10 @@ import { Button } from 'posy-fnb-core'
 import { calculateAddOn, toRupiah } from 'utils/common'
 import { addToBasket, dropFromBasket, updateBasket } from 'store/slices/basket'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import type { Product } from '@/types/product'
+import { ProductDetail } from 'core/domain/product/models'
 
 interface MoleculesSectionAddToBasketProps {
-  product: Product
+  product: ProductDetail
 }
 
 const MoleculesSectionAddToBasket = ({ product }: MoleculesSectionAddToBasketProps) => {
@@ -19,8 +19,10 @@ const MoleculesSectionAddToBasket = ({ product }: MoleculesSectionAddToBasketPro
   const addOnVariant = useAppSelector((state) => state.menu.orderForm.addOnVariant)
   const notes = useAppSelector((state) => state.menu.orderForm.notes)
 
+  const price = product.detail.is_discount ? product.detail.price_final : product.detail.price
+
   const total = useMemo(
-    () => (calculateAddOn(addOnVariant) + product.price_after_discount) * quantity,
+    () => (calculateAddOn(addOnVariant) + price) * quantity,
     [quantity, addOnVariant],
   )
 

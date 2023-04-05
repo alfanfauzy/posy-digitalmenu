@@ -20,10 +20,11 @@ import User from 'src/assets/icons/user'
 const PagesBill: React.FC = () => {
   const router = useRouter()
   const { basket } = useAppSelector((state) => state.basket)
+  const { transaction_uuid } = useAppSelector((state) => state.transaction)
 
   const subtotal = useMemo(() => calculateTotal(basket), [basket])
 
-  const goBack = () => router.push('/menu')
+  const goBack = () => router.push(`/menu/${transaction_uuid}`)
 
   return (
     <main className="container mx-auto min-h-screen pt-4 pb-40 shadow-md">
@@ -71,7 +72,9 @@ const PagesBill: React.FC = () => {
               <aside key={item.counter} className="pb-4">
                 <div id="product-info" className="flex justify-between">
                   <p className="mr-2 text-l-regular">x{item.quantity}</p>
-                  <p className="flex-1 text-l-regular">{item.product.product_name}</p>
+                  <p className="flex-1 text-l-regular">
+                    {item.product.detail.product.product_name}
+                  </p>
                   <div className="flex flex-col items-end">
                     <p className="text-l-regular">{toRupiah(calculateOrder(item) || 0)}</p>
                     <p className="text-s-regular text-neutral-60 line-through">

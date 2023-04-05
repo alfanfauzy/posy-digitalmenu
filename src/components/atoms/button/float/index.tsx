@@ -6,12 +6,13 @@ import { useAppSelector } from 'store/hooks'
 
 const AtomsButtonFloating = () => {
   const router = useRouter()
+
   const { basket } = useAppSelector((state) => state.basket)
 
   const totalQuantity = useMemo(() => calculateQuantity(basket), [basket])
   const totalPrice = useMemo(() => calculateTotal(basket), [basket])
 
-  const goToBasket = () => router.push('/basket')
+  const goToBasket = () => router.push(`/basket`)
 
   return (
     <div className="fixed bottom-10 z-30 w-full max-w-[576px] px-4">
