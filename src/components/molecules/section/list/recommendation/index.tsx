@@ -15,7 +15,7 @@ const MoleculesSectionListRecommendation = ({ data }: MoleculesSectionListRecomm
     const temp: Products = []
 
     data
-      .map((prod) => prod)
+      ?.map((prod) => prod)
       .filter((pro) =>
         pro.products.map((prods) => {
           if (prods.is_favourite) {

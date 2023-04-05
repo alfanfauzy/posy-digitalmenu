@@ -6,10 +6,10 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AddOnVariant } from './menu'
-import type { Product } from '@/types/product'
+import { ProductDetail } from 'core/domain/product/models'
 
 export interface BasketItem {
-  product: Product
+  product: ProductDetail
   quantity: number
   addOnVariant: AddOnVariant[]
   counter: number
@@ -37,7 +37,7 @@ export const BasketSlice = createSlice({
       if (
         prevBasket.find(
           (el) =>
-            el.product.product_uuid === newBasketItem.product.product_uuid &&
+            el.product.detail.product.uuid === newBasketItem.product.detail.product.uuid &&
             el.counter === newBasketItem.counter,
         )
       ) {

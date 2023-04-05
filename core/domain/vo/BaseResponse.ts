@@ -1,26 +1,14 @@
-import { UseQueryResult } from '@tanstack/react-query'
+import { UseMutationResult, UseQueryResult } from '@tanstack/react-query'
 
 export type Response<TData = unknown> = {
-  code: number
-  data: Array<TData>
-  message: string
-  more_info: string
-}
-
-export type ResponseObj<TData = unknown> = {
-  code: number
-  data: {
-    objs: Array<TData>
-  }
-  message: string
-  more_info: string
-}
-
-export type ResponseDetail<TData = unknown> = {
   code: number
   data: TData
   message: string
   more_info: string
+}
+
+export type DataObj<TData = unknown> = {
+  objs: Array<TData>
 }
 
 export type ResultQuery<TData = unknown, TError = unknown> = Omit<
@@ -29,3 +17,10 @@ export type ResultQuery<TData = unknown, TError = unknown> = Omit<
     data: TData
   }
 >
+
+export type ResultMutation<TData = unknown, TError = unknown, TVariables = unknown> = Omit<
+  UseMutationResult<unknown, TError, TVariables>,
+  'data' | 'mutate' | 'mutateAsync'
+> & {
+  data: TData
+}

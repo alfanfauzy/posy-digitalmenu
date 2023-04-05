@@ -15,13 +15,13 @@ const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
 
   const handleChangeAddon = (
     type: 'radio' | 'checkbox',
-    variant: any,
+    variants: any,
     addOn: { addOnName: string; addOnUuid: string },
   ) =>
     dispatch(
       onChangeAddOn({
         type,
-        addOnVariant: { addOnName: addOn.addOnName, addOnUuid: addOn.addOnUuid, ...variant },
+        addOnVariant: { addOnName: addOn.addOnName, addOnUuid: addOn.addOnUuid, ...variants },
       }),
     )
 
@@ -37,49 +37,48 @@ const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
           </div>
           <section className="border-b">
             <aside className="pb-4 text-neutral-100">
-              {addon.variants.map((variant, variant_idx) =>
+              {addon.variants.map((variants, variant_idx) =>
                 addon.can_choose_multiple ? (
-                  <div key={variant.uuid}>
+                  <div key={variants.uuid}>
                     <Checkbox
                       size="m"
-                      value={variant.uuid}
-                      checked={addOnVariant?.some((el) => el.variant_uuid === variant.uuid)}
+                      value={variants.uuid}
+                      checked={addOnVariant?.some((el) => el.uuid === variants.uuid)}
                       onChange={() =>
-                        handleChangeAddon('checkbox', variant, {
+                        handleChangeAddon('checkbox', variants, {
                           addOnName: addon.addon_name,
                           addOnUuid: addon.uuid,
                         })
                       }
                       label={
-                        !variant.variant_price || variant.variant_price === 0
+                        !variants.variant_price || variants.variant_price === 0
                           ? 'Free'
-                          : toRupiah(variant.variant_price)
+                          : toRupiah(variants.variant_price)
                       }
-                      title={variant.variant_name}
+                      title={variants.variant_name}
                     />
                     <div />
                     {addon.variants.length - 1 !== variant_idx && <div className="border-b" />}
                   </div>
                 ) : (
-                  <div key={variant.uuid}>
+                  <div key={variants.uuid}>
                     <Radio
                       selectedValue={
-                        addOnVariant?.find((el) => el.variant_uuid === variant.uuid)
-                          ?.variant_uuid || ''
+                        addOnVariant?.find((el) => el.uuid === variants.uuid)?.uuid ?? ''
                       }
-                      value={variant.uuid}
+                      value={variants.uuid}
                       onChange={() =>
-                        handleChangeAddon('radio', variant, {
+                        handleChangeAddon('radio', variants, {
                           addOnName: addon.addon_name,
                           addOnUuid: addon.uuid,
                         })
                       }
                       label={
-                        !variant.variant_price || variant.variant_price === 0
+                        !variants.variant_price || variants.variant_price === 0
                           ? 'Free'
-                          : toRupiah(variant.variant_price)
+                          : toRupiah(variants.variant_price)
                       }
-                      title={variant.variant_name}
+                      title={variants.variant_name}
                     />
                     {addon.variants.length - 1 !== variant_idx && <div className="border-b" />}
                   </div>

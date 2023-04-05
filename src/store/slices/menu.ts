@@ -7,6 +7,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Products, ProductsMenu } from 'core/domain/product/models'
 
 export type AddOnVariant = {
+  uuid: string
   addOnName: string
   addOnUuid: string
   variant_name: string

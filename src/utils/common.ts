@@ -15,17 +15,22 @@ export const calculateAddOn = (arr: any[]) =>
 
 export const calculateTotal = (arr: BasketItem[]) =>
   [...arr]
-    .map((el) => (calculateAddOn(el.addOnVariant) + el.product.price_after_discount) * el.quantity)
+    .map((el) => (calculateAddOn(el.addOnVariant) + el.product.detail.price) * el.quantity)
     .reduce((prev, current) => prev + current, 0)
 
 export const calculateQuantity = (arr: { quantity: number }[]) =>
   [...arr].map((el) => el.quantity).reduce((prev, current) => prev + current, 0)
 
 export const calculateOrder = (el: BasketItem) =>
-  (calculateAddOn(el.addOnVariant) + el.product.price_after_discount) * el.quantity
+  (calculateAddOn(el.addOnVariant) + el.product.detail.price_final) * el.quantity
 
 export const calculateOrderBeforeDiscount = (el: BasketItem) =>
-  (calculateAddOn(el.addOnVariant) + el.product.price_before_discount) * el.quantity
+  (calculateAddOn(el.addOnVariant) + el.product.detail.price) * el.quantity
+
+export const calculateDiscount = (arr: BasketItem[]) =>
+  [...arr]
+    .map((el) => (calculateAddOn(el.addOnVariant) + el.product.detail.price_discount) * el.quantity)
+    .reduce((prev, current) => prev + current, 0)
 
 export const renderPrice = (
   available: boolean,
