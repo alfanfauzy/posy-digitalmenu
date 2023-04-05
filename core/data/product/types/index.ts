@@ -1,5 +1,6 @@
-import { Addons, Product } from 'core/domain/product/models'
+import { Product } from 'core/domain/product/models'
 import { GetCategoryListResponse } from 'core/data/category/types'
+import { Addons } from 'core/domain/addon/model'
 
 export type GetProductMenuResponse = {
   category_uuid: string

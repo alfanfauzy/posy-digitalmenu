@@ -3,7 +3,7 @@ import { Checkbox, Radio } from 'posy-fnb-core'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onChangeAddOn } from 'store/slices/menu'
 import { toRupiah } from 'utils/common'
-import { Addons } from 'core/domain/product/models'
+import { Addons } from 'core/domain/addon/model'
 
 interface MoleculesSectionAddonProps {
   add_on: Addons

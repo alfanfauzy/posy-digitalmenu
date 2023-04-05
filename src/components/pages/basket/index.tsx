@@ -36,7 +36,7 @@ const PagesBasket: React.FC = () => {
   const subdiscount = useMemo(() => calculateDiscount(basket), [basket])
   const grandTotal = useMemo(() => subtotal - subdiscount, [subtotal, subdiscount])
 
-  const goBack = () => router.push(`/menu/${transaction_uuid}`)
+  const goBack = () => router.back()
 
   const { createOrder, isLoading: isLoadingCreate } = useCreateOrderViewModal({
     onSuccess(data) {
