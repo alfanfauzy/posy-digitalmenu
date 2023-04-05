@@ -11,6 +11,9 @@ interface MoleculesCardMenuRecommendationProps {
 
 const MoleculesCardMenuRecommendation = ({ data }: MoleculesCardMenuRecommendationProps) => {
   const router = useRouter()
+  const { transaction_uuid } = router.query
+
+  const { uuid } = data
 
   return (
     <div className="relative">
@@ -21,7 +24,7 @@ const MoleculesCardMenuRecommendation = ({ data }: MoleculesCardMenuRecommendati
       )}
       <div>
         <ImageMenu
-          onClick={() => router.push('/menu/1')}
+          onClick={() => router.push(`/menu/${transaction_uuid}/${uuid}/`)}
           label={data.is_discount ? 'Discount' : undefined}
           timeLabel={`in ${data.cooking_duration} min`}
           isRecommended={data.is_favourite}
@@ -47,7 +50,12 @@ const MoleculesCardMenuRecommendation = ({ data }: MoleculesCardMenuRecommendati
         </div>
 
         <div className="mt-2">
-          <Button variant="secondary" size="m" fullWidth>
+          <Button
+            variant="secondary"
+            size="m"
+            fullWidth
+            onClick={() => router.push(`/menu/${transaction_uuid}/${uuid}`)}
+          >
             Add
           </Button>
         </div>

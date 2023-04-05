@@ -1,28 +1,22 @@
 import React from 'react'
 import ImageMenu from '@/molecules/image/menu'
 import { toRupiah } from 'utils/common'
-import { Product } from '@/types/product'
+import { ProductDetail } from 'core/domain/product/models'
 
 interface MoleculesCardMenuDetailProps {
-  product: Product
+  product: ProductDetail
 }
 
 const MoleculesCardMenuDetail = ({ product }: MoleculesCardMenuDetailProps) => {
-  const {
-    product_name,
-    product_description,
-    price_after_discount,
-    price_before_discount,
-    is_favourite,
-    cooking_duration,
-    is_discount,
-    // product_thumbnail,
-  } = product
+  const { is_favourite, cooking_duration, is_discount, price_after_discount, price } =
+    product.detail
+
+  const { product_name, product_description, product_image_url } = product.detail.product
 
   return (
     <article>
       <ImageMenu
-        image={{ url: '/menu.png', alt: product_name }}
+        image={{ url: product_image_url, alt: product_name }}
         timeLabel={`in ${cooking_duration} min`}
         label={is_discount ? 'Discount' : ''}
         size="l"
@@ -33,9 +27,9 @@ const MoleculesCardMenuDetail = ({ product }: MoleculesCardMenuDetailProps) => {
           <p className="text-xxl-bold">{product_name}</p>
           <div className="flex items-center gap-2">
             <p className="text-xxl-regular">{toRupiah(price_after_discount)}</p>
-            <p className="text-xxl-regular text-neutral-70 line-through">
-              {toRupiah(price_before_discount)}
-            </p>
+            {is_discount && (
+              <p className="text-xxl-regular text-neutral-70 line-through">{toRupiah(price)}</p>
+            )}
           </div>
           <p className="mt-0.5 text-m-regular">{product_description}</p>
         </div>

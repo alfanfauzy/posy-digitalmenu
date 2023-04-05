@@ -4,9 +4,10 @@ import SectionAddon from '@/molecules/section/add-on'
 import { Addon } from '@/types/product'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onChangeNotes } from 'store/slices/menu'
+import { Addons } from 'core/domain/product/models'
 
 interface OrganismsFormOrderProps {
-  add_on: Addon[]
+  add_on: Addons
 }
 
 const OrganismsFormOrder = ({ add_on }: OrganismsFormOrderProps) => {

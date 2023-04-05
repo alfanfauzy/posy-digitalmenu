@@ -36,7 +36,7 @@ const OrganismsSectionFilter = () => {
         value: cat.category_name.toLowerCase(),
       }))
 
-      setListCategories((prevState) => [...prevState, ...convertCategory])
+      setListCategories([...convertCategory])
     }
   }, [category])
 

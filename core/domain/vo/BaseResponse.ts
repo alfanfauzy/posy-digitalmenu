@@ -16,6 +16,13 @@ export type ResponseObj<TData = unknown> = {
   more_info: string
 }
 
+export type ResponseDetail<TData = unknown> = {
+  code: number
+  data: TData
+  message: string
+  more_info: string
+}
+
 export type ResultQuery<TData = unknown, TError = unknown> = Omit<
   UseQueryResult<unknown, TError>,
   'data' & {

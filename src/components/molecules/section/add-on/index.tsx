@@ -3,10 +3,10 @@ import { Checkbox, Radio } from 'posy-fnb-core'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { onChangeAddOn } from 'store/slices/menu'
 import { toRupiah } from 'utils/common'
-import type { Addon } from '@/types/product'
+import { Addons } from 'core/domain/product/models'
 
 interface MoleculesSectionAddonProps {
-  add_on: Addon[]
+  add_on: Addons
 }
 
 const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
@@ -27,51 +27,61 @@ const MoleculesSectionAddon = ({ add_on }: MoleculesSectionAddonProps) => {
 
   return (
     <article>
-      {add_on.map((addon) => (
+      {add_on.map((addon, id) => (
         <aside key={addon.addon_name}>
           <div className="mt-4">
             <p className="text-xl-semibold">{addon.addon_name}</p>
-            <p className="text-m-regular">Required | select 1</p>
+            <p className="text-m-regular">
+              {!addon.is_optional && `Required | `}Select {id + 1}
+            </p>
           </div>
           <section className="border-b">
             <aside className="pb-4 text-neutral-100">
-              {addon.variant.map((variant, variant_idx) =>
-                addon.is_multiple ? (
-                  <div key={variant.variant_uuid}>
+              {addon.variants.map((variant, variant_idx) =>
+                addon.can_choose_multiple ? (
+                  <div key={variant.uuid}>
                     <Checkbox
                       size="m"
-                      value={variant.variant_uuid}
-                      checked={addOnVariant?.some((el) => el.variant_uuid === variant.variant_uuid)}
+                      value={variant.uuid}
+                      checked={addOnVariant?.some((el) => el.variant_uuid === variant.uuid)}
                       onChange={() =>
                         handleChangeAddon('checkbox', variant, {
                           addOnName: addon.addon_name,
-                          addOnUuid: addon.addon_uuid,
+                          addOnUuid: addon.uuid,
                         })
                       }
-                      label={variant.price === 0 ? 'Free' : toRupiah(variant.price)}
+                      label={
+                        !variant.variant_price || variant.variant_price === 0
+                          ? 'Free'
+                          : toRupiah(variant.variant_price)
+                      }
                       title={variant.variant_name}
                     />
                     <div />
-                    {addon.variant.length - 1 !== variant_idx && <div className="border-b" />}
+                    {addon.variants.length - 1 !== variant_idx && <div className="border-b" />}
                   </div>
                 ) : (
-                  <div key={variant.variant_uuid}>
+                  <div key={variant.uuid}>
                     <Radio
                       selectedValue={
-                        addOnVariant?.find((el) => el.variant_uuid === variant.variant_uuid)
+                        addOnVariant?.find((el) => el.variant_uuid === variant.uuid)
                           ?.variant_uuid || ''
                       }
-                      value={variant.variant_uuid}
+                      value={variant.uuid}
                       onChange={() =>
                         handleChangeAddon('radio', variant, {
                           addOnName: addon.addon_name,
-                          addOnUuid: addon.addon_uuid,
+                          addOnUuid: addon.uuid,
                         })
                       }
-                      label={variant.price === 0 ? 'Free' : toRupiah(variant.price)}
+                      label={
+                        !variant.variant_price || variant.variant_price === 0
+                          ? 'Free'
+                          : toRupiah(variant.variant_price)
+                      }
                       title={variant.variant_name}
                     />
-                    {addon.variant.length - 1 !== variant_idx && <div className="border-b" />}
+                    {addon.variants.length - 1 !== variant_idx && <div className="border-b" />}
                   </div>
                 ),
               )}

@@ -1,4 +1,1 @@
-import { ProductsMenu } from '../models'
-import { ResultQuery } from 'core/domain/vo/BaseResponse'
-
-export type GetProductMenuListResult = ResultQuery<ProductsMenu> | undefined
+export type GetProductDetailParams = { transaction_uuid: string; product_uuid: string }
