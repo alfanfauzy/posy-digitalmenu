@@ -31,6 +31,9 @@ export const BasketSlice = createSlice({
     addToBasket: (state, action: PayloadAction<BasketItem>) => {
       state.basket.push(action.payload)
     },
+    clearBasket: (state, action: PayloadAction<BasketState>) => {
+      state.basket = []
+    },
     updateBasket: (state, action: PayloadAction<BasketItem>) => {
       const prevBasket = state.basket
       const newBasketItem = action.payload
@@ -90,7 +93,13 @@ export const BasketSlice = createSlice({
 })
 
 // export the action from the slice
-export const { addToBasket, updateBasket, dropFromBasket, onChangeQuantity, onChangeNotes } =
-  BasketSlice.actions
+export const {
+  addToBasket,
+  updateBasket,
+  dropFromBasket,
+  onChangeQuantity,
+  onChangeNotes,
+  clearBasket,
+} = BasketSlice.actions
 
 export default BasketSlice.reducer
