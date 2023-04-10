@@ -139,7 +139,7 @@ _Below is an example of how you can instruct your audience on installing and set
    ```
 3. Enter your configuration project in `.env.local`, in a module you will work on
    ```js
-   NEXT_PUBLIC_API = 'ENTER YOUR SECRET KEY'
+   NEXT_PUBLIC_API = 'ENTER YOUR SECRET KEY';
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

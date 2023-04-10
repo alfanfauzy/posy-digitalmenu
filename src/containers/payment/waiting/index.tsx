@@ -4,16 +4,16 @@
  *
  */
 
-import React from 'react'
-import { GetPaymentSummaryResponse } from 'core/data/payment/types'
-import PagesWaitingPayment from '@/pages/payment/waiting'
+import PagesWaitingPayment from '@/pages/payment/waiting';
+import {GetPaymentSummaryResponse} from 'core/data/payment/types';
+import React from 'react';
 
 type ContainerWaitingPaymentProps = {
-  paymentSummary: GetPaymentSummaryResponse | undefined
-}
+	paymentSummary: GetPaymentSummaryResponse | undefined;
+};
 
-const ContainerWaitingPayment = ({ paymentSummary }: ContainerWaitingPaymentProps) => (
-  <PagesWaitingPayment paymentSummary={paymentSummary} />
-)
+const ContainerWaitingPayment = ({paymentSummary}: ContainerWaitingPaymentProps) => (
+	<PagesWaitingPayment paymentSummary={paymentSummary} />
+);
 
-export default ContainerWaitingPayment
+export default ContainerWaitingPayment;

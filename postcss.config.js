@@ -1,8 +1,8 @@
 const plugins = {
-  'postcss-import': {},
-  tailwindcss: {},
-  autoprefixer: {},
-}
+	'postcss-import': {},
+	tailwindcss: {},
+	autoprefixer: {},
+};
 
 // if (process.env.NODE_ENV === 'production') {
 //   plugins['@fullhuman/postcss-purgecss'] = {
@@ -21,5 +21,5 @@ const plugins = {
 // }
 
 module.exports = {
-  plugins,
-}
+	plugins,
+};

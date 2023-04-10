@@ -4,9 +4,9 @@
  *
  */
 
-import React from 'react'
-import PagesMenu from '@/pages/menu'
+import PagesMenu from '@/pages/menu';
+import React from 'react';
 
-const ContainerMenu: React.FC = () => <PagesMenu />
+const ContainerMenu: React.FC = () => <PagesMenu />;
 
-export default ContainerMenu
+export default ContainerMenu;

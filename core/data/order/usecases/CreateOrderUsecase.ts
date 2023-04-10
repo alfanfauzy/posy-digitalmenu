@@ -1,18 +1,19 @@
-import { CreateOrderResponse } from '../types'
-import { useCreateOrderMutation } from '../sources/CreateOrderMutation'
-import { MutationOptions } from 'core/domain/vo/BaseMutation'
-import { OrderParam } from 'core/domain/order/models'
+import {OrderParam} from 'core/domain/order/models';
+import {MutationOptions} from 'core/domain/vo/BaseMutation';
+
+import {useCreateOrderMutation} from '../sources/CreateOrderMutation';
+import {CreateOrderResponse} from '../types';
 
 export const useCreateOrderUsecase = (options: MutationOptions<CreateOrderResponse>): any => {
-  const { mutate, data, ...rest } = useCreateOrderMutation(options)
+	const {mutate, data, ...rest} = useCreateOrderMutation(options);
 
-  const createOrder = (payload: OrderParam) => {
-    mutate(payload)
-  }
+	const createOrder = (payload: OrderParam) => {
+		mutate(payload);
+	};
 
-  return {
-    createOrder,
-    data: data?.data,
-    ...rest,
-  }
-}
+	return {
+		createOrder,
+		data: data?.data,
+		...rest,
+	};
+};

@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  posy-dashboard:
+    container_name: posy-fnb-digital-menu
+    image: posy--fnb-digital-menu
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_APP_NAME: $NEXT_APP_NAME
+        NEXT_PUBLIC_API: $NEXT_PUBLIC_API
+    env_file:
+      - .env
+    ports:
+      - '3300:3000'

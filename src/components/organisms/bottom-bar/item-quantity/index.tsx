@@ -1,22 +1,22 @@
-import React from 'react'
-import SectionQuantityCounter from '@/molecules/section/quantity-counter'
-import SectionAddToBasket from '@/molecules/section/add-to-basket'
-import { ProductDetail } from 'core/domain/product/models'
+import SectionAddToBasket from '@/molecules/section/add-to-basket';
+import SectionQuantityCounter from '@/molecules/section/quantity-counter';
+import {ProductDetail} from 'core/domain/product/models';
+import React from 'react';
 
-interface OrganismsBottomBarItemQuantityProps {
-  product: ProductDetail
-}
+type OrganismsBottomBarItemQuantityProps = {
+	product: ProductDetail;
+};
 
-const OrganismsBottomBarItemQuantity = ({ product }: OrganismsBottomBarItemQuantityProps) => (
-  <section
-    style={{
-      boxShadow: '0px -6px 24px rgb(0 0 0 / 10%)',
-    }}
-    className="fixed bottom-0 z-20 -ml-4 w-full max-w-[576px] rounded-t-2xl bg-neutral-10 px-4 pb-6 pt-8"
-  >
-    <SectionQuantityCounter />
-    <SectionAddToBasket product={product} />
-  </section>
-)
+const OrganismsBottomBarItemQuantity = ({product}: OrganismsBottomBarItemQuantityProps) => (
+	<section
+		style={{
+			boxShadow: '0px -6px 24px rgb(0 0 0 / 10%)',
+		}}
+		className="fixed bottom-0 z-20 -ml-4 w-full max-w-[576px] rounded-t-2xl bg-neutral-10 px-4 pb-6 pt-8"
+	>
+		<SectionQuantityCounter />
+		<SectionAddToBasket product={product} />
+	</section>
+);
 
-export default OrganismsBottomBarItemQuantity
+export default OrganismsBottomBarItemQuantity;
