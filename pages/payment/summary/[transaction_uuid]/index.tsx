@@ -14,7 +14,7 @@ const Page = ({transaction_uuid}: SummaryPageProps) => {
 	// Use useQuery hook to fetch data client-side
 	const {data: paymentSummary} = useQuery(['payment/summary'], async () => {
 		const response = await GetPaymentSummary(transaction_uuid);
-		const dataOrder = await response.data;
+		const dataOrder = response.data;
 		return dataOrder;
 	});
 
