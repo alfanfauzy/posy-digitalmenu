@@ -26,7 +26,7 @@ export const calculateOrder = (el: BasketItem) =>
   (calculateAddOn(el.addOnVariant) + el.product.detail.price_final) * el.quantity
 
 export const calculateOrderBeforeDiscount = (el: BasketItem) =>
-  (calculateAddOn(el.addOnVariant) + el.product.detail.price) * el.quantity
+  (calculateAddOn(el.addOnVariant) + el.product.detail.price_discount) * el.quantity
 
 export const calculateDiscount = (arr: Array<BasketItem>) =>
   [...arr]

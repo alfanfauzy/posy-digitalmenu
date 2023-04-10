@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import { Button } from 'posy-fnb-core'
 import React, { useMemo } from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
-import { useAppSelector } from 'store/hooks'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
   calculateDiscount,
   calculateOrder,
@@ -22,6 +22,7 @@ import Info from 'src/assets/icons/info'
 import useDisclosure from '@/hooks/useDisclosure'
 import { OrderDetail, OrderParam } from 'core/domain/order/models'
 import { useCreateOrderViewModal } from 'core/view/order/view-modals/CreateOrderViewModel'
+import { clearBasket } from 'store/slices/basket'
 
 const Modal = dynamic(() => import('posy-fnb-core').then((el) => el.Modal), {
   loading: () => <div />,
@@ -29,12 +30,13 @@ const Modal = dynamic(() => import('posy-fnb-core').then((el) => el.Modal), {
 
 const PagesBasket: React.FC = () => {
   const router = useRouter()
+  const dispatch = useAppDispatch()
+
   const { basket } = useAppSelector((state) => state.basket)
   const { transaction_uuid } = useAppSelector((state) => state.transaction)
   const [isOpen, { open, close }] = useDisclosure({ initialState: false })
-  const subtotal = useMemo(() => calculateTotal(basket), [basket])
-  const subdiscount = useMemo(() => calculateDiscount(basket), [basket])
-  const grandTotal = useMemo(() => subtotal - subdiscount, [subtotal, subdiscount])
+  const subTotal = useMemo(() => calculateTotal(basket), [basket])
+  const subDiscount = basket?.reduce((acc, obj) => acc + obj.product.detail.price_discount, 0)
 
   const goBack = () => router.back()
 
@@ -42,7 +44,8 @@ const PagesBasket: React.FC = () => {
     onSuccess(data) {
       if (data) {
         close()
-        router.push('/bill')
+        dispatch(clearBasket({ basket: [] }))
+        router.push(`/bill?transaction_uuid=${transaction_uuid}`)
       }
     },
   })
@@ -106,7 +109,7 @@ const PagesBasket: React.FC = () => {
                     </p>
                     {item.product.detail.is_discount && (
                       <p className="text-s-regular text-neutral-60 line-through">
-                        {toRupiah(calculateOrderBeforeDiscount(item) || 0)}
+                        {toRupiah(item.product.detail.price_discount)}
                       </p>
                     )}
                   </div>
@@ -151,15 +154,15 @@ const PagesBasket: React.FC = () => {
               <p className="text-m-semibold">Payment Details</p>
               <div className="flex items-center justify-between text-m-medium">
                 <p>Subtotal</p>
-                <p>{toRupiah(subtotal)}</p>
+                <p>{toRupiah(subTotal)}</p>
               </div>
               <div className="flex items-center justify-between text-m-medium">
                 <p>Discount</p>
-                <p>{toRupiah(subdiscount)}</p>
+                <p>{toRupiah(subDiscount)}</p>
               </div>
               <div className="flex items-center justify-between text-l-semibold">
                 <p>Total</p>
-                <p>{toRupiah(grandTotal)}</p>
+                <p>{toRupiah(subTotal)}</p>
               </div>
             </div>
           </section>
