@@ -35,7 +35,6 @@ const PagesBasket: React.FC = () => {
 	const {transaction_uuid} = router.query;
 
 	const {basket} = useAppSelector(state => state.basket);
-	// const {transaction_uuid} = useAppSelector(state => state.transaction);
 	const [isOpen, {open, close}] = useDisclosure({initialState: false});
 	const subTotalBeforeDiscount = useMemo(() => calculateTotalBeforeDiscount(basket), [basket]);
 	const subTotal = useMemo(() => calculateTotal(basket), [basket]);
