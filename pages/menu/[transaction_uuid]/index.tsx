@@ -4,11 +4,13 @@ import MetaHeader from '@/molecules/meta-header';
 import {dehydrate, QueryClient, useQuery} from '@tanstack/react-query';
 import ContainerMenu from 'containers/menu';
 import {GetCategory} from 'core/data/category/sources/GetCategoryQuery';
+import {GetOutletDetail} from 'core/data/outlet/sources/GetOutletDetailQuery';
 import {GetProductMenu} from 'core/data/product/sources/GetProductMenuQuery';
 import {GetServerSideProps} from 'next';
 import {useEffect} from 'react';
 import {useAppDispatch} from 'store/hooks';
 import {onChangeCategoryList} from 'store/slices/category';
+import {onChangeOutletDetail} from 'store/slices/outlet';
 import {onChangeProductMenu} from 'store/slices/product';
 import {onChangeTransactionId} from 'store/slices/transaction';
 
@@ -48,6 +50,20 @@ const Page = ({transaction_uuid}: PageProps) => {
 		},
 	);
 
+	const {data: outlet} = useQuery(
+		['outlet/detail'],
+		async () => {
+			const response = await GetOutletDetail(transaction_uuid);
+			const dataOutletDetail = response.data;
+			return dataOutletDetail;
+		},
+		{
+			onSuccess: data => {
+				if (data) dispatch(onChangeOutletDetail(data));
+			},
+		},
+	);
+
 	useEffect(() => {
 		if (transaction_uuid) dispatch(onChangeTransactionId(transaction_uuid));
 	}, [transaction_uuid]);
@@ -81,12 +97,23 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 		return dataProduct;
 	};
 
+	const fetchOutletDetail = async () => {
+		const response = await GetOutletDetail(transaction_uuid);
+		const dataOutletDetail = response.data;
+		return dataOutletDetail;
+	};
+
 	// Fetch both queries in parallel
-	const [category, product] = await Promise.all([fetchCategory(), fetchProduct()]);
+	const [category, product, outlet] = await Promise.all([
+		fetchCategory(),
+		fetchProduct(),
+		fetchOutletDetail(),
+	]);
 
 	// Prefetch both queries in the queryClient
 	queryClient.prefetchQuery(['category/list'], () => category);
 	queryClient.prefetchQuery(['product/list'], () => product);
+	queryClient.prefetchQuery(['outlet/detail'], () => outlet);
 
 	// Dehydrate the queryClient state
 	const dehydratedState = dehydrate(queryClient);
