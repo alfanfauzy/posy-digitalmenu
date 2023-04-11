@@ -47,7 +47,7 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 	const handleClickExisting = (counter: number) => {
 		setTimeout(() => {
 			router.push({
-				pathname: `/menu/${transaction_uuid}`,
+				pathname: `/menu/${transaction_uuid}/${product.uuid}`,
 				query: {counter},
 			});
 		}, 300);
@@ -112,7 +112,7 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 								className="flex items-center justify-between gap-3 py-4"
 							>
 								<div>
-									<p className="text-m-semibold">{el.product.detail.product.uuid}</p>
+									<p className="text-m-semibold">{product.product_name}</p>
 									{el.addOnVariant.length > 0 && (
 										<p className=" text-m-medium">{`${el.addOnVariant[0].addOnName} : ${el.addOnVariant[0].variant_name}`}</p>
 									)}

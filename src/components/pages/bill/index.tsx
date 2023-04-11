@@ -8,11 +8,11 @@ import {GetOrderResponse} from 'core/data/order/types';
 import {GetTransactionDetailResponse} from 'core/data/transaction/types';
 import {useRouter} from 'next/router';
 import {Button} from 'posy-fnb-core';
-import React, {useMemo} from 'react';
+import React from 'react';
 import {IoIosArrowBack} from 'react-icons/io';
 import User from 'src/assets/icons/user';
 import {useAppSelector} from 'store/hooks';
-import {calculateOrder, calculateOrderBeforeDiscount, calculateTotal, toRupiah} from 'utils/common';
+import {toRupiah} from 'utils/common';
 
 type PagesBillProps = {
 	orderDetail: Array<GetOrderResponse> | undefined;
@@ -29,14 +29,11 @@ const PagesBill = ({
 }: PagesBillProps) => {
 	const router = useRouter();
 
-	const {basket} = useAppSelector(state => state.basket);
 	const {transaction_uuid} = useAppSelector(state => state.transaction);
 
-	//   const subtotal = useMemo(() => calculateTotal(basket), [basket])
-
-	const subTotal = orderDetail?.reduce((acc, obj) => acc + obj.price_base, 0);
+	const subTotal = orderDetail?.reduce((acc, obj) => acc + obj.price_subtotal_gross, 0);
 	const subDiscount = orderDetail?.reduce((acc, obj) => acc + obj.price_discount, 0);
-	const total = (subTotal as number) - (subDiscount as number);
+	const total = orderDetail?.reduce((acc, obj) => acc + obj.price_final, 0);
 
 	const goBack = () => router.back();
 
@@ -100,10 +97,10 @@ const PagesBill = ({
 											<p className="mr-2 text-l-regular">x{item.qty}</p>
 											<p className="flex-1 text-l-regular">{item.product_name}</p>
 											<div className="flex flex-col items-end">
-												<p className="text-l-regular">{toRupiah(item.price_after_discount)}</p>
+												<p className="text-l-regular">{toRupiah(item.price_subtotal)}</p>
 												{item.price_discount !== 0 && (
 													<p className="text-s-regular text-neutral-60 line-through">
-														{toRupiah(item.price_base)}
+														{toRupiah((item.price_base + item.price_addon) * item.qty)}
 													</p>
 												)}
 											</div>
@@ -151,7 +148,7 @@ const PagesBill = ({
 							</div>
 							<div className="flex items-center justify-between text-l-semibold">
 								<p>Total</p>
-								<p>{toRupiah(total)}</p>
+								<p>{toRupiah(total as number)}</p>
 							</div>
 						</div>
 					</section>
