@@ -1,8 +1,6 @@
 import {GetPaymentCompoletedResponse} from 'core/data/payment/types';
 import Image from 'next/image';
-import {useRouter} from 'next/router';
 import React from 'react';
-import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
 
 type PagesPaymentCompletedProps = {

@@ -7,7 +7,7 @@
 import {GetOrderResponse} from 'core/data/order/types';
 import {GetTransactionDetailResponse} from 'core/data/transaction/types';
 import {useRouter} from 'next/router';
-import {Button} from 'posy-fnb-core';
+import {Button, Loading} from 'posy-fnb-core';
 import React from 'react';
 import {IoIosArrowBack} from 'react-icons/io';
 import User from 'src/assets/icons/user';
@@ -39,7 +39,6 @@ const PagesBill = ({
 
 	return (
 		<main className="container mx-auto min-h-screen pt-4 pb-40 shadow-md">
-			{/* molecules */}
 			<section className="px-4">
 				<div className="mb-4 flex items-center gap-4">
 					<IoIosArrowBack onClick={goBack} size={24} className="cursor-pointer" />
@@ -48,11 +47,12 @@ const PagesBill = ({
 				<div className="border-t border-neutral-30" />
 			</section>
 
-			{isLoadingOrderDetail && isLoadingTransactionDetail && (
-				<p className="m-auto text-center">Loading . . .</p>
+			{(isLoadingOrderDetail || isLoadingTransactionDetail) && (
+				<div className="flex h-screen items-center justify-center overflow-hidden">
+					<Loading size={60} />
+				</div>
 			)}
 
-			{/* molecules */}
 			{!orderDetail ? (
 				<div className="mt-10 flex justify-center text-m-semibold">Your order is still empty!</div>
 			) : (

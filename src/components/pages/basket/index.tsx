@@ -17,7 +17,6 @@ import PencilEdit from 'src/assets/icons/pencilEdit';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
 import {clearBasket} from 'store/slices/basket';
 import {
-	calculateDiscount,
 	calculateOrder,
 	calculateOrderBeforeDiscount,
 	calculateTotal,

@@ -23,6 +23,7 @@ const Page = ({transaction_uuid}: PaymentCompletedPageProps) => {
 
 	useEffect(() => {
 		dispatch(onChangeTransactionId(''));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

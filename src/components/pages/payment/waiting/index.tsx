@@ -6,8 +6,7 @@ import {useRouter} from 'next/router';
 import {Button} from 'posy-fnb-core';
 import React from 'react';
 import {IoIosArrowBack} from 'react-icons/io';
-import {useAppDispatch, useAppSelector} from 'store/hooks';
-import {onChangeTransactionId} from 'store/slices/transaction';
+import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
 
 type PagesPaymentSummaryProps = {
@@ -22,11 +21,7 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 
 	const goBack = () => router.push(`/menu/${transaction_uuid}`);
 
-	const {
-		data: transaction_status,
-		isLoading: isLoadingTransactionStatus,
-		refetch: handleGetTransactionStatus,
-	} = useQuery(
+	const {isLoading: isLoadingTransactionStatus, refetch: handleGetTransactionStatus} = useQuery(
 		['transaction/status'],
 		async () => {
 			const response = await GetTransactionStatus(transactionDetail.uuid);

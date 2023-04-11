@@ -22,7 +22,7 @@ const Page = ({transaction_uuid}: PageProps) => {
 	const dispatch = useAppDispatch();
 
 	// Use useQuery hook to fetch data client-side
-	const {data: category} = useQuery(
+	useQuery(
 		['category/list'],
 		async () => {
 			const response = await GetCategory(transaction_uuid);
@@ -36,7 +36,7 @@ const Page = ({transaction_uuid}: PageProps) => {
 		},
 	);
 
-	const {data: product} = useQuery(
+	useQuery(
 		['product/list'],
 		async () => {
 			const response = await GetProductMenu(transaction_uuid);
@@ -50,7 +50,7 @@ const Page = ({transaction_uuid}: PageProps) => {
 		},
 	);
 
-	const {data: outlet} = useQuery(
+	useQuery(
 		['outlet/detail'],
 		async () => {
 			const response = await GetOutletDetail(transaction_uuid);

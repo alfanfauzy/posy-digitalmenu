@@ -1,14 +1,13 @@
 import Transition from '@/atoms/animations/transition';
-import {Loading} from '@/atoms/loading';
 import {useQuery} from '@tanstack/react-query';
 import {GetTransactionStatus} from 'core/data/transaction/sources/GetDetailTransactionStatusQuery';
 import {AnimatePresence} from 'framer-motion';
 import {useRouter} from 'next/router';
-import {BottomNavigation} from 'posy-fnb-core';
-import React, {ReactNode, useEffect, useState} from 'react';
+import {BottomNavigation, Loading} from 'posy-fnb-core';
+import React, {ReactNode, SyntheticEvent, useEffect, useState} from 'react';
 import {Bell} from 'src/assets/icons/bell';
 import Bill from 'src/assets/icons/bill';
-import {useAppDispatch, useAppSelector} from 'store/hooks';
+import {useAppDispatch} from 'store/hooks';
 import {onChangeTransactionId} from 'store/slices/transaction';
 
 type OrganismsLayoutProps = {
@@ -27,6 +26,7 @@ const list = (transaction_uuid: string) => [
 		icon: Bill,
 	},
 ];
+
 const showBottomNavigationRoutes = [
 	'/menu/[transaction_uuid]',
 	'/basket/[transaction_uuid]',
@@ -40,11 +40,11 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 	const [value, setValue] = useState(0);
 	const [loading, setLoading] = useState(true);
 
-	const {data: transactionStatus} = useQuery(
+	useQuery(
 		[router.pathname],
 		async () => {
 			const response = await GetTransactionStatus(transaction_uuid as string);
-			const dataTransaction = await response.data;
+			const dataTransaction = response.data;
 			return dataTransaction;
 		},
 		{
@@ -54,8 +54,7 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 						setLoading(false);
 					}, 500);
 					dispatch(onChangeTransactionId(''));
-					router.push(`/404`);
-					return;
+					return router.push(`/404`);
 				}
 
 				if (!data.is_open && data.is_paid) {
@@ -72,7 +71,7 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 		},
 	);
 
-	const handleChange = (e: any, newValue: number) => {
+	const handleChange = (e: SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 		router.push(`/${list(transaction_uuid as string)[newValue].value}`);
 	};
@@ -82,10 +81,15 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 			el => el.value === router.pathname.slice(1),
 		);
 		setValue(selected);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [router.pathname]);
 
 	if (loading) {
-		return <Loading size={50} />;
+		return (
+			<div className="flex h-screen items-center justify-center overflow-hidden">
+				<Loading size={60} />
+			</div>
+		);
 	}
 
 	return (
