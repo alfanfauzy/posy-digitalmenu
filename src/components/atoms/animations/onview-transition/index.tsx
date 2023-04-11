@@ -1,5 +1,5 @@
 import {useAnimation, motion, Variants, Transition} from 'framer-motion';
-import {FC, useEffect} from 'react';
+import {FC, ReactNode, useEffect} from 'react';
 import {useInView} from 'react-intersection-observer';
 
 const fadeInDown = {
@@ -42,7 +42,7 @@ export const variant: Record<string, Variants> = {
 };
 
 type Props = {
-	children: any;
+	children: ReactNode;
 	variants?: Variants;
 	transition?: Transition;
 };

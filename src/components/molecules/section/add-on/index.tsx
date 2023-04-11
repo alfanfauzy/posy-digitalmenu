@@ -15,6 +15,7 @@ const MoleculesSectionAddon = ({add_on}: MoleculesSectionAddonProps) => {
 
 	const handleChangeAddon = (
 		type: 'radio' | 'checkbox',
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		variants: any,
 		addOn: {addOnName: string; addOnUuid: string},
 	) =>

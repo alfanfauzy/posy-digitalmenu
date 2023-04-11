@@ -1,13 +1,6 @@
-import {GetPaymentCompoletedResponse, GetPaymentSummaryResponse} from 'core/data/payment/types';
-import {FinishTransactionParam} from 'core/domain/transaction/models';
-import {useCreateFinishTransactionViewModal} from 'core/view/transaction/view-modals/CreateTransactionFinishViewModels';
+import {GetPaymentCompoletedResponse} from 'core/data/payment/types';
 import Image from 'next/image';
-import {useRouter} from 'next/router';
-import {Button} from 'posy-fnb-core';
 import React from 'react';
-import {IoIosArrowBack} from 'react-icons/io';
-import User from 'src/assets/icons/user';
-import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
 
 type PagesPaymentCompletedProps = {
@@ -15,16 +8,10 @@ type PagesPaymentCompletedProps = {
 };
 
 const PagesPaymentCompleted = ({paymentCompleted}: PagesPaymentCompletedProps) => {
-	const router = useRouter();
-	const {transaction_uuid} = useAppSelector(state => state.transaction);
-
-	const goBack = () => router.push(`/menu/${transaction_uuid}`);
-
 	return (
 		<main className="container mx-auto min-h-screen pt-4 pb-40 shadow-md">
 			<section className="px-4">
 				<div className="mb-4 flex items-center gap-4">
-					<IoIosArrowBack onClick={goBack} size={24} className="cursor-pointer" />
 					<p className="text-xxl-semibold">Payment Summary</p>
 				</div>
 				<div className="border-t border-neutral-30" />
@@ -41,9 +28,11 @@ const PagesPaymentCompleted = ({paymentCompleted}: PagesPaymentCompletedProps) =
 					<div className="divide-y divide-neutral-30">
 						<div className="mx-auto max-w-md pb-8">
 							<p className="text-primary-main pt-8 text-center text-xxl-semibold">
-								Payment completed
+								Payment Completed
 							</p>
-							<p className="text-center text-l-regular text-neutral-70">ID: {transaction_uuid}</p>
+							<p className="text-center text-l-regular text-neutral-70">
+								ID: {paymentCompleted.transaction_code}
+							</p>
 						</div>
 						<div className="flex flex-col pb-6" />
 					</div>

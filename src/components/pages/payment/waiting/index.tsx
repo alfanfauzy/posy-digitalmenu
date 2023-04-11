@@ -15,16 +15,13 @@ type PagesPaymentSummaryProps = {
 
 const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	const router = useRouter();
+
 	const transactionDetail = useAppSelector(state => state.transaction.transactionDetail);
 	const {transaction_uuid} = router.query;
 
 	const goBack = () => router.push(`/menu/${transaction_uuid}`);
 
-	const {
-		data: transaction_status,
-		isLoading: isLoadingTransactionStatus,
-		refetch: handleGetTransactionStatus,
-	} = useQuery(
+	const {isLoading: isLoadingTransactionStatus, refetch: handleGetTransactionStatus} = useQuery(
 		['transaction/status'],
 		async () => {
 			const response = await GetTransactionStatus(transactionDetail.uuid);
@@ -34,7 +31,7 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 		{
 			onSuccess: data => {
 				if (data.is_paid) {
-					router.push(`/payment/compoleted/${transaction_uuid}`);
+					router.push(`/payment/completed/${transaction_uuid}`);
 				}
 			},
 		},

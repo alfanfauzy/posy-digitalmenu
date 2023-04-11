@@ -18,6 +18,6 @@ export const GetTransactionStatus = async (
 		return response;
 	} catch (error) {
 		const err = error as AxiosError;
-		throw err.response?.data;
+		throw err.response;
 	}
 };

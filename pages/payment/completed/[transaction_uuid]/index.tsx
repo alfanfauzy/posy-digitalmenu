@@ -2,23 +2,29 @@ import {SEO} from '@/constants/seo';
 import MetaHeader from '@/molecules/meta-header';
 import {dehydrate, QueryClient, useQuery} from '@tanstack/react-query';
 import ContainerPaymentCompleted from 'containers/payment/completed';
-import ContainerPaymentSummary from 'containers/payment/summary';
 import {GetPaymentCompleted} from 'core/data/payment/sources/GetPaymentCompletedQuery';
-import {GetPaymentSummary} from 'core/data/payment/sources/GetPaymentSummaryQuery';
 import {GetServerSideProps} from 'next';
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useAppDispatch} from 'store/hooks';
+import {onChangeTransactionId} from 'store/slices/transaction';
 
 type PaymentCompletedPageProps = {
 	transaction_uuid: string;
 };
 
 const Page = ({transaction_uuid}: PaymentCompletedPageProps) => {
+	const dispatch = useAppDispatch();
 	// Use useQuery hook to fetch data client-side
 	const {data: paymentCompleted} = useQuery(['payment/completed'], async () => {
 		const response = await GetPaymentCompleted(transaction_uuid);
 		const dataPaymentCompleted = await response.data;
 		return dataPaymentCompleted;
 	});
+
+	useEffect(() => {
+		dispatch(onChangeTransactionId(''));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<>

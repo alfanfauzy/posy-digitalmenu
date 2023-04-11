@@ -33,7 +33,7 @@ export const BasketSlice = createSlice({
 			state.basket.push(action.payload);
 		},
 		clearBasket: (state, action: PayloadAction<BasketState>) => {
-			state.basket = [];
+			state.basket = action.payload.basket;
 		},
 		updateBasket: (state, action: PayloadAction<BasketItem>) => {
 			const prevBasket = state.basket;

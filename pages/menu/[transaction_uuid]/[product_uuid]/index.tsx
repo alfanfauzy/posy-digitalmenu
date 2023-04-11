@@ -3,7 +3,7 @@ import MetaHeader from '@/molecules/meta-header';
 import {dehydrate, QueryClient, useQuery} from '@tanstack/react-query';
 import ContainerMenuDetail from 'containers/menu/menu-detail';
 import {GetProductDetail} from 'core/data/product/sources/GetProductMenuDetailQuery';
-import {GetServerSideProps, GetServerSidePropsContext} from 'next';
+import {GetServerSideProps} from 'next';
 import {useEffect} from 'react';
 import {useAppDispatch} from 'store/hooks';
 import {setProductDetail} from 'store/slices/product';
@@ -30,6 +30,7 @@ const Page = ({transaction_uuid, product_uuid}: PageDetailProps) => {
 		if (productDetail) {
 			dispatch(setProductDetail(productDetail));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [productDetail]);
 
 	return (
