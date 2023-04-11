@@ -17,3 +17,14 @@ export type GetPaymentSummaryResponse = {
 	};
 	payment_price: number;
 };
+
+export type GetPaymentCompoletedResponse = {
+	transaction_uuid: string;
+	transaction_code: string;
+	transaction_status: string;
+	total_amount: number;
+	paid_amount: number;
+	change_amount: number;
+	payment_method: string;
+	payment_method_category: string;
+};

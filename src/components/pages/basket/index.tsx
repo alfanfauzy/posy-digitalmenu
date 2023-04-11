@@ -21,6 +21,7 @@ import {
 	calculateOrder,
 	calculateOrderBeforeDiscount,
 	calculateTotal,
+	calculateTotalBeforeDiscount,
 	toRupiah,
 } from 'utils/common';
 
@@ -35,8 +36,9 @@ const PagesBasket: React.FC = () => {
 	const {basket} = useAppSelector(state => state.basket);
 	const {transaction_uuid} = useAppSelector(state => state.transaction);
 	const [isOpen, {open, close}] = useDisclosure({initialState: false});
+	const subTotalBeforeDiscount = useMemo(() => calculateTotalBeforeDiscount(basket), [basket]);
 	const subTotal = useMemo(() => calculateTotal(basket), [basket]);
-	const subDiscount = basket?.reduce((acc, obj) => acc + obj.product.detail.price_discount, 0);
+	const subDiscount = subTotalBeforeDiscount - subTotal;
 
 	const goBack = () => router.back();
 
@@ -74,6 +76,7 @@ const PagesBasket: React.FC = () => {
 			});
 		}, 100);
 	};
+
 	return (
 		<main className="container mx-auto min-h-screen pt-4 pb-40 shadow-md">
 			{/* molecules */}
@@ -103,13 +106,13 @@ const PagesBasket: React.FC = () => {
 									</p>
 									<div className="flex flex-col items-end">
 										<p className="text-l-regular">
-											{item.product.detail.price_final
+											{item.product.detail.price_discount !== 0
 												? toRupiah(calculateOrder(item) || 0)
 												: toRupiah(calculateOrderBeforeDiscount(item) || 0)}
 										</p>
 										{item.product.detail.is_discount && (
 											<p className="text-s-regular text-neutral-60 line-through">
-												{toRupiah(item.product.detail.price_discount)}
+												{toRupiah(calculateOrderBeforeDiscount(item))}
 											</p>
 										)}
 									</div>
@@ -154,7 +157,7 @@ const PagesBasket: React.FC = () => {
 							<p className="text-m-semibold">Payment Details</p>
 							<div className="flex items-center justify-between text-m-medium">
 								<p>Subtotal</p>
-								<p>{toRupiah(subTotal)}</p>
+								<p>{toRupiah(subTotalBeforeDiscount)}</p>
 							</div>
 							<div className="flex items-center justify-between text-m-medium">
 								<p>Discount</p>

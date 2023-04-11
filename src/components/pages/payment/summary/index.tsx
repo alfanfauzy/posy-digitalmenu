@@ -1,5 +1,8 @@
 import {GetPaymentSummaryResponse} from 'core/data/payment/types';
+import {FinishTransactionParam} from 'core/domain/transaction/models';
+import {useCreateFinishTransactionViewModal} from 'core/view/transaction/view-modals/CreateTransactionFinishViewModels';
 import {useRouter} from 'next/router';
+import {Button} from 'posy-fnb-core';
 import React from 'react';
 import {IoIosArrowBack} from 'react-icons/io';
 import User from 'src/assets/icons/user';
@@ -13,8 +16,33 @@ type PagesPaymentSummaryProps = {
 const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	const router = useRouter();
 	const {transaction_uuid} = useAppSelector(state => state.transaction);
+	const transactionDetail = useAppSelector(state => state.transaction.transactionDetail);
 
 	const goBack = () => router.push(`/menu/${transaction_uuid}`);
+
+	const {createTransactionFinish, isLoading: isLoadingCreate} = useCreateFinishTransactionViewModal(
+		{
+			onSuccess(data) {
+				if (data.code === 0 && data.message === 'OK') {
+					router.push(`/payment/waiting/${transaction_uuid}`);
+				}
+			},
+		},
+	);
+
+	const handleFinishTransaction = () => {
+		const payload: FinishTransactionParam = {
+			id: transaction_uuid,
+			payload: {
+				customer_email: '',
+				customer_name: '',
+				customer_phone: '',
+				payment_type: 'CASHIER',
+			},
+		};
+
+		createTransactionFinish(payload);
+	};
 
 	return (
 		<main className="container mx-auto min-h-screen pt-4 pb-40 shadow-md">
@@ -31,16 +59,22 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 					<section key={transaction_uuid} className="mt-4 flex items-center justify-between px-4">
 						<div className="flex flex-col items-start">
 							<p className="text-m-medium text-neutral-60">Trx ID</p>
-							<p className="mt-0.5 text-m-semibold text-neutral-80">{transaction_uuid}</p>
+							<p className="mt-0.5 text-m-semibold text-neutral-80">
+								{transactionDetail.transaction_code}
+							</p>
 						</div>
 						<div className="flex flex-col items-center">
 							<p className="text-m-medium text-neutral-60">Table</p>
-							<p className="mt-0.5 text-m-semibold text-neutral-80">4</p>
+							<p className="mt-0.5 text-m-semibold text-neutral-80">
+								{transactionDetail.table_name ?? '-'}
+							</p>
 						</div>
 						<div className="flex flex-col items-end">
 							<p className="text-m-medium text-neutral-60">Total Pax</p>
 							<div className="flex items-center gap-1.5">
-								<p className="mt-0.5 text-m-semibold text-neutral-80">2</p>
+								<p className="mt-0.5 text-m-semibold text-neutral-80">
+									{transactionDetail.total_pax}
+								</p>
 								<User />
 							</div>
 						</div>
@@ -72,7 +106,7 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 						</div>
 						<div className="flex justify-between pb-2">
 							<p className="text-m-medium text-neutral-100">
-								PB 1{' '}
+								PB1{'  '}
 								{paymentSummary.tax_and_charge.is_tax &&
 									`${paymentSummary.tax_and_charge.tax_percentage}%`}
 							</p>
@@ -97,13 +131,14 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 
 			<div className="flex flex-col p-4">
 				<p className="mb-4 text-xl-semibold text-neutral-100">Payment option</p>
-				<button
+				<Button
 					type="button"
-					onClick={() => router.push(`/payment/waiting/${transaction_uuid}`)}
+					isLoading={isLoadingCreate}
+					onClick={() => handleFinishTransaction()}
 					className="w-full rounded-[24px] border border-black bg-white px-4 py-2 text-l-semibold text-neutral-100"
 				>
 					Pay at Cashier
-				</button>
+				</Button>
 			</div>
 		</main>
 	);

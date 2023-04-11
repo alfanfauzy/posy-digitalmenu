@@ -3,6 +3,7 @@ import {AnimatePresence} from 'framer-motion';
 import {useRouter} from 'next/router';
 import {BottomNavigation} from 'posy-fnb-core';
 import React, {ReactNode, useEffect, useState} from 'react';
+import {Bell} from 'src/assets/icons/bell';
 import Bill from 'src/assets/icons/bill';
 import {useAppSelector} from 'store/hooks';
 
@@ -13,8 +14,8 @@ type OrganismsLayoutProps = {
 const list = (transaction_uuid: string) => [
 	{
 		label: 'Menu',
-		value: 'menu',
-		icon: Bill,
+		value: `menu/${transaction_uuid}`,
+		icon: Bell,
 	},
 	{
 		label: 'Bill',
@@ -22,7 +23,7 @@ const list = (transaction_uuid: string) => [
 		icon: Bill,
 	},
 ];
-const showBottomNavigationRoutes = ['/menu', '/basket', '/bill'];
+const showBottomNavigationRoutes = ['/menu/[transaction_uuid]', '/basket', '/bill'];
 
 const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 	const router = useRouter();

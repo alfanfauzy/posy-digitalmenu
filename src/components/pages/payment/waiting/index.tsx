@@ -1,8 +1,12 @@
+import {useQuery} from '@tanstack/react-query';
 import {GetPaymentSummaryResponse} from 'core/data/payment/types';
+import {GetTransactionStatus} from 'core/data/transaction/sources/GetDetailTransactionStatusQuery';
 import Image from 'next/image';
 import {useRouter} from 'next/router';
+import {Button} from 'posy-fnb-core';
 import React from 'react';
 import {IoIosArrowBack} from 'react-icons/io';
+import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
 
 type PagesPaymentSummaryProps = {
@@ -11,9 +15,30 @@ type PagesPaymentSummaryProps = {
 
 const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	const router = useRouter();
+	const transactionDetail = useAppSelector(state => state.transaction.transactionDetail);
 	const {transaction_uuid} = router.query;
 
 	const goBack = () => router.push(`/menu/${transaction_uuid}`);
+
+	const {
+		data: transaction_status,
+		isLoading: isLoadingTransactionStatus,
+		refetch: handleGetTransactionStatus,
+	} = useQuery(
+		['transaction/status'],
+		async () => {
+			const response = await GetTransactionStatus(transactionDetail.uuid);
+			const dataTransaction = await response.data;
+			return dataTransaction;
+		},
+		{
+			onSuccess: data => {
+				if (data.is_paid) {
+					router.push(`/payment/compoleted/${transaction_uuid}`);
+				}
+			},
+		},
+	);
 
 	return (
 		<main className="container mx-auto min-h-screen pt-4 pb-40 shadow-md">
@@ -33,7 +58,7 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 						</p>
 						<p className="pt-3 text-center text-m-regular text-neutral-70">Your transacion ID</p>
 						<p className="mt-1 mb-4 text-center text-xl-semibold text-secondary-main">
-							{transaction_uuid}
+							{transactionDetail.transaction_code}
 						</p>
 						<Image
 							src="/waiting_payment.svg"
@@ -104,13 +129,14 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 			)}
 
 			<div className="flex flex-col p-4">
-				<button
+				<Button
+					isLoading={isLoadingTransactionStatus}
 					type="button"
-					onClick={() => router.push(`/payment/waiting/${transaction_uuid}`)}
+					onClick={() => handleGetTransactionStatus()}
 					className="w-full rounded-[24px] border border-black bg-white px-4 py-2 text-l-semibold text-neutral-100"
 				>
 					Check Status
-				</button>
+				</Button>
 			</div>
 		</main>
 	);

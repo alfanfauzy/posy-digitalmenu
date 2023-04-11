@@ -9,6 +9,7 @@ export type GetOrderResponse = {
 	price_base: number;
 	price_discount: number;
 	price_after_discount: number;
+	price_subtotal_gross: number;
 	price_final: number;
 	status: string;
 	total_product: number;

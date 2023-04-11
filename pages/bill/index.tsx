@@ -5,12 +5,15 @@ import ContainerBill from 'containers/bill';
 import {GetOrderDetail} from 'core/data/order/sources/GetOrderDetailQuery';
 import {GetTransactionDetail} from 'core/data/transaction/sources/GetDetailTransactionQuery';
 import {GetServerSideProps} from 'next';
+import {useAppDispatch} from 'store/hooks';
+import {onChangeTransactionDetail} from 'store/slices/transaction';
 
 type BillPageProps = {
 	transaction_uuid: string;
 };
 
 const Page = ({transaction_uuid}: BillPageProps) => {
+	const dispatch = useAppDispatch();
 	// Use useQuery hook to fetch data client-side
 	const {data: orderDetail, isLoading: isLoadingOrderDetail} = useQuery(
 		['order/detail'],
@@ -27,6 +30,11 @@ const Page = ({transaction_uuid}: BillPageProps) => {
 			const response = await GetTransactionDetail(transaction_uuid);
 			const dataTransaction = await response.data;
 			return dataTransaction;
+		},
+		{
+			onSuccess: data => {
+				if (data) dispatch(onChangeTransactionDetail(data));
+			},
 		},
 	);
 

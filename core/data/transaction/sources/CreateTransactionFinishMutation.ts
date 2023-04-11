@@ -1,21 +1,19 @@
 import {useMutation} from '@tanstack/react-query';
 import Post from 'api/post';
 import {AxiosError} from 'axios';
-import {OrderParam} from 'core/domain/order/models';
+import {CreateTransactionFinish, FinishTransactionParam} from 'core/domain/transaction/models';
 import {ErrorType} from 'core/domain/vo/BaseError';
 import {MutationOptions} from 'core/domain/vo/BaseMutation';
 import {Response} from 'core/domain/vo/BaseResponse';
 
-import {CreateOrderResponse} from '../types';
-
-export const CreateOrderService = async (
-	param: OrderParam,
-): Promise<Response<CreateOrderResponse>> => {
+export const CreateFinishTransactionService = async (
+	param: FinishTransactionParam,
+): Promise<Response<CreateTransactionFinish>> => {
 	const {id, payload} = param;
 
 	try {
 		const response = await Post({
-			endpoint: `/api/fnb-order-service/menu/order/create`,
+			endpoint: `/api/fnb-order-service/menu/transaction/finish`,
 			data: payload,
 			headers: {'X-Transaction-Uuid': id},
 		});
@@ -26,9 +24,11 @@ export const CreateOrderService = async (
 		throw err.response?.data;
 	}
 };
-export const useCreateOrderMutation = (options: MutationOptions<CreateOrderResponse>) =>
+export const useCreateFinishTransactionMutation = (
+	options: MutationOptions<CreateTransactionFinish>,
+) =>
 	useMutation({
-		mutationFn: (payload: OrderParam) => CreateOrderService(payload),
+		mutationFn: (payload: FinishTransactionParam) => CreateFinishTransactionService(payload),
 		onError(error: ErrorType) {
 			console.log(error.more_info);
 		},

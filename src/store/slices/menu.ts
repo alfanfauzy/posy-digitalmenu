@@ -98,10 +98,8 @@ export const MenuSlice = createSlice({
 					prevAddOnVariant.push(addOnVariant);
 					break;
 				case 'checkbox':
-					if (prevAddOnVariant.find(el => el.variant_uuid === addOnVariant.variant_uuid)) {
-						const filteredArr = prevAddOnVariant.filter(
-							el => el.variant_uuid !== addOnVariant.variant_uuid,
-						);
+					if (prevAddOnVariant.find(el => el.uuid === addOnVariant.uuid)) {
+						const filteredArr = prevAddOnVariant.filter(el => el.uuid !== addOnVariant.uuid);
 						state.orderForm.addOnVariant = filteredArr;
 					}
 					prevAddOnVariant.push(addOnVariant);
