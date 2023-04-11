@@ -7,7 +7,6 @@ import {calculateQuantity, calculateTotal, toRupiah} from 'utils/common';
 const AtomsButtonFloating = () => {
 	const router = useRouter();
 	const {transaction_uuid} = router.query;
-	console.log(transaction_uuid);
 
 	const {basket} = useAppSelector(state => state.basket);
 
