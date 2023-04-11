@@ -15,10 +15,7 @@ const MoleculesHeaderOutletInfo = () => {
 				<div className="flex items-start gap-1">
 					<HiOutlineLocationMarker />
 					<div>
-						<p className="truncate text-m-medium capitalize">{OutletDetail.address}</p>
-						<p className="truncate text-m-medium capitalize">
-							{OutletDetail.region.city_name}, {OutletDetail.region.province_name}
-						</p>
+						<p className="truncate text-m-medium capitalize">{OutletDetail.outlet_name}</p>
 					</div>
 				</div>
 			</div>

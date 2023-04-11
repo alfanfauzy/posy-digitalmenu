@@ -6,13 +6,15 @@ import {calculateQuantity, calculateTotal, toRupiah} from 'utils/common';
 
 const AtomsButtonFloating = () => {
 	const router = useRouter();
+	const {transaction_uuid} = router.query;
+	console.log(transaction_uuid);
 
 	const {basket} = useAppSelector(state => state.basket);
 
 	const totalQuantity = useMemo(() => calculateQuantity(basket), [basket]);
 	const totalPrice = useMemo(() => calculateTotal(basket), [basket]);
 
-	const goToBasket = () => router.push(`/basket`);
+	const goToBasket = () => router.push(`/basket/${transaction_uuid}`);
 
 	return (
 		<div className="fixed bottom-10 z-30 w-full max-w-[576px] px-4">

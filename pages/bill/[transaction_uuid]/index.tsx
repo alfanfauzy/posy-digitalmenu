@@ -59,6 +59,8 @@ const Page = ({transaction_uuid}: BillPageProps) => {
 export const getServerSideProps: GetServerSideProps = async ({query}) => {
 	const transaction_uuid = query.transaction_uuid as string;
 
+	console.log(transaction_uuid);
+
 	const fetchDetailOrder = async () => {
 		const response = await GetOrderDetail(transaction_uuid);
 		const dataOrder = response.data?.objs;

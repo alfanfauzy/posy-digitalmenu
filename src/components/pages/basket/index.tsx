@@ -32,9 +32,10 @@ const Modal = dynamic(() => import('posy-fnb-core').then(el => el.Modal), {
 const PagesBasket: React.FC = () => {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
+	const {transaction_uuid} = router.query;
 
 	const {basket} = useAppSelector(state => state.basket);
-	const {transaction_uuid} = useAppSelector(state => state.transaction);
+	// const {transaction_uuid} = useAppSelector(state => state.transaction);
 	const [isOpen, {open, close}] = useDisclosure({initialState: false});
 	const subTotalBeforeDiscount = useMemo(() => calculateTotalBeforeDiscount(basket), [basket]);
 	const subTotal = useMemo(() => calculateTotal(basket), [basket]);
@@ -47,7 +48,7 @@ const PagesBasket: React.FC = () => {
 			if (data) {
 				close();
 				dispatch(clearBasket({basket: []}));
-				router.push(`/bill?transaction_uuid=${transaction_uuid}`);
+				router.push(`/bill/${transaction_uuid}`);
 			}
 		},
 	});
@@ -63,7 +64,7 @@ const PagesBasket: React.FC = () => {
 			})),
 		}));
 
-		const payload: OrderParam = {id: transaction_uuid, payload: {order: orderBasket}};
+		const payload: OrderParam = {id: transaction_uuid as string, payload: {order: orderBasket}};
 
 		createOrder(payload);
 	};

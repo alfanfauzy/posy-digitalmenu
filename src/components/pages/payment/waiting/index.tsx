@@ -6,7 +6,8 @@ import {useRouter} from 'next/router';
 import {Button} from 'posy-fnb-core';
 import React from 'react';
 import {IoIosArrowBack} from 'react-icons/io';
-import {useAppSelector} from 'store/hooks';
+import {useAppDispatch, useAppSelector} from 'store/hooks';
+import {onChangeTransactionId} from 'store/slices/transaction';
 import {toRupiah} from 'utils/common';
 
 type PagesPaymentSummaryProps = {
@@ -15,6 +16,7 @@ type PagesPaymentSummaryProps = {
 
 const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	const router = useRouter();
+
 	const transactionDetail = useAppSelector(state => state.transaction.transactionDetail);
 	const {transaction_uuid} = router.query;
 
@@ -34,7 +36,7 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 		{
 			onSuccess: data => {
 				if (data.is_paid) {
-					router.push(`/payment/compoleted/${transaction_uuid}`);
+					router.push(`/payment/completed/${transaction_uuid}`);
 				}
 			},
 		},
