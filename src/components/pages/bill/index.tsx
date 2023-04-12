@@ -13,6 +13,8 @@ import {IoIosArrowBack} from 'react-icons/io';
 import User from 'src/assets/icons/user';
 import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
+import {generateOrderStatus} from 'utils/UtilsGenerateOrderStatus';
+import {generateOrderDetailStatus} from 'utils/UtilsGenerateStatusTransaction';
 import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
 
 type PagesBillProps = {
@@ -90,7 +92,7 @@ const PagesBill = ({
 							{/* organims */}
 							<div className="mt-4 flex items-center justify-between bg-neutral-30 px-4 py-2">
 								<p className="text-l-semibold">Order {idx + 1}</p>
-								<p className="text-l-regular">{order.status.split('_').join(' ')}</p>
+								<p className="text-l-regular">{generateOrderStatus(order.status)}</p>
 							</div>
 							<section className="px-4 pt-4">
 								{order.order_detail.map(item => (
@@ -128,7 +130,7 @@ const PagesBill = ({
 
 										<div className="mt-4 ml-6 flex items-center justify-between">
 											<p className="text-m-semibold">Status</p>
-											<p className="text-m-semibold text-[#003BD4]">{item.status}</p>
+											{generateOrderDetailStatus(item.status)}
 										</div>
 										<div className="mt-4 border-t border-neutral-30" />
 									</aside>
