@@ -67,10 +67,10 @@ const PagesBasket: React.FC = () => {
 		createOrder(payload);
 	};
 
-	const editOrder = (orderId: string) => {
+	const editOrder = (orderId: string, productId: string) => {
 		setTimeout(() => {
 			router.push({
-				pathname: `/menu/${transaction_uuid}`,
+				pathname: `/menu/${transaction_uuid}/${productId}`,
 				query: {counter: orderId},
 			});
 		}, 100);
@@ -134,8 +134,12 @@ const PagesBasket: React.FC = () => {
 									<div
 										role="button"
 										tabIndex={0}
-										onClick={() => editOrder(item.counter.toString())}
-										onKeyDown={() => editOrder(item.counter.toString())}
+										onClick={() =>
+											editOrder(item.counter.toString(), item.product.detail.product.uuid)
+										}
+										onKeyDown={() =>
+											editOrder(item.counter.toString(), item.product.detail.product.uuid)
+										}
 										className="flex items-center gap-1.5"
 									>
 										<PencilEdit />

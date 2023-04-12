@@ -2,9 +2,10 @@ import ImageMenu from '@/molecules/image/menu';
 import {Product} from 'core/domain/product/models';
 import dynamic from 'next/dynamic';
 import {useRouter} from 'next/router';
-import {Button} from 'posy-fnb-core';
+import {Button, Label, TimeLabel} from 'posy-fnb-core';
 import React, {useMemo, useState} from 'react';
 import Highlighter from 'react-highlight-words';
+import {BiTimeFive} from 'react-icons/bi';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
 import {onChangeQuantity} from 'store/slices/menu';
 import {calculateQuantity, calculateOrder, toRupiah, renderPrice} from 'utils/common';
@@ -65,10 +66,10 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 					onClick={handleClick}
 					className="flex w-full gap-4 p-4 transition duration-300 ease-in-out hover:bg-neutral-20 active:animate-pulse"
 				>
-					<div className="flex-1">
+					<div className="flex-1 gap-1">
 						<p
 							className={`text-m-semibold line-clamp-3 ${
-								selected.length > 0 ? 'text-red-accent' : ''
+								selected.length > 0 ? 'text-secondary-main' : ''
 							}`}
 						>
 							<Highlighter
@@ -78,10 +79,27 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 								textToHighlight={product.product_name ? product.product_name.toString() : ''}
 							/>
 						</p>
+						{product.is_discount && <Label size="s" title="Discount" />}
 						<p className="mt-1 text-m-regular line-clamp-3">{product.product_description}</p>
-						<p className="mt-2 text-l-medium">
-							{renderPrice(product.is_available, product.price_after_discount, product.price)}
-						</p>
+						{product.is_discount ? (
+							<div className="flex gap-1 items-center mt-1">
+								<p className="text-l-medium">
+									{renderPrice(product.is_available, product.price_after_discount, product.price)}
+								</p>
+								<p className="text-s-medium text-neutral-80 line-through">
+									{toRupiah(product.price)}
+								</p>
+							</div>
+						) : (
+							<p>
+								<p className="text-l-medium">{toRupiah(product.price)}</p>
+							</p>
+						)}
+						<TimeLabel
+							startAdornment={<BiTimeFive />}
+							size="s"
+							title={`in ${product.cooking_duration} min`}
+						/>
 					</div>
 
 					<div className="flex flex-col items-end">

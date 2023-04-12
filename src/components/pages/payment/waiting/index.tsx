@@ -8,6 +8,7 @@ import React from 'react';
 import {IoIosArrowBack} from 'react-icons/io';
 import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
+import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
 
 type PagesPaymentSummaryProps = {
 	paymentSummary: GetPaymentSummaryResponse | undefined;
@@ -54,8 +55,8 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 							Thank you for your order!
 						</p>
 						<p className="pt-3 text-center text-m-regular text-neutral-70">Your transacion ID</p>
-						<p className="mt-1 mb-4 text-center text-xl-semibold text-secondary-main">
-							{transactionDetail.transaction_code}
+						<p className="mt-1 mb-4 text-center text-[30px] font-semibold text-secondary-main">
+							{generateTransactionCode(transactionDetail.transaction_code)}
 						</p>
 						<Image
 							src="/waiting_payment.svg"

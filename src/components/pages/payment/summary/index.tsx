@@ -8,6 +8,7 @@ import {IoIosArrowBack} from 'react-icons/io';
 import User from 'src/assets/icons/user';
 import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
+import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
 
 type PagesPaymentSummaryProps = {
 	paymentSummary: GetPaymentSummaryResponse | undefined;
@@ -60,13 +61,13 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 						<div className="flex flex-col items-start">
 							<p className="text-m-medium text-neutral-60">Trx ID</p>
 							<p className="mt-0.5 text-m-semibold text-neutral-80">
-								{transactionDetail.transaction_code}
+								{generateTransactionCode(transactionDetail.transaction_code)}
 							</p>
 						</div>
 						<div className="flex flex-col items-center">
 							<p className="text-m-medium text-neutral-60">Table</p>
 							<p className="mt-0.5 text-m-semibold text-neutral-80">
-								{transactionDetail.table_name ?? '-'}
+								{transactionDetail.table_name || '-'}
 							</p>
 						</div>
 						<div className="flex flex-col items-end">

@@ -2,6 +2,7 @@ import {GetPaymentCompoletedResponse} from 'core/data/payment/types';
 import Image from 'next/image';
 import React from 'react';
 import {toRupiah} from 'utils/common';
+import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
 
 type PagesPaymentCompletedProps = {
 	paymentCompleted: GetPaymentCompoletedResponse | undefined;
@@ -31,7 +32,7 @@ const PagesPaymentCompleted = ({paymentCompleted}: PagesPaymentCompletedProps) =
 								Payment Completed
 							</p>
 							<p className="text-center text-l-regular text-neutral-70">
-								ID: {paymentCompleted.transaction_code}
+								ID: {generateTransactionCode(paymentCompleted.transaction_code)}
 							</p>
 						</div>
 						<div className="flex flex-col pb-6" />
