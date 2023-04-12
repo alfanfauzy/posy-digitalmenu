@@ -3,6 +3,20 @@ export type CreateOrderResponse = {
 	metadata: object;
 };
 
+export enum OrderStatusEnum {
+	ORDER_RECEIVED = 'ORDER_RECEIVED',
+	ORDER_PROCESS = 'ORDER_PROCESS',
+	ORDER_SERVED = 'ORDER_SERVED',
+	ORDER_CANCELLED = 'ORDER_CANCELLED',
+}
+
+export enum OrderDetailStatusEnum {
+	RECEIVED = 'RECEIVED',
+	PROCESS = 'PROCESS',
+	SERVED = 'SERVED',
+	CANCEL = 'CANCEL',
+}
+
 export type GetOrderResponse = {
 	uuid: string;
 	order_qty: number;
@@ -11,7 +25,7 @@ export type GetOrderResponse = {
 	price_after_discount: number;
 	price_subtotal_gross: number;
 	price_final: number;
-	status: string;
+	status: OrderStatusEnum;
 	total_product: number;
 	is_printed: boolean;
 	total_print_kitchen: number;
@@ -49,11 +63,7 @@ export type GetOrderResponse = {
 			}>;
 		}>;
 		order_note: string;
-		status: string;
+		status: OrderDetailStatusEnum;
 		cancel_reason: string;
 	}>;
 };
-
-type OrderDetailStatus = 'RECEIVED' | 'PROCESS' | 'SERVED' | 'CANCEL';
-
-type TransactionCategory = 'DINE_IN' | 'TAKE_AWAY';
