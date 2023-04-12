@@ -13,6 +13,7 @@ import {IoIosArrowBack} from 'react-icons/io';
 import User from 'src/assets/icons/user';
 import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
+import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
 
 type PagesBillProps = {
 	orderDetail: Array<GetOrderResponse> | undefined;
@@ -64,7 +65,8 @@ const PagesBill = ({
 						<div className="flex flex-col items-start">
 							<p className="text-m-medium text-neutral-60">Trx ID</p>
 							<p className="mt-0.5 text-m-semibold text-neutral-80">
-								{transactionDetail?.transaction_code}
+								<p>{transactionDetail?.transaction_code}</p>
+								{generateTransactionCode(transactionDetail?.transaction_code as string)}
 							</p>
 						</div>
 						<div className="flex flex-col items-center">

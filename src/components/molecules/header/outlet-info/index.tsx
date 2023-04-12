@@ -11,8 +11,8 @@ const MoleculesHeaderOutletInfo = () => {
 	return (
 		<section className="ml-4 flex items-center gap-2 rounded-l-2xl bg-neutral-20 p-4">
 			<div className="w-2/3 flex-1 gap-4">
-				<p className="truncate text-xl-semibold mb-2">{OutletDetail.outlet_name}</p>
-				<div className="flex items-start gap-1">
+				<p className="truncate text-xl-semibold mb-2">{OutletDetail.restaurant_name}</p>
+				<div className="flex items-center gap-1">
 					<HiOutlineLocationMarker />
 					<div>
 						<p className="truncate text-m-medium capitalize">{OutletDetail.outlet_name}</p>
@@ -20,7 +20,14 @@ const MoleculesHeaderOutletInfo = () => {
 				</div>
 			</div>
 			<div>
-				<Image src={OutletDetail.logo_image_url} priority alt="logo" width={60} height={60} />
+				<Image
+					src={OutletDetail.logo_image_url}
+					priority
+					alt="logo"
+					width={80}
+					height={80}
+					className="rounded-full"
+				/>
 			</div>
 		</section>
 	);
