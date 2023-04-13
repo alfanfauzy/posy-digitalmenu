@@ -51,14 +51,6 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 		},
 		{
 			onSuccess: data => {
-				if (data === null) {
-					setTimeout(() => {
-						setLoading(false);
-					}, 500);
-					dispatch(onChangeTransactionId(''));
-					return router.push(`/404`);
-				}
-
 				if (!data.is_open && data.is_paid) {
 					setTimeout(() => {
 						setLoading(false);
@@ -79,7 +71,9 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 				setTimeout(() => {
 					setLoading(false);
 				}, 500);
+				dispatch(onChangeTransactionId(''));
 				toast.error(data.more_info);
+				return router.push(`/404`);
 			},
 		},
 	);
