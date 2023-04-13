@@ -4,7 +4,7 @@ import React from 'react';
 export const Bill = ({
 	fill = 'currentColor',
 	width = 22,
-	height = 18,
+	height = 22,
 	onClick,
 	className,
 }: IconType) => (

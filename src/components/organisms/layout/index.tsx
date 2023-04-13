@@ -5,8 +5,8 @@ import {AnimatePresence} from 'framer-motion';
 import {useRouter} from 'next/router';
 import {BottomNavigation, Loading} from 'posy-fnb-core';
 import React, {ReactNode, SyntheticEvent, useEffect, useState} from 'react';
-import {Bell} from 'src/assets/icons/bell';
 import Bill from 'src/assets/icons/bill';
+import Menu from 'src/assets/icons/menu';
 import {useAppDispatch} from 'store/hooks';
 import {onChangeTransactionId} from 'store/slices/transaction';
 
@@ -16,9 +16,9 @@ type OrganismsLayoutProps = {
 
 const list = (transaction_uuid: string) => [
 	{
-		label: 'Menu',
+		label: 'Order',
 		value: `menu/${transaction_uuid}`,
-		icon: Bell,
+		icon: Menu,
 	},
 	{
 		label: 'Bill',
