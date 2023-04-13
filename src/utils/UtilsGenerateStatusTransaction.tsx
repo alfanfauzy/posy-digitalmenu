@@ -15,5 +15,5 @@ export const generateOrderDetailStatus = (status: OrderDetailStatusEnum) => {
 		CANCEL: 'Order Cancelled',
 	};
 
-	return <p className={statusColor[status]}>{statusText[status]}</p>;
+	return <p className={`text-m-semibold ${statusColor[status]}`}>{statusText[status]}</p>;
 };
