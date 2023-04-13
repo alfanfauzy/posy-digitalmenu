@@ -3,6 +3,8 @@ import {Product} from 'core/domain/product/models';
 import {useRouter} from 'next/router';
 import {Button} from 'posy-fnb-core';
 import React from 'react';
+import {useAppDispatch} from 'store/hooks';
+import {onChangeQuantity} from 'store/slices/menu';
 import {renderPrice, toRupiah} from 'utils/common';
 
 type MoleculesCardMenuRecommendationProps = {
@@ -11,9 +13,16 @@ type MoleculesCardMenuRecommendationProps = {
 
 const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendationProps) => {
 	const router = useRouter();
+	const dispatch = useAppDispatch();
 	const {transaction_uuid} = router.query;
-
 	const {uuid} = data;
+
+	const handleClick = () => {
+		setTimeout(() => {
+			router.push(`/menu/${transaction_uuid}/${uuid}`);
+		}, 500);
+		dispatch(onChangeQuantity({operator: 'plus', value: 1}));
+	};
 
 	return (
 		<div className="relative">
@@ -24,7 +33,7 @@ const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendation
 			)}
 			<div>
 				<ImageMenu
-					onClick={() => router.push(`/menu/${transaction_uuid}/${uuid}/`)}
+					onClick={() => handleClick()}
 					label={data.is_discount ? 'Discount' : undefined}
 					timeLabel={`in ${data.cooking_duration} min`}
 					isRecommended={data.is_favourite}
@@ -50,12 +59,7 @@ const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendation
 				</div>
 
 				<div className="mt-2">
-					<Button
-						variant="secondary"
-						size="m"
-						fullWidth
-						onClick={() => router.push(`/menu/${transaction_uuid}/${uuid}`)}
-					>
+					<Button variant="secondary" size="m" fullWidth onClick={() => handleClick()}>
 						Add
 					</Button>
 				</div>

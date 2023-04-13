@@ -6,6 +6,7 @@
  */
 
 import CardMenuDetail from '@/molecules/card/menu/detail';
+import MoleculesHeaderNavigation from '@/molecules/header/navigation';
 import SectionBottomBar from '@/organisms/bottom-bar/item-quantity';
 import FormOrder from '@/organisms/form/order';
 import {useRouter} from 'next/router';
@@ -20,6 +21,8 @@ const PagesMenuDetail: React.FC = () => {
 	const basket = useAppSelector(state => state.basket);
 	const productDetail = useAppSelector(state => state.product.detail);
 	const [loading, setLoading] = useState(false);
+
+	const goBack = () => router.back();
 
 	useEffect(() => {
 		const exitingFunction = () => dispatch(onLeaveOrderPage());
@@ -61,6 +64,7 @@ const PagesMenuDetail: React.FC = () => {
 
 	return (
 		<main className="p-4 shadow-md">
+			<MoleculesHeaderNavigation goBack={goBack} text={productDetail.detail.product.product_name} />
 			<CardMenuDetail product={productDetail} />
 			<FormOrder add_on={productDetail.addons} />
 			<SectionBottomBar product={productDetail} />

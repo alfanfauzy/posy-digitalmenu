@@ -15,5 +15,5 @@ export const generateOrderStatus = (status: OrderStatusEnum) => {
 		ORDER_CANCELLED: 'Cancelled',
 	};
 
-	return <p className={statusColor[status]}>{statusText[status]}</p>;
+	return <p className={`text-l-reguler ${statusColor[status]}`}>{statusText[status]}</p>;
 };
