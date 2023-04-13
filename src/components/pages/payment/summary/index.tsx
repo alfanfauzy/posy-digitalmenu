@@ -1,10 +1,12 @@
+import useDisclosure from '@/hooks/useDisclosure';
 import MoleculesHeaderNavigation from '@/molecules/header/navigation';
 import {GetPaymentSummaryResponse} from 'core/data/payment/types';
 import {FinishTransactionParam} from 'core/domain/transaction/models';
 import {useCreateFinishTransactionViewModal} from 'core/view/transaction/view-modals/CreateTransactionFinishViewModels';
 import {useRouter} from 'next/router';
-import {Button} from 'posy-fnb-core';
+import {Button, Modal} from 'posy-fnb-core';
 import React from 'react';
+import Info from 'src/assets/icons/info';
 import User from 'src/assets/icons/user';
 import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
@@ -16,6 +18,7 @@ type PagesPaymentSummaryProps = {
 
 const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	const router = useRouter();
+	const [isOpen, {open, close}] = useDisclosure({initialState: false});
 	const {transaction_uuid} = useAppSelector(state => state.transaction);
 	const transactionDetail = useAppSelector(state => state.transaction.transactionDetail);
 
@@ -129,12 +132,37 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 				<Button
 					type="button"
 					isLoading={isLoadingCreate}
-					onClick={() => handleFinishTransaction()}
+					onClick={open}
 					className="w-full rounded-[24px] border border-black bg-white px-4 py-2 text-l-semibold text-neutral-100"
 				>
 					Pay at Cashier
 				</Button>
 			</div>
+
+			<Modal open={isOpen} handleClose={close}>
+				<section className="flex flex-col items-center justify-center pt-2">
+					<Info />
+					<div className="mt-4 px-4">
+						<p className="text-center text-l-semibold">
+							Once you choose payment option, you can’t order again.
+						</p>
+					</div>
+					<p className="mt-[10px] text-center text-m-regular">Are you sure you want to proceed?</p>
+					<div className="mt-8 flex gap-2">
+						<Button variant="secondary" size="m" onClick={close}>
+							No
+						</Button>
+						<Button
+							variant="primary"
+							size="m"
+							onClick={handleFinishTransaction}
+							isLoading={isLoadingCreate}
+						>
+							Yes
+						</Button>
+					</div>
+				</section>
+			</Modal>
 		</main>
 	);
 };

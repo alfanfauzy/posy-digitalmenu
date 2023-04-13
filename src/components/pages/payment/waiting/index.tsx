@@ -43,7 +43,7 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 			<section className="px-4">
 				<div className="mb-4 flex items-center gap-4">
 					<IoIosArrowBack onClick={goBack} size={24} className="cursor-pointer" />
-					<p className="text-xxl-semibold">Bill Summary</p>
+					<p className="text-xxl-semibold">Waiting for Payment</p>
 				</div>
 				<div className="border-t border-neutral-30" />
 			</section>

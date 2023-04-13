@@ -1,10 +1,12 @@
 import Transition from '@/atoms/animations/transition';
 import {useQuery} from '@tanstack/react-query';
 import {GetTransactionStatus} from 'core/data/transaction/sources/GetDetailTransactionStatusQuery';
+import {Response} from 'core/domain/vo/BaseResponse';
 import {AnimatePresence} from 'framer-motion';
 import {useRouter} from 'next/router';
 import {BottomNavigation, Loading} from 'posy-fnb-core';
 import React, {ReactNode, SyntheticEvent, useEffect, useState} from 'react';
+import {toast} from 'react-toastify';
 import Bill from 'src/assets/icons/bill';
 import Menu from 'src/assets/icons/menu';
 import {useAppDispatch} from 'store/hooks';
@@ -62,11 +64,22 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 						setLoading(false);
 					}, 500);
 					router.push(`/payment/completed/${transaction_uuid}`);
+				} else if (data.is_waiting_payment) {
+					setTimeout(() => {
+						setLoading(false);
+					}, 500);
+					router.push(`/payment/waiting/${transaction_uuid}`);
 				} else {
 					setTimeout(() => {
 						setLoading(false);
 					}, 500);
 				}
+			},
+			onError: (data: Response) => {
+				setTimeout(() => {
+					setLoading(false);
+				}, 500);
+				toast.error(data.more_info);
 			},
 		},
 	);
