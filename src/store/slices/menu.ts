@@ -30,7 +30,7 @@ const initialState: MenuState = {
 	search: '',
 	category: {label: '', value: ''},
 	orderForm: {
-		quantity: 0,
+		quantity: 1,
 		addOnVariant: [],
 	},
 	filteredMenu: [],
