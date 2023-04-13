@@ -4,12 +4,12 @@
  *
  */
 
+import MoleculesHeaderNavigation from '@/molecules/header/navigation';
 import {GetOrderResponse} from 'core/data/order/types';
 import {GetTransactionDetailResponse} from 'core/data/transaction/types';
 import {useRouter} from 'next/router';
 import {Button, Loading} from 'posy-fnb-core';
 import React from 'react';
-import {IoIosArrowBack} from 'react-icons/io';
 import User from 'src/assets/icons/user';
 import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
@@ -42,13 +42,7 @@ const PagesBill = ({
 
 	return (
 		<main className="container mx-auto min-h-screen pt-4 pb-40 shadow-md">
-			<section className="px-4">
-				<div className="mb-4 flex items-center gap-4">
-					<IoIosArrowBack onClick={goBack} size={24} className="cursor-pointer" />
-					<p className="text-xxl-semibold">Bill Summary</p>
-				</div>
-				<div className="border-t border-neutral-30" />
-			</section>
+			<MoleculesHeaderNavigation goBack={goBack} text="Bill Summary" />
 
 			{(isLoadingOrderDetail || isLoadingTransactionDetail) && (
 				<div className="flex h-screen items-center justify-center overflow-hidden">
@@ -65,9 +59,8 @@ const PagesBill = ({
 						className="mt-4 flex items-center justify-between px-4"
 					>
 						<div className="flex flex-col items-start">
-							<p className="text-m-medium text-neutral-60">Trx ID</p>
+							<p className="text-m-medium text-neutral-60">Transaction ID</p>
 							<p className="mt-0.5 text-m-semibold text-neutral-80">
-								<p>{transactionDetail?.transaction_code}</p>
 								{generateTransactionCode(transactionDetail?.transaction_code as string)}
 							</p>
 						</div>

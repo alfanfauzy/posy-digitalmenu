@@ -1,10 +1,10 @@
+import MoleculesHeaderNavigation from '@/molecules/header/navigation';
 import {GetPaymentSummaryResponse} from 'core/data/payment/types';
 import {FinishTransactionParam} from 'core/domain/transaction/models';
 import {useCreateFinishTransactionViewModal} from 'core/view/transaction/view-modals/CreateTransactionFinishViewModels';
 import {useRouter} from 'next/router';
 import {Button} from 'posy-fnb-core';
 import React from 'react';
-import {IoIosArrowBack} from 'react-icons/io';
 import User from 'src/assets/icons/user';
 import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
@@ -47,19 +47,13 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 
 	return (
 		<main className="container mx-auto min-h-screen pt-4 pb-40 shadow-md">
-			<section className="px-4">
-				<div className="mb-4 flex items-center gap-4">
-					<IoIosArrowBack onClick={goBack} size={24} className="cursor-pointer" />
-					<p className="text-xxl-semibold">Payment Summary</p>
-				</div>
-				<div className="border-t border-neutral-30" />
-			</section>
+			<MoleculesHeaderNavigation goBack={goBack} text="Payment Summary" />
 
 			{paymentSummary && (
 				<>
 					<section key={transaction_uuid} className="mt-4 flex items-center justify-between px-4">
 						<div className="flex flex-col items-start">
-							<p className="text-m-medium text-neutral-60">Trx ID</p>
+							<p className="text-m-medium text-neutral-60">Transaction ID</p>
 							<p className="mt-0.5 text-m-semibold text-neutral-80">
 								{generateTransactionCode(transactionDetail.transaction_code)}
 							</p>
