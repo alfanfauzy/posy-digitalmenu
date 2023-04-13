@@ -23,7 +23,7 @@ const MoleculesSectionAddToBasket = ({product}: MoleculesSectionAddToBasketProps
 
 	const total = useMemo(
 		() => (calculateAddOn(addOnVariant) + price) * quantity,
-		[quantity, addOnVariant],
+		[quantity, addOnVariant, product],
 	);
 
 	const goBack = () => {
