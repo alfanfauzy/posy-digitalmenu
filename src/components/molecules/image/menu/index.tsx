@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import {Label, TimeLabel} from 'posy-fnb-core';
 import React from 'react';
@@ -37,9 +38,10 @@ const MoleculesImageMenu = ({
 		<div
 			onClick={onClick}
 			role="presentation"
-			className={`${properties[size]} ${className} relative transition duration-300 ease-in-out `}
+			className={`${properties[size]} ${className} relative transition duration-300 ease-in-out`}
 		>
-			<Image
+			{/* temporary using img tag from html due to appearing some issues in server configuration*/}
+			{/* <Image
 				src={image.url}
 				alt={image.alt}
 				fill
@@ -48,7 +50,15 @@ const MoleculesImageMenu = ({
         (max-width: 1200px) 50vw,
         33vw"
 				className="rounded-lg object-cover shadow-sm hover:bg-opacity-70"
-			/>
+			/> */}
+			<div>
+				<img
+					src={image.url}
+					alt={image.alt}
+					loading="lazy"
+					className="rounded-lg object-cover shadow-sm w-full h-auto aspect-square hover:bg-opacity-70"
+				/>
+			</div>
 			{size !== 's' && label && (
 				<div className="absolute top-3">
 					<Label size={size === 'm' ? 's' : 'l'} title={label} />
