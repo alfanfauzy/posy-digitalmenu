@@ -4,12 +4,17 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	images: {
-		domains: ['pvpapi.klikoo.co.id'],
 		remotePatterns: [
 			{
 				protocol: 'https',
 				hostname: 'pvpapi.klikoo.co.id',
 				port: '',
+				pathname: '/**',
+			},
+			{
+				protocol: 'http',
+				hostname: 'localhost',
+				port: '12004',
 				pathname: '/**',
 			},
 		],
