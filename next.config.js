@@ -12,6 +12,12 @@ const nextConfig = {
 				pathname: '/**',
 			},
 			{
+				protocol: 'https',
+				hostname: 'fnb-posy.stage.pvg.im',
+				port: '',
+				pathname: '/**',
+			},
+			{
 				protocol: 'http',
 				hostname: 'localhost',
 				port: '12004',
