@@ -8,12 +8,10 @@ import MoleculesHeaderNavigation from '@/molecules/header/navigation';
 import EmptyBasketState from '@/organisms/empty-state/EmptyBasketState';
 import {GetOrderResponse} from 'core/data/order/types';
 import {GetTransactionDetailResponse} from 'core/data/transaction/types';
-import Image from 'next/image';
 import {useRouter} from 'next/router';
 import {Button, Loading} from 'posy-fnb-core';
 import React from 'react';
 import User from 'src/assets/icons/user';
-import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
 import {generateOrderStatus} from 'utils/UtilsGenerateOrderStatus';
 import {generateOrderDetailStatus} from 'utils/UtilsGenerateStatusTransaction';
@@ -33,8 +31,7 @@ const PagesBill = ({
 	isLoadingTransactionDetail,
 }: PagesBillProps) => {
 	const router = useRouter();
-
-	const {transaction_uuid} = useAppSelector(state => state.transaction);
+	const {transaction_uuid} = router.query;
 
 	const subTotal = orderDetail?.reduce((acc, obj) => acc + obj.price_subtotal_gross, 0);
 	const subDiscount = orderDetail?.reduce((acc, obj) => acc + obj.price_discount, 0);
@@ -161,7 +158,10 @@ const PagesBill = ({
 						}}
 						className="fixed bottom-0 w-full max-w-[576px] rounded-t-2xl bg-neutral-10 px-4 pb-20 pt-6"
 					>
-						<Button fullWidth onClick={() => router.push(`/payment/summary/${transaction_uuid}`)}>
+						<Button
+							fullWidth
+							onClick={() => router.push(`/payment/summary/${transaction_uuid as string}`)}
+						>
 							Payment
 						</Button>
 					</section>

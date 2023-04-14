@@ -18,8 +18,9 @@ type PagesPaymentSummaryProps = {
 
 const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	const router = useRouter();
+	const {transaction_uuid} = router.query;
+
 	const [isOpen, {open, close}] = useDisclosure({initialState: false});
-	const {transaction_uuid} = useAppSelector(state => state.transaction);
 	const transactionDetail = useAppSelector(state => state.transaction.transactionDetail);
 
 	const goBack = () => router.push(`/menu/${transaction_uuid}`);
@@ -36,7 +37,7 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 
 	const handleFinishTransaction = () => {
 		const payload: FinishTransactionParam = {
-			id: transaction_uuid,
+			id: transaction_uuid as string,
 			payload: {
 				customer_email: '',
 				customer_name: '',
@@ -50,11 +51,13 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 
 	return (
 		<main className="container mx-auto pt-4 min-h-screen shadow-md">
-			<MoleculesHeaderNavigation goBack={goBack} text="Payment Summary" />
+			<div className="px-5">
+				<MoleculesHeaderNavigation goBack={goBack} text="Payment Summary" />
+			</div>
 
 			{paymentSummary && (
 				<>
-					<section key={transaction_uuid} className="mt-4 flex items-center justify-between px-4">
+					<section className="mt-4 flex items-center justify-between px-5">
 						<div className="flex flex-col items-start">
 							<p className="text-m-medium text-neutral-60">Transaction ID</p>
 							<p className="mt-0.5 text-m-semibold text-neutral-80">
@@ -78,7 +81,7 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 						</div>
 					</section>
 
-					<section className="px-4 pt-4">
+					<section className="p-4">
 						<p className="text-left text-xl-semibold text-neutral-100">Payment Details</p>
 						<div className="flex justify-between pb-2 pt-2">
 							<p className="text-m-medium text-neutral-100">Subtotal</p>
@@ -119,10 +122,7 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 							</p>
 						</div>
 
-						<div className="divide-y divide-gray-300/50">
-							<div className="flex flex-col pb-4" />
-							<div className="flex flex-col pb-4" />
-						</div>
+						<div className="mt-6 border border-gray-300/50 border-b" />
 					</section>
 				</>
 			)}
@@ -133,7 +133,7 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 					type="button"
 					isLoading={isLoadingCreate}
 					onClick={open}
-					className="w-full rounded-[24px] border border-black bg-white px-4 py-2 text-l-semibold text-neutral-100"
+					className="w-full rounded-[24px] border border-black bg-white px-5 py-2 text-l-semibold text-neutral-100"
 				>
 					Pay at Cashier
 				</Button>
@@ -142,7 +142,7 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 			<Modal open={isOpen} handleClose={close}>
 				<section className="flex flex-col items-center justify-center pt-2">
 					<Info />
-					<div className="mt-4 px-4">
+					<div className="mt-4 px-5">
 						<p className="text-center text-l-semibold">
 							Once you choose payment option, you can’t order again.
 						</p>
