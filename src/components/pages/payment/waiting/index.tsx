@@ -1,12 +1,12 @@
 import {useQuery} from '@tanstack/react-query';
 import {GetPaymentSummaryResponse} from 'core/data/payment/types';
+import {GetTransactionDetail} from 'core/data/transaction/sources/GetDetailTransactionQuery';
 import {GetTransactionStatus} from 'core/data/transaction/sources/GetDetailTransactionStatusQuery';
 import Image from 'next/image';
 import {useRouter} from 'next/router';
-import {Button} from 'posy-fnb-core';
+import {Button, Loading} from 'posy-fnb-core';
 import React from 'react';
 import {toast} from 'react-toastify';
-import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
 import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
 
@@ -20,7 +20,15 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	const router = useRouter();
 	const {transaction_uuid} = router.query;
 
-	const transactionDetail = useAppSelector(state => state.transaction.transactionDetail);
+	const {data: transactionDetail, isLoading: isLoadingTransactionDetail} = useQuery(
+		['transaction/detail'],
+		async () => {
+			const response = await GetTransactionDetail(transaction_uuid as string);
+			const dataTransaction = response.data;
+			return dataTransaction;
+		},
+		{enabled: !!transaction_uuid},
+	);
 
 	const {isLoading: isLoadingTransactionStatus, refetch: handleGetTransactionStatus} = useQuery(
 		['transaction/status'],
@@ -58,7 +66,11 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 						</p>
 						<p className="pt-3 text-center text-m-regular text-neutral-70">Your transacion ID</p>
 						<p className="mt-1 mb-4 text-center text-[30px] font-semibold text-secondary-main">
-							{generateTransactionCode(transactionDetail.transaction_code)}
+							{isLoadingTransactionDetail ? (
+								<Loading size={10} />
+							) : (
+								generateTransactionCode(transactionDetail?.transaction_code as string)
+							)}
 						</p>
 						<Image src={ImageWaitingPayment} priority alt="waiting payment" className="m-auto" />
 					</div>

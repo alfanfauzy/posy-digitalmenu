@@ -7,7 +7,6 @@ import category from './slices/category';
 import menu from './slices/menu';
 import outlet from './slices/outlet';
 import product from './slices/product';
-import transaction from './slices/transaction';
 
 const persistConfig = {
 	key: 'root',
@@ -23,7 +22,6 @@ const persistedReducer = persistReducer(
 		menu,
 		category,
 		product,
-		transaction,
 		outlet,
 	}),
 );

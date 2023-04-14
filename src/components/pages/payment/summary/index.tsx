@@ -1,14 +1,15 @@
 import useDisclosure from '@/hooks/useDisclosure';
 import MoleculesHeaderNavigation from '@/molecules/header/navigation';
+import {useQuery} from '@tanstack/react-query';
 import {GetPaymentSummaryResponse} from 'core/data/payment/types';
+import {GetTransactionDetail} from 'core/data/transaction/sources/GetDetailTransactionQuery';
 import {FinishTransactionParam} from 'core/domain/transaction/models';
 import {useCreateFinishTransactionViewModal} from 'core/view/transaction/view-modals/CreateTransactionFinishViewModels';
 import {useRouter} from 'next/router';
-import {Button, Modal} from 'posy-fnb-core';
+import {Button, Loading, Modal} from 'posy-fnb-core';
 import React from 'react';
 import Info from 'src/assets/icons/info';
 import User from 'src/assets/icons/user';
-import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
 import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
 
@@ -21,7 +22,16 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	const {transaction_uuid} = router.query;
 
 	const [isOpen, {open, close}] = useDisclosure({initialState: false});
-	const transactionDetail = useAppSelector(state => state.transaction.transactionDetail);
+
+	const {data: transactionDetail, isLoading: isLoadingTransactionDetail} = useQuery(
+		['transaction/detail'],
+		async () => {
+			const response = await GetTransactionDetail(transaction_uuid as string);
+			const dataTransaction = response.data;
+			return dataTransaction;
+		},
+		{enabled: !!transaction_uuid},
+	);
 
 	const goBack = () => router.push(`/menu/${transaction_uuid}`);
 
@@ -49,6 +59,14 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 		createTransactionFinish(payload);
 	};
 
+	if (isLoadingTransactionDetail) {
+		return (
+			<div className="flex h-screen items-center justify-center overflow-hidden">
+				<Loading size={60} />
+			</div>
+		);
+	}
+
 	return (
 		<main className="container mx-auto pt-4 min-h-screen shadow-md">
 			<div className="px-5">
@@ -61,20 +79,20 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 						<div className="flex flex-col items-start">
 							<p className="text-m-medium text-neutral-60">Transaction ID</p>
 							<p className="mt-0.5 text-m-semibold text-neutral-80">
-								{generateTransactionCode(transactionDetail.transaction_code)}
+								{generateTransactionCode(transactionDetail?.transaction_code as string)}
 							</p>
 						</div>
 						<div className="flex flex-col items-center">
 							<p className="text-m-medium text-neutral-60">Table</p>
 							<p className="mt-0.5 text-m-semibold text-neutral-80">
-								{transactionDetail.table_name || '-'}
+								{transactionDetail?.table_name || '-'}
 							</p>
 						</div>
 						<div className="flex flex-col items-end">
 							<p className="text-m-medium text-neutral-60">Total Pax</p>
 							<div className="flex items-center gap-1.5">
 								<p className="mt-0.5 text-m-semibold text-neutral-80">
-									{transactionDetail.total_pax}
+									{transactionDetail?.total_pax}
 								</p>
 								<User />
 							</div>
@@ -131,7 +149,6 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 				<p className="mb-4 text-xl-semibold text-neutral-100">Payment option</p>
 				<Button
 					type="button"
-					isLoading={isLoadingCreate}
 					onClick={open}
 					className="w-full rounded-[24px] border border-black bg-white px-5 py-2 text-l-semibold text-neutral-100"
 				>

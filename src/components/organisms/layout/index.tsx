@@ -9,8 +9,6 @@ import React, {ReactNode, SyntheticEvent, useEffect, useState} from 'react';
 import {toast} from 'react-toastify';
 import Bill from 'src/assets/icons/bill';
 import Menu from 'src/assets/icons/menu';
-import {useAppDispatch} from 'store/hooks';
-import {onChangeTransactionId} from 'store/slices/transaction';
 
 type OrganismsLayoutProps = {
 	children: ReactNode;
@@ -37,7 +35,6 @@ const showBottomNavigationRoutes = [
 
 const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 	const router = useRouter();
-	const dispatch = useAppDispatch();
 	const {transaction_uuid} = router.query;
 	const [value, setValue] = useState(0);
 	const [loading, setLoading] = useState(true);
@@ -73,7 +70,6 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 				setTimeout(() => {
 					setLoading(false);
 				}, 500);
-				dispatch(onChangeTransactionId(''));
 				toast.error(data.more_info);
 				return router.push(`/404`);
 			},

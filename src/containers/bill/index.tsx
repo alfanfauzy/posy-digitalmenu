@@ -5,29 +5,8 @@
  */
 
 import PagesBill from '@/pages/bill';
-import {GetOrderResponse} from 'core/data/order/types';
-import {GetTransactionDetailResponse} from 'core/data/transaction/types';
 import React from 'react';
 
-type ContainerBillProps = {
-	orderDetail: Array<GetOrderResponse> | undefined;
-	isLoadingOrderDetail: boolean;
-	transactionDetail: GetTransactionDetailResponse | undefined;
-	isLoadingTransactionDetail: boolean;
-};
-
-const ContainerBill = ({
-	orderDetail,
-	isLoadingOrderDetail,
-	transactionDetail,
-	isLoadingTransactionDetail,
-}: ContainerBillProps) => (
-	<PagesBill
-		orderDetail={orderDetail}
-		isLoadingOrderDetail={isLoadingOrderDetail}
-		transactionDetail={transactionDetail}
-		isLoadingTransactionDetail={isLoadingTransactionDetail}
-	/>
-);
+const ContainerBill = () => <PagesBill />;
 
 export default ContainerBill;
