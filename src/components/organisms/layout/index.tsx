@@ -89,6 +89,12 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [router.pathname]);
 
+	useEffect(() => {
+		if (!transaction_uuid) {
+			setLoading(false);
+		}
+	}, [router.pathname, transaction_uuid]);
+
 	if (loading) {
 		return (
 			<div className="flex h-screen items-center justify-center overflow-hidden">

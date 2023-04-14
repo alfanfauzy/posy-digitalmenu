@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {ProductDetail} from 'core/domain/product/models';
 import {useRouter} from 'next/router';
 import {Button} from 'posy-fnb-core';
@@ -17,13 +16,14 @@ const MoleculesSectionAddToBasket = ({product}: MoleculesSectionAddToBasketProps
 	const dispatch = useAppDispatch();
 	const quantity = useAppSelector(state => state.menu.orderForm.quantity);
 	const addOnVariant = useAppSelector(state => state.menu.orderForm.addOnVariant);
-	const notes = useAppSelector(state => state.menu.orderForm.notes);
+	const {orderForm} = useAppSelector(state => state.menu);
+	const {notes} = orderForm;
 
 	const price = product.detail.is_discount ? product.detail.price_final : product.detail.price;
 
 	const total = useMemo(
 		() => (calculateAddOn(addOnVariant) + price) * quantity,
-		[quantity, addOnVariant, product],
+		[addOnVariant, price, quantity],
 	);
 
 	const goBack = () => {
@@ -63,6 +63,24 @@ const MoleculesSectionAddToBasket = ({product}: MoleculesSectionAddToBasketProps
 		goBack();
 	};
 
+	const AddonRequired = useMemo(
+		() =>
+			product?.addons?.flatMap(el =>
+				el.is_optional
+					? []
+					: {
+							addOnUuid: el.uuid,
+							required: !el.is_optional,
+					  },
+			),
+		[product?.addons],
+	);
+
+	const isValidAddon = useMemo(
+		() => AddonRequired?.map(el => orderForm.addOnVariant.some(v => v.addOnUuid === el.addOnUuid)),
+		[AddonRequired, orderForm.addOnVariant],
+	);
+
 	if (counter && quantity === 0) {
 		return (
 			<div className="mt-6">
@@ -98,7 +116,12 @@ const MoleculesSectionAddToBasket = ({product}: MoleculesSectionAddToBasketProps
 
 	return (
 		<div className="mt-6">
-			<Button onClick={handleAddToBasket} fullWidth variant="primary">
+			<Button
+				disabled={!isValidAddon?.every(item => item)}
+				onClick={handleAddToBasket}
+				fullWidth
+				variant="primary"
+			>
 				<div className="flex items-center justify-between">
 					<p className="text-l-semibold">Add to Basket</p>
 					<p className="flex flex-1 justify-end text-xxl-semibold">{toRupiah(total)}</p>

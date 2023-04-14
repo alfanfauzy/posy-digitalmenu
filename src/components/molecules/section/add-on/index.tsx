@@ -28,12 +28,12 @@ const MoleculesSectionAddon = ({add_on}: MoleculesSectionAddonProps) => {
 
 	return (
 		<article>
-			{add_on.map((addon, id) => (
+			{add_on.map(addon => (
 				<aside key={addon.addon_name}>
 					<div className="mt-4">
 						<p className="text-xl-semibold">{addon.addon_name}</p>
 						<p className="text-m-regular">
-							{!addon.is_optional && `Required | `}Select {id + 1}
+							{`${addon.is_optional ? 'Optional' : 'Required | select 1'}`}
 						</p>
 					</div>
 					<section className="border-b">

@@ -97,57 +97,58 @@ const PagesBill = () => {
 							</div>
 						</div>
 					</section>
-					{orderDetail?.map((order, idx) => (
-						<>
-							{/* organims */}
-							<div className="mt-4 flex items-center justify-between bg-neutral-30 px-5 py-2">
-								<p className="text-l-semibold">Order {idx + 1}</p>
-								<p className="text-l-regular">{generateOrderStatus(order.status)}</p>
-							</div>
-							<section className="p-5">
-								{order.order_detail.map(item => (
-									<aside key={item.uuid} className="pb-4">
-										<div id="product-info" className="flex justify-between">
-											<p className="mr-2 text-l-regular">x{item.qty}</p>
-											<p className="flex-1 text-l-regular">{item.product_name}</p>
-											<div className="flex flex-col items-end">
-												<p className="text-l-regular">{toRupiah(item.price_subtotal)}</p>
-												{item.price_discount !== 0 && (
-													<p className="text-s-regular text-neutral-60 line-through">
-														{toRupiah((item.price_base + item.price_addon) * item.qty)}
-													</p>
-												)}
-											</div>
-										</div>
-										<div id="addon" className="mt-2 ml-6 flex flex-col gap-1">
-											{item.addon_information.map(addon => (
-												<div
-													key={`${addon.addon_name}${addon.addon_price}`}
-													className="flex items-start justify-between"
-												>
-													<p className="w-3/4 text-s-regular text-neutral-90 line-clamp-1">{`${addon.addon_name} ${addon.addon_variants[0].variant_name}`}</p>
+					{orderDetail &&
+						orderDetail?.map((order, idx) => (
+							<>
+								{/* organims */}
+								<div className="mt-4 flex items-center justify-between bg-neutral-30 px-5 py-2">
+									<p className="text-l-semibold">Order {idx + 1}</p>
+									<p className="text-l-regular">{generateOrderStatus(order.status)}</p>
+								</div>
+								<section className="p-5">
+									{order.order_detail.map(item => (
+										<aside key={item.uuid} className="pb-4">
+											<div id="product-info" className="flex justify-between">
+												<p className="mr-2 text-l-regular">x{item.qty}</p>
+												<p className="flex-1 text-l-regular">{item.product_name}</p>
+												<div className="flex flex-col items-end">
+													<p className="text-l-regular">{toRupiah(item.price_subtotal)}</p>
+													{item.price_discount !== 0 && (
+														<p className="text-s-regular text-neutral-60 line-through">
+															{toRupiah((item.price_base + item.price_addon) * item.qty)}
+														</p>
+													)}
 												</div>
-											))}
-										</div>
-
-										{item.order_note && (
-											<div id="notes" className="ml-6 mt-0.5">
-												<p className="text-s-regular text-neutral-70">
-													<span className="text-s-semibold">Notes:</span> {item.order_note || '-'}
-												</p>
 											</div>
-										)}
+											<div id="addon" className="mt-2 ml-6 flex flex-col gap-1">
+												{item.addon_information.map(addon => (
+													<div
+														key={`${addon.addon_name}${addon.addon_price}`}
+														className="flex items-start justify-between"
+													>
+														<p className="w-3/4 text-s-regular text-neutral-90 line-clamp-1">{`${addon.addon_name} ${addon.addon_variants[0].variant_name}`}</p>
+													</div>
+												))}
+											</div>
 
-										<div className="mt-4 ml-6 flex items-center justify-between">
-											<p className="text-m-semibold">Status</p>
-											{generateOrderDetailStatus(item.status)}
-										</div>
-										<div className="mt-4 border-t border-neutral-30" />
-									</aside>
-								))}
-							</section>
-						</>
-					))}
+											{item.order_note && (
+												<div id="notes" className="ml-6 mt-0.5">
+													<p className="text-s-regular text-neutral-70">
+														<span className="text-s-semibold">Notes:</span> {item.order_note || '-'}
+													</p>
+												</div>
+											)}
+
+											<div className="mt-4 ml-6 flex items-center justify-between">
+												<p className="text-m-semibold">Status</p>
+												{generateOrderDetailStatus(item.status)}
+											</div>
+											<div className="mt-4 border-t border-neutral-30" />
+										</aside>
+									))}
+								</section>
+							</>
+						))}
 
 					<section className="p-4">
 						<p className="text-left text-xl-semibold text-neutral-100">Payment Details</p>

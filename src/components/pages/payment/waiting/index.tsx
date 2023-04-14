@@ -112,7 +112,7 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 						</div>
 						<div className="flex justify-between pb-2">
 							<p className="text-m-medium text-neutral-100">
-								PB 1{' '}
+								PB1{' '}
 								{paymentSummary.tax_and_charge.is_tax &&
 									`${paymentSummary.tax_and_charge.tax_percentage}%`}
 							</p>
