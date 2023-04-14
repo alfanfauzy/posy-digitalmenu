@@ -5,10 +5,12 @@ import Image from 'next/image';
 import {useRouter} from 'next/router';
 import {Button} from 'posy-fnb-core';
 import React from 'react';
-import {IoIosArrowBack} from 'react-icons/io';
+import {toast} from 'react-toastify';
 import {useAppSelector} from 'store/hooks';
 import {toRupiah} from 'utils/common';
 import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
+
+const ImageWaitingPayment = require('public/waiting_payment.svg');
 
 type PagesPaymentSummaryProps = {
 	paymentSummary: GetPaymentSummaryResponse | undefined;
@@ -20,13 +22,11 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	const transactionDetail = useAppSelector(state => state.transaction.transactionDetail);
 	const {transaction_uuid} = router.query;
 
-	const goBack = () => router.push(`/menu/${transaction_uuid}`);
-
 	const {isLoading: isLoadingTransactionStatus, refetch: handleGetTransactionStatus} = useQuery(
 		['transaction/status'],
 		async () => {
 			const response = await GetTransactionStatus(transactionDetail.uuid);
-			const dataTransaction = await response.data;
+			const dataTransaction = response.data;
 			return dataTransaction;
 		},
 		{
@@ -38,19 +38,21 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 		},
 	);
 
-	return (
-		<main className="container mx-auto min-h-screen pt-4 pb-40 shadow-md">
-			<section className="px-4">
-				<div className="mb-4 flex items-center gap-4">
-					<IoIosArrowBack onClick={goBack} size={24} className="cursor-pointer" />
-					<p className="text-xxl-semibold">Waiting for Payment</p>
-				</div>
-				<div className="border-t border-neutral-30" />
-			</section>
+	const handleCheckStatus = async () => {
+		await handleGetTransactionStatus().then(data => {
+			if (data.data?.is_waiting_payment) {
+				toast.info('Waiting for payment', {
+					closeButton: false,
+				});
+			}
+		});
+	};
 
+	return (
+		<main className="container mx-auto min-h-screen flex flex-col items-center py-4 shadow-md">
 			{paymentSummary && (
-				<>
-					<div className="mx-auto mt-2 max-w-md pb-5">
+				<section className="mt-4">
+					<div className="mx-auto">
 						<p className="text-center text-xxl-semibold text-neutral-100">
 							Thank you for your order!
 						</p>
@@ -58,17 +60,10 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 						<p className="mt-1 mb-4 text-center text-[30px] font-semibold text-secondary-main">
 							{generateTransactionCode(transactionDetail.transaction_code)}
 						</p>
-						<Image
-							src="/waiting_payment.svg"
-							priority
-							alt="logo"
-							width={400}
-							height={400}
-							className="m-auto"
-						/>
+						<Image src={ImageWaitingPayment} priority alt="waiting payment" className="m-auto" />
 					</div>
-					<div className="pb divide-y divide-gray-300/50">
-						<div className="mx-auto max-w-md pb-5 pt-5">
+					<div className="divide-y divide-gray-300/50">
+						<div className="mx-auto p-5">
 							<p className="text-left text-l-regular text-neutral-100">
 								Please go to the cashier to pay for your order. Our staff will be happy to assist
 								you.
@@ -77,7 +72,7 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 						<div className="flex flex-col pb-8" />
 					</div>
 
-					<section className="px-4 pt-4">
+					<aside className="px-4 pt-4">
 						<p className="text-left text-xl-semibold text-neutral-100">Payment Details</p>
 						<div className="flex justify-between pb-2 pt-2">
 							<p className="text-m-medium text-neutral-100">Subtotal</p>
@@ -85,12 +80,14 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 								{toRupiah(paymentSummary.subtotal_price_gross)}
 							</p>
 						</div>
-						<div className="flex justify-between pb-2">
-							<p className="text-m-medium text-neutral-100">Discount</p>
-							<p className="text-l-semibold text-neutral-100">
-								-{toRupiah(paymentSummary.discount_product_price)}
-							</p>
-						</div>
+						{paymentSummary.discount_product_price > 0 && (
+							<div className="flex justify-between pb-2">
+								<p className="text-m-medium text-neutral-100">Discount</p>
+								<p className="text-l-semibold text-neutral-100">
+									-{toRupiah(paymentSummary.discount_product_price)}
+								</p>
+							</div>
+						)}
 						<div className="flex justify-between pb-2">
 							<p className="text-m-medium text-neutral-100">
 								Service{' '}
@@ -117,20 +114,19 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 								{toRupiah(paymentSummary.payment_price)}
 							</p>
 						</div>
-
 						<div className="divide-y divide-gray-300/50">
 							<div className="flex flex-col pb-4" />
 							<div className="flex flex-col pb-4" />
 						</div>
-					</section>
-				</>
+					</aside>
+				</section>
 			)}
 
-			<div className="flex flex-col p-4">
+			<div className="flex flex-col py-4">
 				<Button
 					isLoading={isLoadingTransactionStatus}
 					type="button"
-					onClick={() => handleGetTransactionStatus()}
+					onClick={handleCheckStatus}
 					className="w-full rounded-[24px] border border-black bg-white px-4 py-2 text-l-semibold text-neutral-100"
 				>
 					Check Status
