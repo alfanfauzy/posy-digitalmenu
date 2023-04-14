@@ -18,14 +18,14 @@ type PagesPaymentSummaryProps = {
 
 const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	const router = useRouter();
+	const {transaction_uuid} = router.query;
 
 	const transactionDetail = useAppSelector(state => state.transaction.transactionDetail);
-	const {transaction_uuid} = router.query;
 
 	const {isLoading: isLoadingTransactionStatus, refetch: handleGetTransactionStatus} = useQuery(
 		['transaction/status'],
 		async () => {
-			const response = await GetTransactionStatus(transactionDetail.uuid);
+			const response = await GetTransactionStatus(transaction_uuid as string);
 			const dataTransaction = response.data;
 			return dataTransaction;
 		},
@@ -49,9 +49,9 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	};
 
 	return (
-		<main className="container mx-auto min-h-screen flex flex-col items-center py-4 shadow-md">
+		<main className="container mx-auto overflow-auto h-full flex flex-col items-center py-4">
 			{paymentSummary && (
-				<section className="mt-4">
+				<section className="mt-4 overflow-auto">
 					<div className="mx-auto">
 						<p className="text-center text-xxl-semibold text-neutral-100">
 							Thank you for your order!
@@ -69,10 +69,10 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 								you.
 							</p>
 						</div>
-						<div className="flex flex-col pb-8" />
+						<div className="flex flex-col" />
 					</div>
 
-					<aside className="px-4 pt-4">
+					<aside className="p-5">
 						<p className="text-left text-xl-semibold text-neutral-100">Payment Details</p>
 						<div className="flex justify-between pb-2 pt-2">
 							<p className="text-m-medium text-neutral-100">Subtotal</p>
@@ -122,7 +122,7 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 				</section>
 			)}
 
-			<div className="flex flex-col py-4">
+			<div className="flex flex-col pb-4">
 				<Button
 					isLoading={isLoadingTransactionStatus}
 					type="button"

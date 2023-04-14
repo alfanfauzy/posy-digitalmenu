@@ -12,7 +12,7 @@ import transaction from './slices/transaction';
 const persistConfig = {
 	key: 'root',
 	version: 1,
-	whitelist: ['basket', 'transaction'],
+	whitelist: ['basket'],
 	storage: PersistStorage,
 };
 

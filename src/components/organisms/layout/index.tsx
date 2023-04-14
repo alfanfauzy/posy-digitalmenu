@@ -47,9 +47,11 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 		async () => {
 			const response = await GetTransactionStatus(transaction_uuid as string);
 			const dataTransaction = response.data;
+
 			return dataTransaction;
 		},
 		{
+			enabled: !!transaction_uuid,
 			onSuccess: data => {
 				if (!data.is_open && data.is_paid) {
 					setTimeout(() => {

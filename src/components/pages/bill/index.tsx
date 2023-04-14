@@ -5,6 +5,7 @@
  */
 
 import MoleculesHeaderNavigation from '@/molecules/header/navigation';
+import EmptyBasketState from '@/organisms/empty-state/EmptyBasketState';
 import {GetOrderResponse} from 'core/data/order/types';
 import {GetTransactionDetailResponse} from 'core/data/transaction/types';
 import Image from 'next/image';
@@ -18,8 +19,6 @@ import {generateOrderStatus} from 'utils/UtilsGenerateOrderStatus';
 import {generateOrderDetailStatus} from 'utils/UtilsGenerateStatusTransaction';
 import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
 
-const ImageBillEmpty = require('public/bill-empty.svg');
-
 type PagesBillProps = {
 	orderDetail: Array<GetOrderResponse> | undefined;
 	isLoadingOrderDetail: boolean;
@@ -27,15 +26,6 @@ type PagesBillProps = {
 	isLoadingTransactionDetail: boolean;
 };
 
-const EmptyBill = () => (
-	<div className="flex justify-center flex-col p-2 items-center">
-		<p className="text-xl-semibold p-1 mb-2 mt-6">Oops! Ther&lsquo;s no order yet</p>
-		<Image src={ImageBillEmpty} priority alt="bill-empty" width={350} height={350} />
-		<p className="text-l-reguler p-1 mt-6 text-center">
-			Start browsing our menu and add your favorite items to your basket.
-		</p>
-	</div>
-);
 const PagesBill = ({
 	orderDetail,
 	isLoadingOrderDetail,
@@ -53,8 +43,10 @@ const PagesBill = ({
 	const goBack = () => router.back();
 
 	return (
-		<main className="container mx-auto min-h-screen pt-4 pb-40 shadow-md">
-			<MoleculesHeaderNavigation goBack={goBack} text="Bill Summary" />
+		<main className="container mx-auto min-h-screen overflow-y-auto pt-4 pb-40 shadow-md">
+			<div className="px-5">
+				<MoleculesHeaderNavigation goBack={goBack} text="Bill Summary" />
+			</div>
 
 			{(isLoadingOrderDetail || isLoadingTransactionDetail) && (
 				<div className="flex h-screen items-center justify-center overflow-hidden">
@@ -63,12 +55,12 @@ const PagesBill = ({
 			)}
 
 			{!orderDetail ? (
-				<EmptyBill />
+				<EmptyBasketState />
 			) : (
 				<>
 					<section
 						key={transactionDetail?.transaction_code}
-						className="mt-4 flex items-center justify-between px-4"
+						className="mt-4 flex items-center justify-between px-5"
 					>
 						<div className="flex flex-col items-start">
 							<p className="text-m-medium text-neutral-60">Transaction ID</p>
@@ -95,11 +87,11 @@ const PagesBill = ({
 					{orderDetail?.map((order, idx) => (
 						<>
 							{/* organims */}
-							<div className="mt-4 flex items-center justify-between bg-neutral-30 px-4 py-2">
+							<div className="mt-4 flex items-center justify-between bg-neutral-30 px-5 py-2">
 								<p className="text-l-semibold">Order {idx + 1}</p>
 								<p className="text-l-regular">{generateOrderStatus(order.status)}</p>
 							</div>
-							<section className="px-4 pt-4">
+							<section className="p-5">
 								{order.order_detail.map(item => (
 									<aside key={item.uuid} className="pb-4">
 										<div id="product-info" className="flex justify-between">
@@ -144,8 +136,8 @@ const PagesBill = ({
 						</>
 					))}
 
-					<section className="mt-2 px-4">
-						<div className="mt-6 flex flex-col gap-2">
+					<section className="px-5">
+						<div className="flex flex-col gap-2">
 							<p className="text-m-semibold">Payment Details</p>
 							<div className="flex items-center justify-between text-m-medium">
 								<p>Subtotal</p>

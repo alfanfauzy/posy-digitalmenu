@@ -5,15 +5,14 @@
  */
 
 import useDisclosure from '@/hooks/useDisclosure';
+import EmptyBasketState from '@/organisms/empty-state/EmptyBasketState';
 import {OrderDetail, OrderParam} from 'core/domain/order/models';
-import {Response} from 'core/domain/vo/BaseResponse';
 import {useCreateOrderViewModal} from 'core/view/order/view-modals/CreateOrderViewModel';
 import dynamic from 'next/dynamic';
 import {useRouter} from 'next/router';
 import {Button} from 'posy-fnb-core';
 import React, {useMemo} from 'react';
 import {IoIosArrowBack} from 'react-icons/io';
-import {toast} from 'react-toastify';
 import Info from 'src/assets/icons/info';
 import PencilEdit from 'src/assets/icons/pencilEdit';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
@@ -79,25 +78,20 @@ const PagesBasket: React.FC = () => {
 	};
 
 	return (
-		<main className="container mx-auto min-h-screen pt-4 pb-40 shadow-md">
-			{/* molecules */}
-			<section className="px-4">
-				<div className="mb-4 flex items-center gap-4">
+		<main className="container mx-auto min-h-screen overflow-y-auto pt-4 pb-40 shadow-md">
+			<section className="px-5">
+				<div className="mb-4 flex items-center gap-2">
 					<IoIosArrowBack onClick={goBack} size={24} className="cursor-pointer" />
 					<p className="text-xxl-semibold">Your Basket</p>
 				</div>
 				<div className="border-t border-neutral-30" />
 			</section>
 
-			{basket.length === 0 && (
-				<div className="mt-10 flex justify-center text-m-semibold">Your basket is still empty!</div>
-			)}
+			{basket.length === 0 && <EmptyBasketState />}
 
-			{/* molecules */}
 			{basket.length > 0 && (
 				<>
-					{/* organims */}
-					<section className="px-4 pt-4">
+					<section className="p-5">
 						{basket.map(item => (
 							<aside key={item.counter} className="pb-4">
 								<div id="product-info" className="flex justify-between">
@@ -153,7 +147,7 @@ const PagesBasket: React.FC = () => {
 						))}
 					</section>
 
-					<section className="mt-2 px-4">
+					<section className="mt-2 px-5">
 						<Button variant="secondary" size="m" fullWidth onClick={goBack}>
 							+ Add more order
 						</Button>
@@ -188,7 +182,6 @@ const PagesBasket: React.FC = () => {
 				</>
 			)}
 
-			{/* molecules */}
 			<Modal open={isOpen} handleClose={close}>
 				<section className="flex flex-col items-center justify-center pt-2">
 					<Info />

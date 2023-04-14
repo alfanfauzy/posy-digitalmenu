@@ -19,7 +19,7 @@ const Page = ({transaction_uuid}: BillPageProps) => {
 		['order/detail'],
 		async () => {
 			const response = await GetOrderDetail(transaction_uuid);
-			const dataOrder = await response.data.objs;
+			const dataOrder = response.data.objs;
 			return dataOrder;
 		},
 	);
@@ -28,7 +28,7 @@ const Page = ({transaction_uuid}: BillPageProps) => {
 		['transaction/detail'],
 		async () => {
 			const response = await GetTransactionDetail(transaction_uuid);
-			const dataTransaction = await response.data;
+			const dataTransaction = response.data;
 			return dataTransaction;
 		},
 		{
