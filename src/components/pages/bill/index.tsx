@@ -6,8 +6,10 @@
 
 import MoleculesHeaderNavigation from '@/molecules/header/navigation';
 import EmptyBasketState from '@/organisms/empty-state/EmptyBasketState';
-import {GetOrderResponse} from 'core/data/order/types';
-import {GetTransactionDetailResponse} from 'core/data/transaction/types';
+import {useQuery} from '@tanstack/react-query';
+import {GetOrderDetail} from 'core/data/order/sources/GetOrderDetailQuery';
+import {GetPaymentSummary} from 'core/data/payment/sources/GetPaymentSummaryQuery';
+import {GetTransactionDetail} from 'core/data/transaction/sources/GetDetailTransactionQuery';
 import {useRouter} from 'next/router';
 import {Button, Loading} from 'posy-fnb-core';
 import React from 'react';
@@ -17,25 +19,39 @@ import {generateOrderStatus} from 'utils/UtilsGenerateOrderStatus';
 import {generateOrderDetailStatus} from 'utils/UtilsGenerateStatusTransaction';
 import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
 
-type PagesBillProps = {
-	orderDetail: Array<GetOrderResponse> | undefined;
-	isLoadingOrderDetail: boolean;
-	transactionDetail: GetTransactionDetailResponse | undefined;
-	isLoadingTransactionDetail: boolean;
-};
-
-const PagesBill = ({
-	orderDetail,
-	isLoadingOrderDetail,
-	transactionDetail,
-	isLoadingTransactionDetail,
-}: PagesBillProps) => {
+const PagesBill = () => {
 	const router = useRouter();
 	const {transaction_uuid} = router.query;
 
-	const subTotal = orderDetail?.reduce((acc, obj) => acc + obj.price_subtotal_gross, 0);
-	const subDiscount = orderDetail?.reduce((acc, obj) => acc + obj.price_discount, 0);
-	const total = orderDetail?.reduce((acc, obj) => acc + obj.price_final, 0);
+	const {data: orderDetail, isLoading: isLoadingOrderDetail} = useQuery(
+		['order/detail'],
+		async () => {
+			const response = await GetOrderDetail(transaction_uuid as string);
+			const dataOrder = response.data.objs;
+			return dataOrder;
+		},
+		{enabled: !!transaction_uuid},
+	);
+
+	const {data: transactionDetail, isLoading: isLoadingTransactionDetail} = useQuery(
+		['transaction/detail'],
+		async () => {
+			const response = await GetTransactionDetail(transaction_uuid as string);
+			const dataTransaction = response.data;
+			return dataTransaction;
+		},
+		{enabled: !!transaction_uuid},
+	);
+
+	const {data: paymentSummary} = useQuery(
+		['payment/summary'],
+		async () => {
+			const response = await GetPaymentSummary(transaction_uuid as string);
+			const dataOrder = response.data;
+			return dataOrder;
+		},
+		{enabled: !!transaction_uuid},
+	);
 
 	const goBack = () => router.back();
 
@@ -133,22 +149,48 @@ const PagesBill = ({
 						</>
 					))}
 
-					<section className="px-5">
-						<div className="flex flex-col gap-2">
-							<p className="text-m-semibold">Payment Details</p>
-							<div className="flex items-center justify-between text-m-medium">
-								<p>Subtotal</p>
-								<p>{toRupiah(subTotal as number)}</p>
-							</div>
-							<div className="flex items-center justify-between text-m-medium">
-								<p>Discount</p>
-								<p>{toRupiah(subDiscount as number)}</p>
-							</div>
-							<div className="flex items-center justify-between text-l-semibold">
-								<p>Total</p>
-								<p>{toRupiah(total as number)}</p>
-							</div>
+					<section className="p-4">
+						<p className="text-left text-xl-semibold text-neutral-100">Payment Details</p>
+						<div className="flex justify-between pb-2 pt-2">
+							<p className="text-m-medium text-neutral-100">Subtotal</p>
+							<p className="text-l-semibold text-neutral-100">
+								{toRupiah(paymentSummary?.subtotal_price_gross as number)}
+							</p>
 						</div>
+						<div className="flex justify-between pb-2">
+							<p className="text-m-medium text-neutral-100">Discount</p>
+							<p className="text-l-semibold text-neutral-100">
+								-{toRupiah(paymentSummary?.discount_product_price as number)}
+							</p>
+						</div>
+						<div className="flex justify-between pb-2">
+							<p className="text-m-medium text-neutral-100">
+								Service{' '}
+								{paymentSummary?.tax_and_charge.is_service_charge &&
+									`${paymentSummary?.tax_and_charge.service_charge_percentage}%`}
+							</p>
+							<p className="text-l-medium text-neutral-100">
+								{toRupiah(paymentSummary?.tax_and_charge.service_charge_price as number)}
+							</p>
+						</div>
+						<div className="flex justify-between pb-2">
+							<p className="text-m-medium text-neutral-100">
+								PB1{'  '}
+								{paymentSummary?.tax_and_charge.is_tax &&
+									`${paymentSummary?.tax_and_charge.tax_percentage}%`}
+							</p>
+							<p className="text-l-medium text-neutral-100">
+								{toRupiah(paymentSummary?.tax_and_charge.tax_price as number)}
+							</p>
+						</div>
+						<div className="flex justify-between">
+							<p className="text-l-semibold text-neutral-100">TOTAL</p>
+							<p className="text-l-semibold text-neutral-100">
+								{toRupiah(paymentSummary?.payment_price as number)}
+							</p>
+						</div>
+
+						<div className="mt-6 border border-gray-300/50 border-b" />
 					</section>
 
 					{/* molecules */}
