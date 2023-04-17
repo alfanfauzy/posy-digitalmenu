@@ -17,7 +17,7 @@ const PagesMenu: React.FC = () => {
 	const {basket} = useAppSelector(state => state.basket);
 
 	return (
-		<main className="container mx-auto min-h-screen pt-4 pb-28 shadow-md">
+		<main className="mx-auto min-h-screen pt-4 pb-28 shadow-md">
 			<HeaderOutletInfo />
 			<SectionFilter />
 			<SectionList />

@@ -7,7 +7,7 @@ const nextConfig = {
 		remotePatterns: [
 			{
 				protocol: 'https',
-				hostname: 'pvpapi.klikoo.co.id',
+				hostname: 'fnbapi.stage.pvg.im',
 				port: '',
 				pathname: '/**',
 			},

@@ -56,7 +56,7 @@ const PagesBill = () => {
 	const goBack = () => router.back();
 
 	return (
-		<main className="container mx-auto min-h-screen overflow-y-auto pt-4 pb-40 shadow-md">
+		<main className="mx-auto min-h-screen overflow-y-auto pt-4 pb-40 shadow-md">
 			<div className="px-5">
 				<MoleculesHeaderNavigation goBack={goBack} text="Bill Summary" />
 			</div>

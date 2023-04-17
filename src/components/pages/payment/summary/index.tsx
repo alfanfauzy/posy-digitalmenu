@@ -68,7 +68,7 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	}
 
 	return (
-		<main className="container mx-auto pt-4 min-h-screen shadow-md">
+		<main className="mx-auto pt-4 min-h-screen shadow-md">
 			<div className="px-5">
 				<MoleculesHeaderNavigation goBack={goBack} text="Payment Summary" />
 			</div>

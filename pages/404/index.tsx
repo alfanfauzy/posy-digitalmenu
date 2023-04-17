@@ -18,7 +18,7 @@ const Page = () => {
 				keywords={SEO.keywords}
 				image={SEO.image}
 			/>
-			<main className="container min-h-screen pt-4 px-5 shadow-md text-center mx-auto my-auto align-middle">
+			<main className="min-h-screen pt-4 px-5 shadow-md text-center mx-auto my-auto align-middle">
 				<MoleculesHeaderNavigation text="Page doesn’t exist" goBack={() => router.back()} />
 				<div className="flex items-center flex-col">
 					<p className="text-xl-semibold p-1 mb-2 mt-6">Oops! The page doesn&lsquo;t exist.</p>

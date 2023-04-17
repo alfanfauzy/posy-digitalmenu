@@ -38,7 +38,7 @@ const MoleculesImageMenu = ({
 		<div
 			onClick={onClick}
 			role="presentation"
-			className={`${properties[size]} ${className} relative transition duration-300 ease-in-out`}
+			className={`${properties[size]} ${className} h-fit relative transition duration-300 ease-in-out`}
 		>
 			{/* temporary using img tag from html due to appearing some issues in server configuration*/}
 			{/* <Image
@@ -56,7 +56,7 @@ const MoleculesImageMenu = ({
 					src={image.url}
 					alt={image.alt}
 					loading="lazy"
-					className="rounded-lg object-cover shadow-sm w-full h-auto aspect-square hover:bg-opacity-70"
+					className="rounded-lg object-cover shadow-sm w-full aspect-square hover:bg-opacity-70"
 				/>
 			</div>
 			{size !== 's' && label && (

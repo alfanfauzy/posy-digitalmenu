@@ -78,7 +78,7 @@ const PagesBasket: React.FC = () => {
 	};
 
 	return (
-		<main className="container mx-auto min-h-screen overflow-y-auto pt-4 pb-40 shadow-md">
+		<main className="mx-auto min-h-screen overflow-y-auto pt-4 pb-40 shadow-md">
 			<section className="px-5">
 				<div className="mb-4 flex items-center gap-2">
 					<IoIosArrowBack onClick={goBack} size={24} className="cursor-pointer" />

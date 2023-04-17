@@ -1,4 +1,4 @@
-import Image from 'next/image';
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import {HiOutlineLocationMarker} from 'react-icons/hi';
 import {useAppSelector} from 'store/hooks';
@@ -20,9 +20,17 @@ const MoleculesHeaderOutletInfo = () => {
 				</div>
 			</div>
 			<div>
-				<Image
+				{/* <Image
 					src={OutletDetail.logo_image_url}
 					priority
+					alt="logo"
+					width={80}
+					height={80}
+					className="rounded-full"
+				/> */}
+				{/* temporary use */}
+				<img
+					src={OutletDetail.logo_image_url}
 					alt="logo"
 					width={80}
 					height={80}

@@ -1237,6 +1237,14 @@
   resolved "https://registry.yarnpkg.com/@tailwindcss/line-clamp/-/line-clamp-0.4.4.tgz#767cf8e5d528a5d90c9740ca66eb079f5e87d423"
   integrity sha512-5U6SY5z8N42VtrCrKlsTAA35gy2VSyYtHWCsg1H87NU1SXnEfekTVlrga9fzUDrrHcGi2Lb5KenUWb4lRQT5/g==
 
+"@tanem/react-nprogress@^5.0.34":
+  version "5.0.34"
+  resolved "https://registry.yarnpkg.com/@tanem/react-nprogress/-/react-nprogress-5.0.34.tgz#ddeb0b9ff914e6496ed27b7fbf7f6d4c64d2738a"
+  integrity sha512-9/95nQbymqk8Y9B1CS9Kcpf/wpZSh2LEiIe0enIZ+XBhnn9omGYJefyTsZSFxURl4RLU1gA5ZMM92kisuQxOMg==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
+    hoist-non-react-statics "^3.3.2"
+
 "@tanstack/match-sorter-utils@^8.7.0":
   version "8.8.4"
   resolved "https://registry.yarnpkg.com/@tanstack/match-sorter-utils/-/match-sorter-utils-8.8.4.tgz#0b2864d8b7bac06a9f84cb903d405852cc40a457"

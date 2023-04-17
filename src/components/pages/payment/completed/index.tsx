@@ -12,7 +12,7 @@ type PagesPaymentCompletedProps = {
 
 const PagesPaymentCompleted = ({paymentCompleted}: PagesPaymentCompletedProps) => {
 	return (
-		<main className="container mx-auto min-h-screen pt-4 px-5 shadow-md">
+		<main className="mx-auto min-h-screen pt-4 px-5 shadow-md">
 			<section>
 				<div className="mb-4 flex items-center gap-4">
 					<p className="text-xxl-semibold">Payment Summary</p>

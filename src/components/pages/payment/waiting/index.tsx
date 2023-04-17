@@ -57,7 +57,7 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	};
 
 	return (
-		<main className="container mx-auto overflow-auto h-full flex flex-col items-center py-4">
+		<main className="mx-auto overflow-auto shadow-md min-h-screen h-full flex flex-col items-center py-4">
 			{paymentSummary && (
 				<section className="mt-4 overflow-auto">
 					<div className="mx-auto">

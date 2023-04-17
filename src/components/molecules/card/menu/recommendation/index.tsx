@@ -32,31 +32,35 @@ const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendation
 				</div>
 			)}
 			<div>
-				<ImageMenu
-					onClick={() => handleClick()}
-					label={data.is_discount ? 'Discount' : undefined}
-					timeLabel={`in ${data.cooking_duration} min`}
-					isRecommended={data.is_favourite}
-					image={{url: data.product_image_url, alt: 'menu'}}
-				/>
+				<aside className="flex flex-col">
+					<ImageMenu
+						onClick={() => handleClick()}
+						label={data.is_discount ? 'Discount' : undefined}
+						timeLabel={`in ${data.cooking_duration} min`}
+						isRecommended={data.is_favourite}
+						image={{url: data.product_image_url, alt: 'menu'}}
+					/>
 
-				<div className="mt-1">
-					<p className="text-m-semibold">{data.product_name}</p>
-					<div className="mt-1 flex items-center gap-1">
-						{data.is_discount ? (
-							<>
-								<p className="text-l-medium">
-									{renderPrice(data.is_available, data.price_after_discount, data.price)}
+					<div className="mt-3">
+						<p className="text-m-semibold">{data.product_name}</p>
+						<div className="mt-1 flex items-center gap-1">
+							{data.is_discount ? (
+								<>
+									<p className="text-l-medium">
+										{renderPrice(data.is_available, data.price_after_discount, data.price)}
+									</p>
+									<p className="text-s-medium text-neutral-80 line-through">
+										{toRupiah(data.price)}
+									</p>
+								</>
+							) : (
+								<p>
+									<p className="text-l-medium">{toRupiah(data.price)}</p>
 								</p>
-								<p className="text-s-medium text-neutral-80 line-through">{toRupiah(data.price)}</p>
-							</>
-						) : (
-							<p>
-								<p className="text-l-medium">{toRupiah(data.price)}</p>
-							</p>
-						)}
+							)}
+						</div>
 					</div>
-				</div>
+				</aside>
 
 				<div className="mt-2">
 					<Button variant="secondary" size="m" fullWidth onClick={() => handleClick()}>

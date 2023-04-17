@@ -1,3 +1,5 @@
+import LoadingBar from '@/atoms/loading-bar';
+import {useLoading} from '@/hooks/useLoading';
 import Layout from '@/organisms/layout';
 import type {NextPageWithLayout} from '@/types/index';
 import {QueryClientProvider, QueryClient} from '@tanstack/react-query';
@@ -5,7 +7,7 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 import type {AppProps} from 'next/app';
 import {Suspense, useState} from 'react';
 import {Provider} from 'react-redux';
-import {ToastContainer, toast} from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistor, wrapper} from 'store/index';
@@ -20,6 +22,7 @@ type AppPropsWithLayout = AppProps & {
 const App = ({Component, pageProps, ...rest}: AppPropsWithLayout) => {
 	const [queryClient] = useState(() => new QueryClient());
 	const {store} = wrapper.useWrappedStore(rest);
+	const {loadingState} = useLoading();
 
 	const getLayout =
 		Component.getLayout ??
@@ -32,7 +35,13 @@ const App = ({Component, pageProps, ...rest}: AppPropsWithLayout) => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<Provider store={store}>
-				<PersistGate persistor={persistor}>{getLayout(<Component {...pageProps} />)}</PersistGate>
+				<PersistGate persistor={persistor}>
+					<LoadingBar
+						isRouteChanging={loadingState.isRouteChanging}
+						key={loadingState.loadingKey}
+					/>
+					{getLayout(<Component {...pageProps} />)}
+				</PersistGate>
 				<ToastContainer
 					position="bottom-center"
 					autoClose={2000}
