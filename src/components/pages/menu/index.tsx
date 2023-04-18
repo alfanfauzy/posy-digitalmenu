@@ -3,7 +3,6 @@
  * PagesMenu
  *
  */
-
 import HeaderOutletInfo from '@/molecules/header/outlet-info';
 import SectionFilter from '@/organisms/section/filter';
 import SectionList from '@/organisms/section/list';
