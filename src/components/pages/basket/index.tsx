@@ -59,7 +59,9 @@ const PagesBasket: React.FC = () => {
 			order_note: data.notes,
 			addon: data.addOnVariant.map(variant => ({
 				uuid: variant.addOnUuid,
-				variant_uuids: data.addOnVariant.map(addon => addon.uuid),
+				variant_uuids: data.addOnVariant
+					.filter(addondata => addondata.addOnUuid === variant.addOnUuid)
+					.map(addon => addon.uuid),
 			})),
 		}));
 
