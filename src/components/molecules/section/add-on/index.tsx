@@ -18,13 +18,19 @@ const MoleculesSectionAddon = ({add_on}: MoleculesSectionAddonProps) => {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		variants: any,
 		addOn: {addOnName: string; addOnUuid: string},
-	) =>
+	) => {
 		dispatch(
 			onChangeAddOn({
 				type,
-				addOnVariant: {addOnName: addOn.addOnName, addOnUuid: addOn.addOnUuid, ...variants},
+				addOnVariant: {
+					addOnName: addOn.addOnName,
+					addOnUuid: addOn.addOnUuid,
+					variant_price: variants.variant_price ?? 0,
+					...variants,
+				},
 			}),
 		);
+	};
 
 	return (
 		<article>
