@@ -64,23 +64,43 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 				<aside
 					role="presentation"
 					onClick={handleClick}
-					className="flex w-full gap-4 p-4 transition duration-300 ease-in-out hover:bg-neutral-20 active:animate-pulse"
+					className="flex flex-col w-full gap-4 p-4 transition duration-300 ease-in-out hover:bg-neutral-20 active:animate-pulse"
 				>
-					<div className="flex-1 gap-1">
-						<p
-							className={`text-m-semibold line-clamp-3 ${
-								selected.length > 0 ? 'text-secondary-main' : ''
-							}`}
-						>
-							<Highlighter
-								highlightStyle={{backgroundColor: '#ffc069', padding: 0}}
-								searchWords={[search]}
-								autoEscape
-								textToHighlight={product.product_name ? product.product_name.toString() : ''}
+					<div className="flex">
+						<div className="flex-1 gap-1">
+							<p
+								className={`text-m-semibold line-clamp-3 ${
+									selected.length > 0 ? 'text-secondary-main' : ''
+								}`}
+							>
+								<Highlighter
+									highlightStyle={{backgroundColor: '#ffc069', padding: 0}}
+									searchWords={[search]}
+									autoEscape
+									textToHighlight={product.product_name ? product.product_name.toString() : ''}
+								/>
+							</p>
+							{product.is_discount && <Label size="s" title="Discount" />}
+							<p className="mt-1 text-m-regular line-clamp-3">{product.product_description}</p>
+
+							{product.cooking_duration !== 0 && (
+								<TimeLabel
+									startAdornment={<BiTimeFive />}
+									size="s"
+									title={`in ${product.cooking_duration} min`}
+								/>
+							)}
+						</div>
+
+						<div className="flex flex-col items-end">
+							<ImageMenu
+								image={{url: product.product_image_url, alt: 'menu'}}
+								size="s"
+								className="mb-4"
 							/>
-						</p>
-						{product.is_discount && <Label size="s" title="Discount" />}
-						<p className="mt-1 text-m-regular line-clamp-3">{product.product_description}</p>
+						</div>
+					</div>
+					<div className="flex justify-between">
 						{product.is_discount ? (
 							<div className="flex gap-1 items-center mt-1">
 								<p className="text-l-medium">
@@ -95,19 +115,6 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 								<p className="text-l-medium">{toRupiah(product.price)}</p>
 							</p>
 						)}
-						<TimeLabel
-							startAdornment={<BiTimeFive />}
-							size="s"
-							title={`in ${product.cooking_duration} min`}
-						/>
-					</div>
-
-					<div className="flex flex-col items-end">
-						<ImageMenu
-							image={{url: product.product_image_url, alt: 'menu'}}
-							size="s"
-							className="mb-4"
-						/>
 						<Button variant="secondary" size="xs">
 							{`${selected.length > 0 ? `${quantity} item${quantity > 1 ? 's' : ''}` : 'Add'}`}
 						</Button>
