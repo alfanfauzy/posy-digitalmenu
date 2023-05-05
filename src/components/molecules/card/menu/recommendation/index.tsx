@@ -24,6 +24,9 @@ const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendation
 		dispatch(onChangeQuantity({operator: 'plus', value: 1}));
 	};
 
+	const cookingDuration =
+		data.cooking_duration !== 0 ? `in ${data.cooking_duration} min` : undefined;
+
 	return (
 		<div className="relative">
 			{!data.is_available && (
@@ -36,7 +39,7 @@ const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendation
 					<ImageMenu
 						onClick={() => handleClick()}
 						label={data.is_discount ? 'Discount' : undefined}
-						timeLabel={`in ${data.cooking_duration} min`}
+						timeLabel={cookingDuration}
 						isRecommended={data.is_favourite}
 						image={{url: data.product_image_url, alt: 'menu'}}
 					/>
