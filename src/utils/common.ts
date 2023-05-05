@@ -9,7 +9,7 @@ export const toRupiah = (number: number | bigint | string) =>
 	})
 		.format(Number(number))
 		.replaceAll(',', '.')
-		.replaceAll('IDR', 'Rp');
+		.replaceAll('IDR', '');
 
 export const calculateAddOn = (arr: Array<AddOnVariant>) =>
 	[...arr].map(el => el.variant_price).reduce((prev, current) => prev + current, 0);

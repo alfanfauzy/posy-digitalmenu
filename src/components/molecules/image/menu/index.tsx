@@ -5,6 +5,8 @@ import React from 'react';
 import {BiTimeFive} from 'react-icons/bi';
 import Recommended from 'src/assets/icons/recommended';
 
+const ImageStarRecomendation = require('public/recomendation.png');
+
 type MoleculesImageMenuProps = {
 	onClick?: () => void;
 	size?: 's' | 'm' | 'l';
@@ -65,8 +67,8 @@ const MoleculesImageMenu = ({
 				</div>
 			)}
 			<div
-				className={`absolute bottom-3 flex w-full items-center justify-between ${
-					size === 'l' ? 'pr-4' : 'pr-2'
+				className={`absolute bottom-3 flex w-full items-center ${size === 'l' ? 'pr-4' : 'pr-2'} ${
+					timeLabel ? 'justify-between' : 'justify-end'
 				}`}
 			>
 				{size !== 's' && timeLabel && (
@@ -77,7 +79,7 @@ const MoleculesImageMenu = ({
 					/>
 				)}
 				{size !== 's' && isRecommended && (
-					<Recommended height={size === 'l' ? 32 : 22} width={size === 'l' ? 32 : 22} />
+					<Image src={ImageStarRecomendation} priority alt="bill-empty" width={35} height={35} />
 				)}
 			</div>
 		</div>
