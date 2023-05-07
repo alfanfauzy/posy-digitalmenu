@@ -2,10 +2,10 @@ import {OrderDetailStatusEnum} from 'core/data/order/types';
 
 export const generateOrderDetailStatus = (status: OrderDetailStatusEnum) => {
 	const statusColor = {
-		RECEIVED: 'text-blue-success',
-		PROCESS: 'text-yellow-500',
-		SERVED: 'text-green-success',
-		CANCEL: 'text-red-accent',
+		RECEIVED: '#003BD4',
+		PROCESS: '#f1c40f',
+		SERVED: '#37B175',
+		CANCEL: '#CB3A31',
 	};
 
 	const statusText = {
@@ -15,5 +15,14 @@ export const generateOrderDetailStatus = (status: OrderDetailStatusEnum) => {
 		CANCEL: 'Order Cancelled',
 	};
 
-	return <p className={`text-m-semibold ${statusColor[status]}`}>{statusText[status]}</p>;
+	return (
+		<p
+			style={{
+				color: statusColor[status],
+			}}
+			className={`text-m-semibold ${statusColor[status]}`}
+		>
+			{statusText[status]}
+		</p>
+	);
 };

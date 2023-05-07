@@ -4,7 +4,7 @@
 	"private": true,
 	"author": "zaidanammar",
 	"scripts": {
-		"dev": "next dev -p 8080",
+		"dev": "next dev -p 8082",
 		"build": "rm -rf dist && next build",
 		"start": "next start -p 8080",
 		"lint": "next lint",

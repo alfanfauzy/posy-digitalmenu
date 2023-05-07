@@ -40,6 +40,7 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 			onSuccess(data) {
 				if (data.code === 0 && data.message === 'OK') {
 					router.push(`/payment/waiting/${transaction_uuid}`);
+					close();
 				}
 			},
 		},
@@ -107,12 +108,14 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 								{toRupiah(paymentSummary.subtotal_price_gross)}
 							</p>
 						</div>
-						<div className="flex justify-between pb-2">
-							<p className="text-m-medium text-neutral-100">Discount</p>
-							<p className="text-l-semibold text-neutral-100">
-								-{toRupiah(paymentSummary.discount_product_price)}
-							</p>
-						</div>
+						{paymentSummary?.discount_general_price ? (
+							<div className="flex justify-between pb-2">
+								<p className="text-m-medium text-neutral-100">{`Discount ${paymentSummary.discount_general_percentage}%`}</p>
+								<p className="text-l-semibold text-neutral-100">
+									-{toRupiah(paymentSummary.discount_general_price)}
+								</p>
+							</div>
+						) : null}
 						<div className="flex justify-between pb-2">
 							<p className="text-m-medium text-neutral-100">
 								Service{' '}
@@ -159,10 +162,9 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 			<Modal open={isOpen} handleClose={close}>
 				<section className="flex flex-col items-center justify-center pt-2">
 					<Info />
-					<div className="mt-4 px-5">
-						<p className="text-center text-l-semibold">
-							Once you choose payment option, you can’t order again.
-						</p>
+					<div className="mt-4 px-4 text-center text-l-semibold">
+						<p>Once you choose payment option,</p>
+						<p>you can’t order again.</p>
 					</div>
 					<p className="mt-[10px] text-center text-m-regular">Are you sure you want to proceed?</p>
 					<div className="mt-8 flex gap-2">
