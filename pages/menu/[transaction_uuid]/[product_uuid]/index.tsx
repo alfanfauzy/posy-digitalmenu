@@ -17,7 +17,7 @@ const Page = ({transaction_uuid, product_uuid}: PageDetailProps) => {
 	const dispatch = useAppDispatch();
 
 	// Use useQuery hook to fetch data client-side
-	const {data: productDetail} = useQuery(['product/detail'], async () => {
+	const {data: productDetail} = useQuery(['product/detail', product_uuid], async () => {
 		const response = await GetProductDetail({
 			transaction_uuid,
 			product_uuid,
@@ -61,7 +61,7 @@ export const getServerSideProps: GetServerSideProps = async ({query}) => {
 
 	const queryClient = new QueryClient();
 
-	await queryClient.prefetchQuery(['product/detail'], fetchDetailProduct);
+	await queryClient.prefetchQuery(['product/detail', product_uuid], fetchDetailProduct);
 
 	const dehydratedState = dehydrate(queryClient);
 

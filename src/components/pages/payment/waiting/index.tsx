@@ -57,9 +57,9 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	};
 
 	return (
-		<main className="mx-auto overflow-auto shadow-md min-h-screen h-full flex flex-col items-center py-4">
+		<main className="mx-auto overflow-y-auto shadow-md min-h-screen h-full flex flex-col items-center py-4">
 			{paymentSummary && (
-				<section className="mt-4 overflow-auto">
+				<section className="mt-4">
 					<div className="mx-auto">
 						<p className="text-center text-xxl-semibold text-neutral-100">
 							Thank you for your order!
@@ -92,11 +92,11 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 								{toRupiah(paymentSummary.subtotal_price_gross)}
 							</p>
 						</div>
-						{paymentSummary.discount_product_price > 0 && (
+						{paymentSummary.discount_general_price > 0 && (
 							<div className="flex justify-between pb-2">
-								<p className="text-m-medium text-neutral-100">Discount</p>
+								<p className="text-m-medium text-neutral-100">{`Discount ${paymentSummary.discount_general_percentage}%`}</p>
 								<p className="text-l-semibold text-neutral-100">
-									-{toRupiah(paymentSummary.discount_product_price)}
+									-{toRupiah(paymentSummary.discount_general_price)}
 								</p>
 							</div>
 						)}

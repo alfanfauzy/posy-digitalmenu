@@ -103,9 +103,9 @@ const PagesBill = () => {
 								{/* organims */}
 								<div className="mt-4 flex items-center justify-between bg-neutral-30 px-5 py-2">
 									<p className="text-l-semibold">Order {idx + 1}</p>
-									<p className="text-l-regular">{generateOrderStatus(order.status)}</p>
+									<div className="text-l-regular">{generateOrderStatus(order.status)}</div>
 								</div>
-								<section className="p-5">
+								<section className="pb-0 p-5">
 									{order.order_detail.map(item => (
 										<aside key={item.uuid} className="pb-4">
 											<div id="product-info" className="flex justify-between">
@@ -139,7 +139,7 @@ const PagesBill = () => {
 												</div>
 											)}
 
-											<div className="mt-4 ml-6 flex items-center justify-between">
+											<div className="mt-2 ml-6 flex items-center justify-between">
 												<p className="text-m-semibold">Status</p>
 												{generateOrderDetailStatus(item.status)}
 											</div>
@@ -150,7 +150,7 @@ const PagesBill = () => {
 							</>
 						))}
 
-					<section className="p-4">
+					<section className="pt-0 p-4">
 						<p className="text-left text-xl-semibold text-neutral-100">Payment Details</p>
 						<div className="flex justify-between pb-2 pt-2">
 							<p className="text-m-medium text-neutral-100">Subtotal</p>
@@ -158,12 +158,14 @@ const PagesBill = () => {
 								{toRupiah(paymentSummary?.subtotal_price_gross as number)}
 							</p>
 						</div>
-						<div className="flex justify-between pb-2">
-							<p className="text-m-medium text-neutral-100">Discount</p>
-							<p className="text-l-semibold text-neutral-100">
-								-{toRupiah(paymentSummary?.discount_product_price as number)}
-							</p>
-						</div>
+						{paymentSummary?.discount_general_price ? (
+							<div className="flex justify-between pb-2">
+								<p className="text-m-medium text-neutral-100">{`Discount ${paymentSummary.discount_general_percentage}%`}</p>
+								<p className="text-l-semibold text-neutral-100">
+									-{toRupiah(paymentSummary?.discount_general_price as number)}
+								</p>
+							</div>
+						) : null}
 						<div className="flex justify-between pb-2">
 							<p className="text-m-medium text-neutral-100">
 								Service{' '}
