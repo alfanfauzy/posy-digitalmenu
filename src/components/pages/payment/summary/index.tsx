@@ -158,6 +158,32 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 					Pay at Cashier
 				</Button>
 			</div>
+			<div className="flex flex-col p-4">
+				<p className="mb-4 text-xl-semibold text-neutral-100">E-Wallet</p>
+				<div className="flex flex-col gap-4">
+					<Button
+						type="button"
+						onClick={open}
+						className="w-full rounded-[24px] border border-black bg-white px-5 py-2 text-l-semibold text-neutral-100 flex justify-center items-center"
+					>
+						<img src="/ovo.png" alt="ovo-logo" />
+					</Button>
+					<Button
+						type="button"
+						onClick={open}
+						className="w-full rounded-[24px] border border-black bg-white px-5 py-2 text-l-semibold text-neutral-100 flex justify-center items-center"
+					>
+						<img src="/dana.png" alt="dana-logo" />
+					</Button>
+					<Button
+						type="button"
+						onClick={open}
+						className="w-full rounded-[24px] border border-black bg-white px-5 py-2 text-l-semibold text-neutral-100 flex justify-center items-center"
+					>
+						<img src="/link-aja.png" alt="link-aja-logo" />
+					</Button>
+				</div>
+			</div>
 
 			<Modal open={isOpen} handleClose={close}>
 				<section className="flex flex-col items-center justify-center pt-2">
