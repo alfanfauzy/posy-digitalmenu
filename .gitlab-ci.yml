@@ -93,7 +93,6 @@ build_image:
     - |
       if [ "$CI_COMMIT_BRANCH" != master ]; then
         export IMAGE_TAG=dev-$CI_COMMIT_SHORT_SHA
-        export NEXT_PUBLIC_API=$NEXT_PUBLIC_API
       fi
     - |
       docker build --progress=plain \

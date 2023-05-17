@@ -79,7 +79,7 @@ const MoleculesImageMenu = ({
 					/>
 				)}
 				{size !== 's' && isRecommended && (
-					<Image src={ImageStarRecomendation} priority alt="bill-empty" width={35} height={35} />
+					<img src="/recomendation.png" alt="recomendation" width={35} height={35} />
 				)}
 			</div>
 		</div>
