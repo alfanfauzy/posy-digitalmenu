@@ -15,8 +15,7 @@ import {Button, Loading} from 'posy-fnb-core';
 import React from 'react';
 import User from 'src/assets/icons/user';
 import {toRupiah} from 'utils/common';
-import {generateOrderStatus} from 'utils/UtilsGenerateOrderStatus';
-import {generateOrderDetailStatus} from 'utils/UtilsGenerateStatusTransaction';
+import {generateStatusOrder, generateStatusOrderDetail} from 'utils/UtilsGenerateOrderStatus';
 import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
 
 const PagesBill = () => {
@@ -98,12 +97,12 @@ const PagesBill = () => {
 						</div>
 					</section>
 					{orderDetail &&
-						orderDetail?.map((order, idx) => (
+						orderDetail?.map(order => (
 							<>
 								{/* organims */}
 								<div className="mt-4 flex items-center justify-between bg-neutral-30 px-5 py-2">
-									<p className="text-l-semibold">Order {idx + 1}</p>
-									<div className="text-l-regular">{generateOrderStatus(order.status)}</div>
+									<p className="text-l-semibold">Order {order.order_number}</p>
+									<p className="text-l-regular">{generateStatusOrder(order.status)}</p>
 								</div>
 								<section className="pb-0 p-5">
 									{order.order_detail.map(item => (
@@ -141,7 +140,7 @@ const PagesBill = () => {
 
 											<div className="mt-2 ml-6 flex items-center justify-between">
 												<p className="text-m-semibold">Status</p>
-												{generateOrderDetailStatus(item.status)}
+												<p className="text-m-medium">{generateStatusOrderDetail(item.status)}</p>
 											</div>
 											<div className="mt-4 border-t border-neutral-30" />
 										</aside>
