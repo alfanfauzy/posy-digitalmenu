@@ -101,11 +101,7 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 							</div>
 						)}
 						<div className="flex justify-between pb-2">
-							<p className="text-m-medium text-neutral-100">
-								Service{' '}
-								{paymentSummary.tax_and_charge.is_service_charge &&
-									`${paymentSummary.tax_and_charge.service_charge_percentage}%`}
-							</p>
+							<p className="text-m-medium text-neutral-100">Service</p>
 							<p className="text-l-medium text-neutral-100">
 								{toRupiah(paymentSummary.tax_and_charge.service_charge_price)}
 							</p>

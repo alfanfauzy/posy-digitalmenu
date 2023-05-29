@@ -1,19 +1,72 @@
-import {OrderStatusEnum} from 'core/data/order/types';
+/* eslint-disable @typescript-eslint/naming-convention */
+import {OrderStatus, OrderDetailStatus} from 'core/domain/order/models';
+import {AiOutlineInfoCircle} from 'react-icons/ai';
+import {BsCheckCircleFill} from 'react-icons/bs';
+import {MdSoupKitchen} from 'react-icons/md';
+import {TfiReload} from 'react-icons/tfi';
 
-export const generateOrderStatus = (status: OrderStatusEnum) => {
+export const generateStatusOrder = (status: OrderStatus) => {
 	const statusColor = {
-		ORDER_RECEIVED: '#003BD4',
-		ORDER_PROCESS: '#f1c40f',
-		ORDER_SERVED: '#37B175',
-		ORDER_CANCELLED: '#CB3A31',
+		0: 'text-blue-success',
+		1: 'text-secondary-main',
+		2: 'text-warning-main',
+		3: 'text-green-success',
+		4: 'text-red-caution',
 	};
 
 	const statusText = {
-		ORDER_RECEIVED: 'Received',
-		ORDER_PROCESS: 'Process',
-		ORDER_SERVED: 'Served',
-		ORDER_CANCELLED: 'Cancelled',
+		0: 'Not selected',
+		1: 'Processing',
+		2: 'On kitchen',
+		3: 'Served',
+		4: 'Cancelled',
 	};
 
-	return <p style={{color: statusColor[status]}}>{statusText[status]}</p>;
+	const icon = {
+		0: <AiOutlineInfoCircle />,
+		1: <TfiReload />,
+		2: <MdSoupKitchen />,
+		3: <BsCheckCircleFill />,
+		4: <AiOutlineInfoCircle />,
+	};
+
+	return (
+		<p className={`flex gap-2 items-center text-m-medium ${statusColor[status]}`}>
+			{icon[status]}
+			{statusText[status]}
+		</p>
+	);
+};
+
+export const generateStatusOrderDetail = (status: OrderDetailStatus) => {
+	const statusColor = {
+		0: 'text-blue-success',
+		1: 'text-secondary-main',
+		2: 'text-warning-main',
+		3: 'text-green-success',
+		4: 'text-red-caution',
+	};
+
+	const statusText = {
+		0: 'Not selected',
+		1: 'Processing',
+		2: 'On kitchen',
+		3: 'Served',
+		4: 'Cancelled',
+	};
+
+	const icon = {
+		0: <AiOutlineInfoCircle />,
+		1: <TfiReload />,
+		2: <MdSoupKitchen />,
+		3: <BsCheckCircleFill />,
+		4: <AiOutlineInfoCircle />,
+	};
+
+	return (
+		<p className={`flex gap-2 items-center ${statusColor[status]}`}>
+			{icon[status]}
+			{statusText[status]}
+		</p>
+	);
 };
