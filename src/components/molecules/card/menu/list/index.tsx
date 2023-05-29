@@ -124,7 +124,7 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 			{selected.length > 0 && (
 				<BottomSheet
 					alignTitle="start"
-					title={product.product_name}
+					title={'Menu Order'}
 					open={openBottomBar}
 					onClose={() => setOpenBottomBar(false)}
 				>
