@@ -48,7 +48,7 @@ const PagesPendingPayment = () => {
 			enabled: !!transaction_uuid,
 			refetchOnWindowFocus: true,
 			onSuccess(response) {
-				setExpiredPayment(response.expired_at);
+				setExpiredPayment(response?.expired_at);
 				//If transaction not available / null, redirect to page menu
 				if (response === null) {
 					router.push(`/menu/${transaction_uuid}`);
