@@ -21,7 +21,7 @@ const PaymentSummaryMolecules = ({paymentCompleted}: PaymentSummaryMoleculesProp
 
 			<div
 				className={`px-6 pt-0 overflow-hidden transition-[max-height] duration-500 ease-in ${
-					showDetails ? 'max-h-40' : 'max-h-0'
+					showDetails ? 'max-h-52' : 'max-h-0'
 				}`}
 			>
 				<div className="divide-y divide-neutral-30">
