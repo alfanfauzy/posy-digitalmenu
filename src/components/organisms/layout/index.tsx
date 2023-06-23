@@ -55,6 +55,11 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 						setLoading(false);
 					}, 500);
 					router.push(`/payment/completed/${transaction_uuid}`);
+				} else if (!data.is_open) {
+					setTimeout(() => {
+						setLoading(false);
+					}, 500);
+					router.push(`/payment/completed/${transaction_uuid}`);
 				} else if (data.is_waiting_payment) {
 					setTimeout(() => {
 						setLoading(false);

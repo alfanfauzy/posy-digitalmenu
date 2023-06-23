@@ -7,6 +7,14 @@ export type Response<TData = unknown> = {
 	more_info: string;
 };
 
+export type Datalist<TData> = {
+	curr_page: number;
+	total_page: number;
+	total_objs: number;
+	per_page: number;
+	objs: Array<TData>;
+};
+
 export type DataObj<TData = unknown> = {
 	objs: Array<TData>;
 };

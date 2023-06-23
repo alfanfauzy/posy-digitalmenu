@@ -5,6 +5,8 @@
  */
 
 import MoleculesHeaderNavigation from '@/molecules/header/navigation';
+import TransactionHeaderMolecules from '@/molecules/header/transaction';
+import PaymentDetailMolecules from '@/molecules/payment/detail';
 import EmptyBasketState from '@/organisms/empty-state/EmptyBasketState';
 import {useQuery} from '@tanstack/react-query';
 import {GetOrderDetail} from 'core/data/order/sources/GetOrderDetailQuery';
@@ -13,10 +15,8 @@ import {GetTransactionDetail} from 'core/data/transaction/sources/GetDetailTrans
 import {useRouter} from 'next/router';
 import {Button, Loading} from 'posy-fnb-core';
 import React from 'react';
-import User from 'src/assets/icons/user';
 import {toRupiah} from 'utils/common';
 import {generateStatusOrder, generateStatusOrderDetail} from 'utils/UtilsGenerateOrderStatus';
-import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
 
 const PagesBill = () => {
 	const router = useRouter();
@@ -70,32 +70,8 @@ const PagesBill = () => {
 				<EmptyBasketState />
 			) : (
 				<>
-					<section
-						key={transactionDetail?.transaction_code}
-						className="mt-4 flex items-center justify-between px-5"
-					>
-						<div className="flex flex-col items-start">
-							<p className="text-m-medium text-neutral-60">Transaction ID</p>
-							<p className="mt-0.5 text-m-semibold text-neutral-80">
-								{generateTransactionCode(transactionDetail?.transaction_code as string)}
-							</p>
-						</div>
-						<div className="flex flex-col items-center">
-							<p className="text-m-medium text-neutral-60">Table</p>
-							<p className="mt-0.5 text-m-semibold text-neutral-80">
-								{transactionDetail?.table_name || '-'}
-							</p>
-						</div>
-						<div className="flex flex-col items-end">
-							<p className="text-m-medium text-neutral-60">Total Pax</p>
-							<div className="flex items-center gap-1.5">
-								<p className="mt-0.5 text-m-semibold text-neutral-80">
-									{transactionDetail?.total_pax}
-								</p>
-								<User />
-							</div>
-						</div>
-					</section>
+					<TransactionHeaderMolecules transactionDetail={transactionDetail} />
+
 					{orderDetail &&
 						orderDetail?.map(order => (
 							<>
@@ -105,7 +81,7 @@ const PagesBill = () => {
 									<p className="text-l-regular">{generateStatusOrder(order.status)}</p>
 								</div>
 								<section className="pb-0 p-5">
-									{order.order_detail.map(item => (
+									{order?.order_detail?.map(item => (
 										<aside key={item.uuid} className="pb-4">
 											<div id="product-info" className="flex justify-between">
 												<p className="mr-2 text-l-regular">x{item.qty}</p>
@@ -149,47 +125,7 @@ const PagesBill = () => {
 							</>
 						))}
 
-					<section className="pt-0 p-4">
-						<p className="text-left text-xl-semibold text-neutral-100">Payment Details</p>
-						<div className="flex justify-between pb-2 pt-2">
-							<p className="text-m-medium text-neutral-100">Subtotal</p>
-							<p className="text-l-semibold text-neutral-100">
-								{toRupiah(paymentSummary?.subtotal_price_gross as number)}
-							</p>
-						</div>
-						{paymentSummary?.discount_general_price ? (
-							<div className="flex justify-between pb-2">
-								<p className="text-m-medium text-neutral-100">{`Discount ${paymentSummary.discount_general_percentage}%`}</p>
-								<p className="text-l-semibold text-neutral-100">
-									-{toRupiah(paymentSummary?.discount_general_price as number)}
-								</p>
-							</div>
-						) : null}
-						<div className="flex justify-between pb-2">
-							<p className="text-m-medium text-neutral-100">Service</p>
-							<p className="text-l-medium text-neutral-100">
-								{toRupiah(paymentSummary?.tax_and_charge.service_charge_price as number)}
-							</p>
-						</div>
-						<div className="flex justify-between pb-2">
-							<p className="text-m-medium text-neutral-100">
-								PB1{'  '}
-								{paymentSummary?.tax_and_charge.is_tax &&
-									`${paymentSummary?.tax_and_charge.tax_percentage}%`}
-							</p>
-							<p className="text-l-medium text-neutral-100">
-								{toRupiah(paymentSummary?.tax_and_charge.tax_price as number)}
-							</p>
-						</div>
-						<div className="flex justify-between">
-							<p className="text-l-semibold text-neutral-100">TOTAL</p>
-							<p className="text-l-semibold text-neutral-100">
-								{toRupiah(paymentSummary?.payment_price as number)}
-							</p>
-						</div>
-
-						<div className="mt-6 border border-gray-300/50 border-b" />
-					</section>
+					<PaymentDetailMolecules paymentSummary={paymentSummary} />
 
 					{/* molecules */}
 					<section

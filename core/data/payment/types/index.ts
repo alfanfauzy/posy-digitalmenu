@@ -1,3 +1,5 @@
+import {PaymentMethod} from 'core/domain/payment/models';
+
 export type GetPaymentSummaryResponse = {
 	subtotal_price_gross: number;
 	subtotal_price: number;
@@ -27,4 +29,44 @@ export type GetPaymentCompoletedResponse = {
 	change_amount: number;
 	payment_method: string;
 	payment_method_category: string;
+};
+
+export type GetPaymentMethodCategoryListResponse = {
+	uuid: string;
+	name: string;
+	description: string;
+	logo_url: string;
+	priority: number;
+	is_show: boolean;
+	is_integration: boolean;
+	payment_method: Array<PaymentMethod>;
+};
+
+export type CreatePaymentRequestResponse = {
+	payment_request_id: string;
+	invoice_url: string;
+	amount: number;
+	status: string;
+	expired_at: string;
+	metadata: {
+		created_at: string;
+	};
+};
+
+export type GetPaymentRequestResponse = {
+	payment_request_id: string;
+	invoice_url: string;
+	amount: number;
+	status: string;
+	expired_at: string;
+	payment_method: {
+		uuid: string;
+		name: string;
+		logo_url: string;
+		category_name: string;
+	};
+	metadata: {
+		created_at: string;
+		updated_at: string;
+	};
 };

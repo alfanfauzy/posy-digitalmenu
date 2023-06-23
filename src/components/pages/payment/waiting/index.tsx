@@ -1,3 +1,4 @@
+import PaymentDetailMolecules from '@/molecules/payment/detail';
 import {useQuery} from '@tanstack/react-query';
 import {GetPaymentSummaryResponse} from 'core/data/payment/types';
 import {GetTransactionDetail} from 'core/data/transaction/sources/GetDetailTransactionQuery';
@@ -7,7 +8,6 @@ import {useRouter} from 'next/router';
 import {Button, Loading} from 'posy-fnb-core';
 import React from 'react';
 import {toast} from 'react-toastify';
-import {toRupiah} from 'utils/common';
 import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
 
 const ImageWaitingPayment = require('public/waiting_payment.svg');
@@ -84,49 +84,7 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 						<div className="flex flex-col" />
 					</div>
 
-					<aside className="p-5">
-						<p className="text-left text-xl-semibold text-neutral-100">Payment Details</p>
-						<div className="flex justify-between pb-2 pt-2">
-							<p className="text-m-medium text-neutral-100">Subtotal</p>
-							<p className="text-l-semibold text-neutral-100">
-								{toRupiah(paymentSummary.subtotal_price_gross)}
-							</p>
-						</div>
-						{paymentSummary.discount_general_price > 0 && (
-							<div className="flex justify-between pb-2">
-								<p className="text-m-medium text-neutral-100">{`Discount ${paymentSummary.discount_general_percentage}%`}</p>
-								<p className="text-l-semibold text-neutral-100">
-									-{toRupiah(paymentSummary.discount_general_price)}
-								</p>
-							</div>
-						)}
-						<div className="flex justify-between pb-2">
-							<p className="text-m-medium text-neutral-100">Service</p>
-							<p className="text-l-medium text-neutral-100">
-								{toRupiah(paymentSummary.tax_and_charge.service_charge_price)}
-							</p>
-						</div>
-						<div className="flex justify-between pb-2">
-							<p className="text-m-medium text-neutral-100">
-								PB1{' '}
-								{paymentSummary.tax_and_charge.is_tax &&
-									`${paymentSummary.tax_and_charge.tax_percentage}%`}
-							</p>
-							<p className="text-l-medium text-neutral-100">
-								{toRupiah(paymentSummary.tax_and_charge.tax_price)}
-							</p>
-						</div>
-						<div className="flex justify-between">
-							<p className="text-l-semibold text-neutral-100">TOTAL</p>
-							<p className="text-l-semibold text-neutral-100">
-								{toRupiah(paymentSummary.payment_price)}
-							</p>
-						</div>
-						<div className="divide-y divide-gray-300/50">
-							<div className="flex flex-col pb-4" />
-							<div className="flex flex-col pb-4" />
-						</div>
-					</aside>
+					<PaymentDetailMolecules paymentSummary={paymentSummary} />
 				</section>
 			)}
 
@@ -135,7 +93,7 @@ const PagesWaitingPayment = ({paymentSummary}: PagesPaymentSummaryProps) => {
 					isLoading={isLoadingTransactionStatus}
 					type="button"
 					onClick={handleCheckStatus}
-					className="w-full rounded-[24px] border border-black bg-white px-4 py-2 text-l-semibold text-neutral-100"
+					className="w-full rounded-[24px] border border-black !bg-secondary-main  px-4 py-2 text-l-semibold text-white"
 				>
 					Check Status
 				</Button>

@@ -1,17 +1,20 @@
 import useDisclosure from '@/hooks/useDisclosure';
 import MoleculesHeaderNavigation from '@/molecules/header/navigation';
+import TransactionHeaderMolecules from '@/molecules/header/transaction';
+import PaymentDetailMolecules from '@/molecules/payment/detail';
 import {useQuery} from '@tanstack/react-query';
+import {GetPaymentMethodCategory} from 'core/data/payment/sources/GetPaymentMethodCategory';
 import {GetPaymentSummaryResponse} from 'core/data/payment/types';
 import {GetTransactionDetail} from 'core/data/transaction/sources/GetDetailTransactionQuery';
+import {PaymentRequestPayload} from 'core/domain/payment/models';
+import {GetFilterPaymentMethodCategory} from 'core/domain/payment/repositories/PaymentRepositories';
 import {FinishTransactionParam} from 'core/domain/transaction/models';
+import {useCreatePaymentRequestViewModal} from 'core/view/payment/view-models/CreatePaymentRequestViewModel';
 import {useCreateFinishTransactionViewModal} from 'core/view/transaction/view-modals/CreateTransactionFinishViewModels';
 import {useRouter} from 'next/router';
 import {Button, Loading, Modal} from 'posy-fnb-core';
-import React from 'react';
+import React, {useMemo, useState} from 'react';
 import Info from 'src/assets/icons/info';
-import User from 'src/assets/icons/user';
-import {toRupiah} from 'utils/common';
-import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
 
 type PagesPaymentSummaryProps = {
 	paymentSummary: GetPaymentSummaryResponse | undefined;
@@ -20,6 +23,32 @@ type PagesPaymentSummaryProps = {
 const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 	const router = useRouter();
 	const {transaction_uuid} = router.query;
+
+	const [selectPaymentMetod, setSelectPaymentMethod] = useState('');
+
+	const hooksParams: GetFilterPaymentMethodCategory = useMemo(
+		() => ({
+			transaction_uuid: transaction_uuid as string,
+			search: [
+				{
+					field: 'with_payment_method',
+					value: 'true',
+				},
+				{
+					field: 'is_integration',
+					value: 'true',
+				},
+				{
+					field: 'is_show',
+					value: 'true',
+				},
+			],
+			sort: {field: 'created_at', value: 'desc'},
+			page: 1,
+			limit: 10,
+		}),
+		[transaction_uuid],
+	);
 
 	const [isOpen, {open, close}] = useDisclosure({initialState: false});
 
@@ -46,18 +75,52 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 		},
 	);
 
-	const handleFinishTransaction = () => {
-		const payload: FinishTransactionParam = {
-			id: transaction_uuid as string,
-			payload: {
-				customer_email: '',
-				customer_name: '',
-				customer_phone: '',
-				payment_type: 'CASHIER',
+	const {createPaymentRequest, isLoading: isLoadingCreatePaymentRequest} =
+		useCreatePaymentRequestViewModal({
+			onSuccess(data) {
+				if (data.code === 0) {
+					window.open(data.data.invoice_url, '_blank');
+					router.push(`/payment/pending/${transaction_uuid}`);
+					close();
+				}
 			},
-		};
+		});
 
-		createTransactionFinish(payload);
+	const {data: paymentMethodCategory} = useQuery(
+		['payment-method/list', JSON.stringify(hooksParams)],
+		async () => {
+			const response = await GetPaymentMethodCategory({
+				filter: hooksParams,
+				transaction_uuid: transaction_uuid as string,
+			});
+			const dataOrder = response.data;
+			return dataOrder;
+		},
+	);
+
+	const handleFinishTransaction = () => {
+		if (selectPaymentMetod === 'cash') {
+			const payload: FinishTransactionParam = {
+				id: transaction_uuid as string,
+				payload: {
+					customer_email: '',
+					customer_name: '',
+					customer_phone: '',
+					payment_type: 'CASHIER',
+				},
+			};
+
+			createTransactionFinish(payload);
+		} else {
+			const payloadPaymentRequet: PaymentRequestPayload = {
+				transaction_id: transaction_uuid as string,
+				payload: {
+					payment_method_uuid: selectPaymentMetod,
+				},
+			};
+
+			createPaymentRequest(payloadPaymentRequet);
+		}
 	};
 
 	if (isLoadingTransactionDetail) {
@@ -76,71 +139,9 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 
 			{paymentSummary && (
 				<>
-					<section className="mt-4 flex items-center justify-between px-5">
-						<div className="flex flex-col items-start">
-							<p className="text-m-medium text-neutral-60">Transaction ID</p>
-							<p className="mt-0.5 text-m-semibold text-neutral-80">
-								{generateTransactionCode(transactionDetail?.transaction_code as string)}
-							</p>
-						</div>
-						<div className="flex flex-col items-center">
-							<p className="text-m-medium text-neutral-60">Table</p>
-							<p className="mt-0.5 text-m-semibold text-neutral-80">
-								{transactionDetail?.table_name || '-'}
-							</p>
-						</div>
-						<div className="flex flex-col items-end">
-							<p className="text-m-medium text-neutral-60">Total Pax</p>
-							<div className="flex items-center gap-1.5">
-								<p className="mt-0.5 text-m-semibold text-neutral-80">
-									{transactionDetail?.total_pax}
-								</p>
-								<User />
-							</div>
-						</div>
-					</section>
+					<TransactionHeaderMolecules transactionDetail={transactionDetail} />
 
-					<section className="p-4">
-						<p className="text-left text-xl-semibold text-neutral-100">Payment Details</p>
-						<div className="flex justify-between pb-2 pt-2">
-							<p className="text-m-medium text-neutral-100">Subtotal</p>
-							<p className="text-l-semibold text-neutral-100">
-								{toRupiah(paymentSummary.subtotal_price_gross)}
-							</p>
-						</div>
-						{paymentSummary?.discount_general_price ? (
-							<div className="flex justify-between pb-2">
-								<p className="text-m-medium text-neutral-100">{`Discount ${paymentSummary.discount_general_percentage}%`}</p>
-								<p className="text-l-semibold text-neutral-100">
-									-{toRupiah(paymentSummary.discount_general_price)}
-								</p>
-							</div>
-						) : null}
-						<div className="flex justify-between pb-2">
-							<p className="text-m-medium text-neutral-100">Service</p>
-							<p className="text-l-medium text-neutral-100">
-								{toRupiah(paymentSummary.tax_and_charge.service_charge_price)}
-							</p>
-						</div>
-						<div className="flex justify-between pb-2">
-							<p className="text-m-medium text-neutral-100">
-								PB1{'  '}
-								{paymentSummary.tax_and_charge.is_tax &&
-									`${paymentSummary.tax_and_charge.tax_percentage}%`}
-							</p>
-							<p className="text-l-medium text-neutral-100">
-								{toRupiah(paymentSummary.tax_and_charge.tax_price)}
-							</p>
-						</div>
-						<div className="flex justify-between">
-							<p className="text-l-semibold text-neutral-100">TOTAL</p>
-							<p className="text-l-semibold text-neutral-100">
-								{toRupiah(paymentSummary.payment_price)}
-							</p>
-						</div>
-
-						<div className="mt-6 border border-gray-300/50 border-b" />
-					</section>
+					<PaymentDetailMolecules paymentSummary={paymentSummary} />
 				</>
 			)}
 
@@ -148,11 +149,36 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 				<p className="mb-4 text-xl-semibold text-neutral-100">Payment option</p>
 				<Button
 					type="button"
-					onClick={open}
-					className="w-full rounded-[24px] border border-black bg-white px-5 py-2 text-l-semibold text-neutral-100"
+					onClick={() => {
+						open();
+						setSelectPaymentMethod('cash');
+					}}
+					className="w-full rounded-[24px] border border-black !bg-white px-5 py-2 text-l-semibold text-neutral-100"
 				>
 					Pay at Cashier
 				</Button>
+			</div>
+			<div className="flex flex-col p-4">
+				<p className="mb-4 text-xl-semibold text-neutral-100">E-Wallet</p>
+				<div className="flex flex-col gap-4">
+					{paymentMethodCategory?.objs.map(paymentMethod => (
+						<Button
+							key={paymentMethod.uuid}
+							type="button"
+							onClick={() => {
+								open();
+								setSelectPaymentMethod(paymentMethod.uuid);
+							}}
+							className="w-full rounded-[24px] border border-black !bg-white flex justify-center items-center h-16 py-3"
+						>
+							<img
+								src={paymentMethod.logo_url}
+								alt={`${paymentMethod.name}-logo`}
+								width={paymentMethod.name !== 'LINKAJA' ? 90 : 50}
+							/>
+						</Button>
+					))}
+				</div>
 			</div>
 
 			<Modal open={isOpen} handleClose={close}>
@@ -171,7 +197,7 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 							variant="primary"
 							size="m"
 							onClick={handleFinishTransaction}
-							isLoading={isLoadingCreate}
+							isLoading={isLoadingCreate || isLoadingCreatePaymentRequest}
 						>
 							Yes
 						</Button>

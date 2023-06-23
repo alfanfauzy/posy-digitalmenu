@@ -5,6 +5,7 @@
  */
 
 import useDisclosure from '@/hooks/useDisclosure';
+import MoleculesHeaderNavigation from '@/molecules/header/navigation';
 import EmptyBasketState from '@/organisms/empty-state/EmptyBasketState';
 import {OrderDetail, OrderParam} from 'core/domain/order/models';
 import {useCreateOrderViewModal} from 'core/view/order/view-modals/CreateOrderViewModel';
@@ -82,11 +83,7 @@ const PagesBasket: React.FC = () => {
 	return (
 		<main className="mx-auto min-h-screen overflow-y-auto pt-4 pb-40 shadow-md">
 			<section className="px-5">
-				<div className="mb-4 flex items-center gap-2">
-					<IoIosArrowBack onClick={goBack} size={24} className="cursor-pointer" />
-					<p className="text-xxl-semibold">Your Basket</p>
-				</div>
-				<div className="border-t border-neutral-30" />
+				<MoleculesHeaderNavigation goBack={goBack} text="Your Basket" />
 			</section>
 
 			{basket.length === 0 && <EmptyBasketState />}
