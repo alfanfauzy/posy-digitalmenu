@@ -161,23 +161,25 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 			<div className="flex flex-col p-4">
 				<p className="mb-4 text-xl-semibold text-neutral-100">E-Wallet</p>
 				<div className="flex flex-col gap-4">
-					{paymentMethodCategory?.objs.map(paymentMethod => (
-						<Button
-							key={paymentMethod.uuid}
-							type="button"
-							onClick={() => {
-								open();
-								setSelectPaymentMethod(paymentMethod.uuid);
-							}}
-							className="w-full rounded-[24px] border border-black !bg-white flex justify-center items-center h-16 py-3"
-						>
-							<img
-								src={paymentMethod.logo_url}
-								alt={`${paymentMethod.name}-logo`}
-								width={paymentMethod.name !== 'LINKAJA' ? 90 : 50}
-							/>
-						</Button>
-					))}
+					{paymentMethodCategory?.objs
+						.filter(payment => payment.is_show)
+						.map(paymentMethod => (
+							<Button
+								key={paymentMethod.uuid}
+								type="button"
+								onClick={() => {
+									open();
+									setSelectPaymentMethod(paymentMethod.uuid);
+								}}
+								className="w-full rounded-[24px] border border-black !bg-white flex justify-center items-center h-16 py-3"
+							>
+								<img
+									src={paymentMethod.logo_url}
+									alt={`${paymentMethod.name}-logo`}
+									width={paymentMethod.name !== 'LINKAJA' ? 90 : 50}
+								/>
+							</Button>
+						))}
 				</div>
 			</div>
 
