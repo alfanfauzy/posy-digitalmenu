@@ -13,10 +13,10 @@ const PaymentDetailMolecules = ({paymentSummary}: PaymentDetailMoleculesProps) =
 			<div className="flex justify-between pb-2 pt-2">
 				<p className="text-m-medium text-neutral-100">Subtotal</p>
 				<p className="text-l-semibold text-neutral-100">
-					{toRupiah(paymentSummary?.subtotal_price_gross as number)}
+					{toRupiah(paymentSummary?.subtotal_price as number)}
 				</p>
 			</div>
-			{paymentSummary?.discount_general_price ? (
+			{paymentSummary?.discount_product_price ? (
 				<div className="flex justify-between pb-2">
 					<p className="text-m-medium text-neutral-100">{`Discount ${paymentSummary.discount_general_percentage}%`}</p>
 					<p className="text-l-semibold text-neutral-100">
