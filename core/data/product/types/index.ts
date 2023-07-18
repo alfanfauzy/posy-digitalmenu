@@ -18,6 +18,8 @@ export type GetProductDetailResponse = {
 			product_image_url: string;
 			categories: Array<GetCategoryListResponse>;
 		};
+		avg_rating: number;
+		total_review: number;
 		is_show: boolean;
 		is_available: boolean;
 		is_discount: boolean;

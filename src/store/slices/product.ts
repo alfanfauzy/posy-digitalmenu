@@ -36,6 +36,8 @@ const initialState: ProductMenuState = {
 			price_discount_percentage: 0,
 			price_final: 0,
 			is_favourite: false,
+			avg_rating: 0,
+			total_review: 0,
 			product: {
 				uuid: '',
 				restaurant_uuid: '',

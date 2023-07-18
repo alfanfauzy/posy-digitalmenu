@@ -1,7 +1,11 @@
 import ImageMenu from '@/molecules/image/menu';
 import {ProductDetail} from 'core/domain/product/models';
+import Image from 'next/image';
 import React from 'react';
+import {AiOutlineRight} from 'react-icons/ai';
 import {toRupiah} from 'utils/common';
+
+const starIcon = require('public/star.svg');
 
 type MoleculesCardMenuDetailProps = {
 	product: ProductDetail;
@@ -12,8 +16,16 @@ const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
 
 	const {product_name, product_description, product_image_url} = product.detail.product;
 
+	const handleShowRatingList = () => {
+		const isEmptyRating = product.detail.avg_rating === 0;
+
+		if (!isEmptyRating) {
+			/** Will be goes to page rating list */
+		}
+	};
+
 	return (
-		<article>
+		<article className="flex gap-4 flex-col">
 			<ImageMenu
 				image={{url: product_image_url, alt: product_name}}
 				timeLabel={`in ${cooking_duration} min`}
@@ -21,6 +33,20 @@ const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
 				size="l"
 				isRecommended={!!is_favourite}
 			/>
+			<aside
+				className="flex flex-row border border-neutral-40 px-2 py-3 rounded-md cursor-pointer"
+				onClick={() => handleShowRatingList()}
+			>
+				<Image src={starIcon} alt="star" width={25} height={25} />
+				<span className="flex gap-1 flex-row border-r-2 px-2">
+					<p>{product.detail.avg_rating === 0 ? '5.0' : product.detail.avg_rating}</p>
+					<p className="text-neutral-60">({product.detail.total_review})</p>
+				</span>
+				<span className="flex flex-row justify-between items-center w-full">
+					<p className="px-2">View ratings and reviews</p>
+					<AiOutlineRight size={20} />
+				</span>
+			</aside>
 			<aside className="mt-4 divide-y">
 				<div className="pb-4">
 					<p className="text-xxl-bold">{product_name}</p>

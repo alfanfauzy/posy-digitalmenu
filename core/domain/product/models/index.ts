@@ -19,6 +19,8 @@ export type ProductBased = {
 	price_discount_percentage: number;
 	price_final: number;
 	cooking_duration: number;
+	avg_rating: number;
+	total_review: number;
 };
 
 export type Products = Array<ProductBased>;
@@ -52,6 +54,8 @@ export type ProductDetailBased = {
 		price_discount_percentage: number;
 		price_final: number;
 		cooking_duration: number;
+		avg_rating: number;
+		total_review: number;
 	};
 	addons: Addons;
 };
