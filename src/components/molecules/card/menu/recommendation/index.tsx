@@ -1,9 +1,9 @@
 import {Product} from '@/domain/product/models/ProductsMenu';
 import ImageMenu from '@/molecules/image/menu';
+import MoleculesRating from '@/molecules/rating';
 import {useRouter} from 'next/router';
 import {Button} from 'posy-fnb-core';
 import React from 'react';
-import {AiFillStar} from 'react-icons/ai';
 import {useAppDispatch} from 'store/hooks';
 import {onChangeQuantity} from 'store/slices/menu';
 import {renderPrice, toRupiah} from 'utils/common';
@@ -58,13 +58,7 @@ const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendation
 							<p className="text-l-medium">{toRupiah(data.price).trim()}</p>
 						)}
 
-						<div className="flex flex-row items-center gap-1">
-							<AiFillStar className={'fill-light-yellow'} size={20} />
-							<span className="flex gap-1 flex-row">
-								<p>{data.avg_rating === 0 ? '5.0' : data.avg_rating}</p>
-								<p className="text-neutral-60">({data.total_review})</p>
-							</span>
-						</div>
+						<MoleculesRating ratingValue={data.avg_rating} totalReview={data.total_review} />
 					</div>
 				</aside>
 

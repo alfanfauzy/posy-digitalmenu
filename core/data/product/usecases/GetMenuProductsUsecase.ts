@@ -1,7 +1,7 @@
 import {mapToMenuProductsModel} from '@/data/product/mappers/ProductMapper';
 import {useGetMenuProductQuery} from '@/data/product/sources/GetProductMenuQuery';
 import {GetProductMenuResponse} from '@/data/product/types';
-import {GetProductsMenuResult} from '@/domain/product/repositories/GetProductsMenu';
+import {GetProductsMenuResult} from '@/domain/product/repositories/GetProductsMenuRepository';
 import {DataObj, Response} from '@/domain/vo/BaseResponse';
 import {UseQueryOptions} from '@tanstack/react-query';
 

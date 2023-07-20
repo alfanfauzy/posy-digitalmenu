@@ -1,11 +1,11 @@
 import {Product} from '@/domain/product/models/ProductsMenu';
 import ImageMenu from '@/molecules/image/menu';
+import MoleculesRating from '@/molecules/rating';
 import dynamic from 'next/dynamic';
 import {useRouter} from 'next/router';
 import {Button, Label, TimeLabel} from 'posy-fnb-core';
 import React, {useMemo, useState} from 'react';
 import Highlighter from 'react-highlight-words';
-import {AiFillStar} from 'react-icons/ai';
 import {BiTimeFive} from 'react-icons/bi';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
 import {onChangeQuantity} from 'store/slices/menu';
@@ -83,13 +83,10 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 								/>
 							</p>
 
-							<div className="flex flex-row items-center align-baseline gap-1">
-								<AiFillStar className={'fill-light-yellow'} size={20} />
-								<span className="flex gap-1 flex-row">
-									<p>{product.avg_rating === 0 ? '5.0' : product.avg_rating}</p>
-									<p className="text-neutral-60">({product.total_review})</p>
-								</span>
-							</div>
+							<MoleculesRating
+								ratingValue={product.avg_rating}
+								totalReview={product.total_review}
+							/>
 
 							{product.is_discount && <Label size="s" title="Discount" />}
 							<p className="mt-1 text-m-regular line-clamp-3">{product.product_description}</p>

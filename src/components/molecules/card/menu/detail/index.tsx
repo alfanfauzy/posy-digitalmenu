@@ -36,7 +36,7 @@ const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
 				className="flex flex-row items-center border border-neutral-40 px-2 py-3 rounded-md cursor-pointer"
 				onClick={handleShowRatingList}
 			>
-				<AiFillStar className={'fill-light-yellow'} size={30} />
+				<AiFillStar className="fill-light-yellow" size={30} />
 				<span className="flex gap-1 flex-row border-r-2 px-1">
 					<p>{showRatingValue}</p>
 					<p className="text-neutral-60">({product.detail.total_review})</p>
