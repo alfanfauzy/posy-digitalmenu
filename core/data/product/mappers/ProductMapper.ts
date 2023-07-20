@@ -1,5 +1,5 @@
 import {GetProductMenuResponse} from '@/data/product/types';
-import {ProductsMenu} from '@/domain/product/models';
+import {ProductsMenu} from '@/domain/product/models/ProductsMenu';
 
 export const mapToMenuProductsModel = (datas: Array<GetProductMenuResponse>): ProductsMenu => {
 	const newData = {

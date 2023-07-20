@@ -1,9 +1,9 @@
+import {Product} from '@/domain/product/models/ProductsMenu';
 import ImageMenu from '@/molecules/image/menu';
-import {Product} from 'core/domain/product/models';
-import Image from 'next/image';
 import {useRouter} from 'next/router';
 import {Button} from 'posy-fnb-core';
 import React from 'react';
+import {AiFillStar} from 'react-icons/ai';
 import {useAppDispatch} from 'store/hooks';
 import {onChangeQuantity} from 'store/slices/menu';
 import {renderPrice, toRupiah} from 'utils/common';
@@ -11,8 +11,6 @@ import {renderPrice, toRupiah} from 'utils/common';
 type MoleculesCardMenuRecommendationProps = {
 	data: Product;
 };
-
-const starIcon = require('public/star.svg');
 
 const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendationProps) => {
 	const router = useRouter();
@@ -61,7 +59,7 @@ const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendation
 						)}
 
 						<div className="flex flex-row items-center gap-1">
-							<Image src={starIcon} alt="star" width={20} height={20} />
+							<AiFillStar className={'fill-light-yellow'} size={20} />
 							<span className="flex gap-1 flex-row">
 								<p>{data.avg_rating === 0 ? '5.0' : data.avg_rating}</p>
 								<p className="text-neutral-60">({data.total_review})</p>

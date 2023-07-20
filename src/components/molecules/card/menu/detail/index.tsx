@@ -1,11 +1,8 @@
 import ImageMenu from '@/molecules/image/menu';
 import {ProductDetail} from 'core/domain/product/models';
-import Image from 'next/image';
 import React from 'react';
-import {AiOutlineRight} from 'react-icons/ai';
+import {AiFillStar, AiOutlineRight} from 'react-icons/ai';
 import {toRupiah} from 'utils/common';
-
-const starIcon = require('public/star.svg');
 
 type MoleculesCardMenuDetailProps = {
 	product: ProductDetail;
@@ -24,6 +21,8 @@ const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
 		}
 	};
 
+	const showRatingValue = product.detail.avg_rating === 0 ? '5.0' : product.detail.avg_rating;
+
 	return (
 		<article className="flex gap-4 flex-col">
 			<ImageMenu
@@ -34,12 +33,12 @@ const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
 				isRecommended={!!is_favourite}
 			/>
 			<aside
-				className="flex flex-row border border-neutral-40 px-2 py-3 rounded-md cursor-pointer"
-				onClick={() => handleShowRatingList()}
+				className="flex flex-row items-center border border-neutral-40 px-2 py-3 rounded-md cursor-pointer"
+				onClick={handleShowRatingList}
 			>
-				<Image src={starIcon} alt="star" width={25} height={25} />
-				<span className="flex gap-1 flex-row border-r-2 px-2">
-					<p>{product.detail.avg_rating === 0 ? '5.0' : product.detail.avg_rating}</p>
+				<AiFillStar className={'fill-light-yellow'} size={30} />
+				<span className="flex gap-1 flex-row border-r-2 px-1">
+					<p>{showRatingValue}</p>
 					<p className="text-neutral-60">({product.detail.total_review})</p>
 				</span>
 				<span className="flex flex-row justify-between items-center w-full">

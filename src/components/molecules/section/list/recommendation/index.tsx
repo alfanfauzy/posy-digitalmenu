@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react/no-array-index-key */
+import {ProductMenu, Products} from '@/domain/product/models/ProductsMenu';
 import MoleculesCardMenuRecommendation from '@/molecules/card/menu/recommendation';
-import {ProductMenu, Products} from 'core/domain/product/models';
 import React, {useEffect, useState} from 'react';
 
 type MoleculesSectionListRecommendationProps = {

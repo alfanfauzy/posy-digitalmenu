@@ -4,4 +4,11 @@ const preset = require('posy-fnb-core/dist/preset.cjs');
 module.exports = {
 	content: ['./pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
 	presets: [preset],
+	theme: {
+		extend: {
+			colors: {
+				'light-yellow': '#FFE664',
+			},
+		},
+	},
 };

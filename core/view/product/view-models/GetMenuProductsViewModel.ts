@@ -1,6 +1,6 @@
 import {GetProductMenuResponse} from '@/data/product/types';
 import {useGetMenuProductsUsecase} from '@/data/product/usecases/GetMenuProductsUsecase';
-import {GetProductsMenuResult} from '@/domain/product/repositories/ProductRepository';
+import {GetProductsMenuResult} from '@/domain/product/repositories/GetProductsMenu';
 import {DataObj, Response} from '@/domain/vo/BaseResponse';
 import {UseQueryOptions} from '@tanstack/react-query';
 

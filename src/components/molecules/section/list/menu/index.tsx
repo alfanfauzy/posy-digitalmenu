@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import {ProductMenu} from '@/domain/product/models/ProductsMenu';
 import CardMenuList from '@/molecules/card/menu/list';
-import {ProductMenu} from 'core/domain/product/models';
 import React, {useEffect} from 'react';
 import {useInView} from 'react-intersection-observer';
 import {useAppDispatch} from 'store/hooks';
