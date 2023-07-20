@@ -1,5 +1,6 @@
+import {Product} from '@/domain/product/models/ProductsMenu';
 import ImageMenu from '@/molecules/image/menu';
-import {Product} from 'core/domain/product/models';
+import MoleculesRating from '@/molecules/rating';
 import dynamic from 'next/dynamic';
 import {useRouter} from 'next/router';
 import {Button, Label, TimeLabel} from 'posy-fnb-core';
@@ -13,6 +14,7 @@ import {calculateQuantity, calculateOrder, toRupiah, renderPrice} from 'utils/co
 const BottomSheet = dynamic(() => import('posy-fnb-core').then(el => el.BottomSheet), {
 	loading: () => <div />,
 });
+
 type MoleculesCardMenuListProps = {
 	product: Product;
 };
@@ -80,6 +82,12 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 									textToHighlight={product.product_name ? product.product_name.toString() : ''}
 								/>
 							</p>
+
+							<MoleculesRating
+								ratingValue={product.avg_rating}
+								totalReview={product.total_review}
+							/>
+
 							{product.is_discount && <Label size="s" title="Discount" />}
 							<p className="mt-1 text-m-regular line-clamp-3">{product.product_description}</p>
 
@@ -104,7 +112,11 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 						{product.is_discount ? (
 							<div className="flex gap-1 items-center mt-1">
 								<p className="text-l-medium">
-									{renderPrice(product.is_available, product.price_after_discount, product.price)}
+									{renderPrice(
+										product.is_available,
+										product.price_after_discount,
+										product.price,
+									).trim()}
 								</p>
 								<p className="text-s-medium text-neutral-80 line-through">
 									{toRupiah(product.price)}
@@ -112,7 +124,7 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 							</div>
 						) : (
 							<p>
-								<p className="text-l-medium">{toRupiah(product.price)}</p>
+								<p className="text-l-medium">{toRupiah(product.price).trim()}</p>
 							</p>
 						)}
 						<Button variant="secondary" size="xs">

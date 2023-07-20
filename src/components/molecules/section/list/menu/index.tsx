@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import {ProductMenu} from '@/domain/product/models/ProductsMenu';
 import CardMenuList from '@/molecules/card/menu/list';
-import {ProductMenu} from 'core/domain/product/models';
 import React, {useEffect} from 'react';
 import {useInView} from 'react-intersection-observer';
 import {useAppDispatch} from 'store/hooks';
@@ -31,7 +31,7 @@ const MoleculesSectionListMenu = ({data}: MoleculesSectionListMenuProps) => {
 			ref={ref}
 			key={data.category_name}
 			className="mt-6"
-			id={data.category_name.toLowerCase()}
+			id={data?.category_name?.toLowerCase()}
 		>
 			<aside className="mb-2 px-4">
 				<p className="text-xxl-semibold">{data.category_name}</p>
