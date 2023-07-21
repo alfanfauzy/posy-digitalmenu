@@ -107,7 +107,11 @@ const PagesRatingAdd = () => {
 					<h3 className="text-l-bold">How do you like our food/beverages?</h3>
 					<h4 className="text-l-reguler">Rate your order</h4>
 				</span>
-				<Rate className="text-heading-s-bold" defaultValue={getRating} />
+				<Rate
+					className="text-heading-s-bold"
+					defaultValue={getRating}
+					onChange={e => setValue(`rating`, e)}
+				/>
 			</aside>
 
 			<aside className="flex flex-col items-center gap-4">

@@ -16,7 +16,7 @@ const PaymentDetailMolecules = ({paymentSummary}: PaymentDetailMoleculesProps) =
 					{toRupiah(paymentSummary?.subtotal_price as number)}
 				</p>
 			</div>
-			{paymentSummary?.discount_product_price ? (
+			{paymentSummary?.discount_general_price && paymentSummary?.discount_general_price > 0 ? (
 				<div className="flex justify-between pb-2">
 					<p className="text-m-medium text-neutral-100">{`Discount ${paymentSummary.discount_general_percentage}%`}</p>
 					<p className="text-l-semibold text-neutral-100">
