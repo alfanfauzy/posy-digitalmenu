@@ -5,9 +5,10 @@ import {Rate} from 'antd';
 import {CreateRatingPayload} from 'core/domain/rating/repositories/CreateRatingRepository';
 import {useGetOrderListByRatingViewModel} from 'core/view/order/view-modals/GetOrderListByRatingViewModel';
 import {useCreateRatingViewModal} from 'core/view/rating/CreateRatingViewModels';
+import {useGetTransactionStatusViewModel} from 'core/view/transaction/view-modals/GetTransactionStatusViewModel';
 import {useRouter} from 'next/router';
 import {Button, Textarea} from 'posy-fnb-core';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {toast} from 'react-toastify';
 import {validateAddRating} from 'src/common/schemas/rating/add';
 import {useAppSelector} from 'store/hooks';
@@ -35,6 +36,10 @@ const PagesRatingAdd = () => {
 				},
 			],
 		},
+	});
+
+	const {data: statusTransaction} = useGetTransactionStatusViewModel(transaction_uuid as string, {
+		enabled: !!transaction_uuid,
 	});
 
 	const {data: orderDetail} = useGetOrderListByRatingViewModel(transaction_uuid as string, {
@@ -84,6 +89,14 @@ const PagesRatingAdd = () => {
 
 		createRating(newPayload);
 	};
+
+	useEffect(() => {
+		const isReviewed = statusTransaction?.is_reviewed;
+
+		if (isReviewed) {
+			push(`/payment/completed/${transaction_uuid}`);
+		}
+	}, [statusTransaction?.is_reviewed]);
 
 	return (
 		<main className="mx-auto min-h-screen pt-4 px-5 shadow-md">
