@@ -21,10 +21,10 @@ export type DataObj<TData = unknown> = {
 
 export type ResultQuery<TData = unknown, TError = unknown> = Omit<
 	UseQueryResult<unknown, TError>,
-	'data' & {
-		data: TData;
-	}
->;
+	'data'
+> & {
+	data: TData;
+};
 
 export type ResultMutation<TData = unknown, TError = unknown, TVariables = unknown> = Omit<
 	UseMutationResult<unknown, TError, TVariables>,
