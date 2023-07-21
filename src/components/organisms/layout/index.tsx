@@ -1,6 +1,6 @@
 import Transition from '@/atoms/animations/transition';
 import {useQuery} from '@tanstack/react-query';
-import {GetTransactionStatus} from 'core/data/transaction/sources/GetDetailTransactionStatusQuery';
+import {GetTransactionStatus} from 'core/data/transaction/sources/GetTransactionStatusQuery';
 import {Response} from 'core/domain/vo/BaseResponse';
 import {AnimatePresence} from 'framer-motion';
 import {useRouter} from 'next/router';
@@ -50,17 +50,7 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 		{
 			enabled: !!transaction_uuid,
 			onSuccess: data => {
-				if (!data.is_open && data.is_paid) {
-					setTimeout(() => {
-						setLoading(false);
-					}, 500);
-					router.push(`/payment/completed/${transaction_uuid}`);
-				} else if (!data.is_open) {
-					setTimeout(() => {
-						setLoading(false);
-					}, 500);
-					router.push(`/payment/completed/${transaction_uuid}`);
-				} else if (data.is_waiting_payment) {
+				if (data.is_waiting_payment) {
 					setTimeout(() => {
 						setLoading(false);
 					}, 500);

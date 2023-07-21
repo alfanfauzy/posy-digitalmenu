@@ -1,6 +1,8 @@
 import {Orders} from 'core/domain/order/models/GetOrderDetail';
+import {OrdersByRating} from 'core/domain/order/models/GetOrderListByRating';
 
 import {GetOrderResponse} from '../types';
+import {GetOrderListByRatingResponse} from '../types/GetOrderListByRatingType';
 
 export const mapToOrdersModel = (datas: Array<GetOrderResponse>): Orders =>
 	datas.map(data => ({
@@ -22,4 +24,11 @@ export const mapToOrdersModel = (datas: Array<GetOrderResponse>): Orders =>
 		},
 		order_detail: data.order_detail,
 		order_number: data.order_number,
+	}));
+
+export const mapToOrderListByRatingModel = (datas: GetOrderListByRatingResponse): OrdersByRating =>
+	datas.order_detail?.map(data => ({
+		product_name: data.product_name,
+		qty: data.qty,
+		uuid: data.uuid,
 	}));
