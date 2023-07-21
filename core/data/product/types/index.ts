@@ -1,6 +1,6 @@
+import {Product} from '@/domain/product/models/ProductsMenu';
 import {GetCategoryListResponse} from 'core/data/category/types';
 import {Addons} from 'core/domain/addon/model';
-import {Product} from 'core/domain/product/models';
 
 export type GetProductMenuResponse = {
 	category_uuid: string;
@@ -18,6 +18,8 @@ export type GetProductDetailResponse = {
 			product_image_url: string;
 			categories: Array<GetCategoryListResponse>;
 		};
+		avg_rating: number;
+		total_review: number;
 		is_show: boolean;
 		is_available: boolean;
 		is_discount: boolean;
