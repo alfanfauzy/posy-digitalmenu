@@ -1,10 +1,10 @@
 import {useForm} from '@/hooks/useForm';
 import MoleculesHeaderNavigation from '@/molecules/header/navigation';
 import OrganismsBottomBarRatingAdd from '@/organisms/bottom-bar/rating';
+import {useCreateRatingViewModal} from '@/view/rating/view-modals/CreateRatingViewModels';
 import {Rate} from 'antd';
 import {CreateRatingPayload} from 'core/domain/rating/repositories/CreateRatingRepository';
 import {useGetOrderListByRatingViewModel} from 'core/view/order/view-modals/GetOrderListByRatingViewModel';
-import {useCreateRatingViewModal} from 'core/view/rating/CreateRatingViewModels';
 import {useGetTransactionStatusViewModel} from 'core/view/transaction/view-modals/GetTransactionStatusViewModel';
 import {useRouter} from 'next/router';
 import {Button, Textarea} from 'posy-fnb-core';

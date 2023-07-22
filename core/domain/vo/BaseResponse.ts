@@ -15,6 +15,10 @@ export type Datalist<TData> = {
 	objs: Array<TData>;
 };
 
+export type DataListRating<TData> = Omit<Datalist<TData>, 'objs'> & {
+	product_rating: TData;
+};
+
 export type DataObj<TData = unknown> = {
 	objs: Array<TData>;
 };
