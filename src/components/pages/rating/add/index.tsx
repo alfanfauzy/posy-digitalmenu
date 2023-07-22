@@ -58,7 +58,7 @@ const PagesRatingAdd = () => {
 	const {createRating} = useCreateRatingViewModal({
 		onSuccess() {
 			toast.success('Succesfull save rating.');
-			push(`/payment/completed/${transaction_uuid}`);
+			push(`/rating/completed/${transaction_uuid}`);
 		},
 		onError() {
 			toast.error('Error save rating');
@@ -185,7 +185,7 @@ const PagesRatingAdd = () => {
 					))}
 			</div>
 
-			<OrganismsBottomBarRatingAdd handleSubmit={handleSubmitRating} />
+			<OrganismsBottomBarRatingAdd handleSubmit={handleSubmitRating} textButton="Submit Rating" />
 		</main>
 	);
 };
