@@ -1,7 +1,7 @@
 import {useForm} from '@/hooks/useForm';
 import MoleculesHeaderNavigation from '@/molecules/header/navigation';
 import OrganismsBottomBarRatingAdd from '@/organisms/bottom-bar/rating';
-import {useCreateRatingViewModal} from '@/view/rating/view-modals/CreateRatingViewModels';
+import {useCreateRatingViewModel} from '@/view/rating/view-modals/CreateRatingViewModels';
 import {Rate} from 'antd';
 import {CreateRatingPayload} from 'core/domain/rating/repositories/CreateRatingRepository';
 import {useGetOrderListByRatingViewModel} from 'core/view/order/view-modals/GetOrderListByRatingViewModel';
@@ -55,7 +55,7 @@ const PagesRatingAdd = () => {
 		},
 	});
 
-	const {createRating} = useCreateRatingViewModal({
+	const {createRating} = useCreateRatingViewModel({
 		onSuccess() {
 			toast.success('Succesfull save rating.');
 			push(`/rating/completed/${transaction_uuid}`);

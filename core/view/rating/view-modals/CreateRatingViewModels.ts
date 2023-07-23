@@ -3,7 +3,7 @@ import {useCreateRatingUsecase} from 'core/data/rating/usecase/CreateRatingUseca
 import {CreateRatingRepository} from 'core/domain/rating/repositories/CreateRatingRepository';
 import {MutationOptions} from 'core/domain/vo/BaseMutation';
 
-export const useCreateRatingViewModal = (
+export const useCreateRatingViewModel = (
 	options?: MutationOptions<CreateRatingResponse>,
 ): CreateRatingRepository => {
 	const result = useCreateRatingUsecase(options);

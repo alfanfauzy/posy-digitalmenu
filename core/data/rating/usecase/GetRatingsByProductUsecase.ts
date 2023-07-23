@@ -1,9 +1,9 @@
-import {mapToMenuProductsModel} from '@/data/product/mappers/ProductMapper';
 import {
+	DataListRating,
 	GetRatingsByProductResult,
 	PayloadGetRatingByProduct,
 } from '@/domain/rating/repositories/GetRatingsByProductRepository';
-import {DataListRating, Response} from '@/domain/vo/BaseResponse';
+import {Response} from '@/domain/vo/BaseResponse';
 import {UseQueryOptions} from '@tanstack/react-query';
 
 import {mapToRatingsByProductModel} from '../mappers/RatingMapper';

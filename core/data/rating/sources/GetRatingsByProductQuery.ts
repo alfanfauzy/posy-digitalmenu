@@ -1,5 +1,8 @@
-import {PayloadGetRatingByProduct} from '@/domain/rating/repositories/GetRatingsByProductRepository';
-import {DataListRating, Response} from '@/domain/vo/BaseResponse';
+import {
+	DataListRating,
+	PayloadGetRatingByProduct,
+} from '@/domain/rating/repositories/GetRatingsByProductRepository';
+import {Response} from '@/domain/vo/BaseResponse';
 import {UseQueryOptions, useQuery} from '@tanstack/react-query';
 import Post from 'api/post';
 import {AxiosError} from 'axios';
