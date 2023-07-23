@@ -84,7 +84,7 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 							</p>
 
 							<MoleculesRating
-								ratingValue={product.avg_rating}
+								ratingValue={Number(product.avg_rating.toFixed(1))}
 								totalReview={product.total_review}
 							/>
 

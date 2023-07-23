@@ -25,7 +25,8 @@ const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
 		}
 	};
 
-	const showRatingValue = product.detail.avg_rating === 0 ? '5.0' : product.detail.avg_rating;
+	const showRatingValue =
+		product.detail.avg_rating === 0 ? '5.0' : product.detail.avg_rating.toFixed(1);
 
 	return (
 		<article className="flex gap-4 flex-col">
