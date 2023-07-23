@@ -58,7 +58,10 @@ const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendation
 							<p className="text-l-medium">{toRupiah(data.price).trim()}</p>
 						)}
 
-						<MoleculesRating ratingValue={data.avg_rating} totalReview={data.total_review} />
+						<MoleculesRating
+							ratingValue={Number(data.avg_rating.toFixed(1))}
+							totalReview={data.total_review}
+						/>
 					</div>
 				</aside>
 

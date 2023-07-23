@@ -1,10 +1,10 @@
 import {useForm} from '@/hooks/useForm';
 import MoleculesHeaderNavigation from '@/molecules/header/navigation';
 import OrganismsBottomBarRatingAdd from '@/organisms/bottom-bar/rating';
+import {useCreateRatingViewModel} from '@/view/rating/view-modals/CreateRatingViewModels';
 import {Rate} from 'antd';
 import {CreateRatingPayload} from 'core/domain/rating/repositories/CreateRatingRepository';
 import {useGetOrderListByRatingViewModel} from 'core/view/order/view-modals/GetOrderListByRatingViewModel';
-import {useCreateRatingViewModal} from 'core/view/rating/CreateRatingViewModels';
 import {useGetTransactionStatusViewModel} from 'core/view/transaction/view-modals/GetTransactionStatusViewModel';
 import {useRouter} from 'next/router';
 import {Button, Textarea} from 'posy-fnb-core';
@@ -55,10 +55,10 @@ const PagesRatingAdd = () => {
 		},
 	});
 
-	const {createRating} = useCreateRatingViewModal({
+	const {createRating} = useCreateRatingViewModel({
 		onSuccess() {
 			toast.success('Succesfull save rating.');
-			push(`/payment/completed/${transaction_uuid}`);
+			push(`/rating/completed/${transaction_uuid}`);
 		},
 		onError() {
 			toast.error('Error save rating');
@@ -185,7 +185,7 @@ const PagesRatingAdd = () => {
 					))}
 			</div>
 
-			<OrganismsBottomBarRatingAdd handleSubmit={handleSubmitRating} />
+			<OrganismsBottomBarRatingAdd handleSubmit={handleSubmitRating} textButton="Submit Rating" />
 		</main>
 	);
 };

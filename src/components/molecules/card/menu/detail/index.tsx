@@ -1,5 +1,6 @@
 import ImageMenu from '@/molecules/image/menu';
 import {ProductDetail} from 'core/domain/product/models';
+import {useRouter} from 'next/router';
 import React from 'react';
 import {AiFillStar, AiOutlineRight} from 'react-icons/ai';
 import {toRupiah} from 'utils/common';
@@ -9,6 +10,9 @@ type MoleculesCardMenuDetailProps = {
 };
 
 const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
+	const {query, push} = useRouter();
+	const {transaction_uuid, product_uuid} = query;
+
 	const {is_favourite, cooking_duration, is_discount, price_after_discount, price} = product.detail;
 
 	const {product_name, product_description, product_image_url} = product.detail.product;
@@ -17,11 +21,12 @@ const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
 		const isEmptyRating = product.detail.avg_rating === 0;
 
 		if (!isEmptyRating) {
-			/** Will be goes to page rating list */
+			push(`/rating/history/${transaction_uuid}/${product_uuid}`);
 		}
 	};
 
-	const showRatingValue = product.detail.avg_rating === 0 ? '5.0' : product.detail.avg_rating;
+	const showRatingValue =
+		product.detail.avg_rating === 0 ? '5.0' : product.detail.avg_rating.toFixed(1);
 
 	return (
 		<article className="flex gap-4 flex-col">
