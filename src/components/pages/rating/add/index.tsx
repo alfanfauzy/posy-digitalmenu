@@ -90,6 +90,10 @@ const PagesRatingAdd = () => {
 		createRating(newPayload);
 	};
 
+	const handleGoBack = () => {
+		push(`/payment/completed/${transaction_uuid}`);
+	};
+
 	useEffect(() => {
 		const isReviewed = statusTransaction?.is_reviewed;
 
@@ -100,7 +104,7 @@ const PagesRatingAdd = () => {
 
 	return (
 		<main className="mx-auto min-h-screen pt-4 px-5 shadow-md">
-			<MoleculesHeaderNavigation text="Foods Rating" isWithIcon={false} />
+			<MoleculesHeaderNavigation text="Foods Rating" isWithIcon goBack={handleGoBack} />
 
 			<aside className="mt-4 mb-6 p-4 border rounded-2xl border-neutral-40 shadow-sm flex flex-col items-center gap-6">
 				<span className="flex flex-col items-center gap-2">
