@@ -16,26 +16,27 @@ import {useAppDispatch, useAppSelector} from 'store/hooks';
 import {onEditOrder, onLeaveOrderPage} from 'store/slices/menu';
 
 const PagesMenuDetail: React.FC = () => {
-	const router = useRouter();
+	const {query, push, events} = useRouter();
+	const {transaction_uuid} = query;
 	const dispatch = useAppDispatch();
 	const basket = useAppSelector(state => state.basket);
 	const productDetail = useAppSelector(state => state.product.detail);
 	const [loading, setLoading] = useState(false);
 
-	const goBack = () => router.back();
+	const goBack = () => push(`/menu/${transaction_uuid}`);
 
 	useEffect(() => {
 		const exitingFunction = () => dispatch(onLeaveOrderPage());
 
-		router.events.on('routeChangeStart', exitingFunction);
+		events.on('routeChangeStart', exitingFunction);
 
 		return () => {
-			router.events.off('routeChangeStart', exitingFunction);
+			events.off('routeChangeStart', exitingFunction);
 		};
 	}, []);
 
 	useEffect(() => {
-		const {counter} = router.query;
+		const {counter} = query;
 		if (counter) {
 			const filteredBasket = basket.basket.find(el => el.counter.toString() === counter);
 			if (filteredBasket) {
