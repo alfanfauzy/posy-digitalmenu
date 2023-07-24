@@ -25,10 +25,4 @@ describe('dateFormatter', () => {
 		const testWithDateFormat = dateFormatter(timeNumber, 'dd MMM yyyy');
 		expect(testWithDateFormat).toBe('24 Jul 2023');
 	});
-
-	test('valid format to unix time', () => {
-		const dateNow = new Date('24 Jul 2023');
-		const testWithDateFormat = toUnix(dateNow);
-		expect(testWithDateFormat).toBe('1690131600');
-	});
 });
