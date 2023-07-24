@@ -1,9 +1,6 @@
 import Post from 'api/post';
 import {AxiosError} from 'axios';
-import {
-	GetFilterPaymentMethodCategory,
-	PayloadPaymentCategory,
-} from 'core/domain/payment/repositories/PaymentRepositories';
+import {PayloadPaymentCategory} from 'core/domain/payment/repositories/PaymentRepositories';
 import {Response, Datalist} from 'core/domain/vo/BaseResponse';
 import {useQuery, UseQueryOptions} from 'react-query';
 
@@ -29,16 +26,3 @@ export const GetPaymentMethodCategory = async (
 		throw err.response?.data;
 	}
 };
-
-export const useGetPaymentMethodCategoryQuery = (
-	input: PayloadPaymentCategory,
-	options?: UseQueryOptions<Response<Datalist<GetPaymentMethodCategoryListResponse>>>,
-) =>
-	useQuery<Response<Datalist<GetPaymentMethodCategoryListResponse>>>(
-		['payment-method-category/list', JSON.stringify(input)],
-		() => GetPaymentMethodCategory(input),
-		{
-			enabled: !!JSON.stringify(input),
-			...options,
-		},
-	);

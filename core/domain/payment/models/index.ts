@@ -20,22 +20,10 @@ export type PaymentMethodCategoryBased = {
 	payment_method: Array<PaymentMethodBased>;
 };
 
-export type PaymentMethodCategoryPayload = {
-	payment_method_category: Array<{
-		uuid: string;
-		is_show: boolean;
-		payment_method: Array<{
-			uuid: string;
-			is_show: boolean;
-		}>;
-	}>;
-};
-
 export type PaymentMethodCategory = PaymentMethodCategoryBased;
 export type PaymentMethodCategorys = Array<PaymentMethodCategoryBased>;
 
 export type PaymentMethod = PaymentMethodBased;
-export type PaymentMethods = Array<PaymentMethodBased>;
 
 /**
  * Payment Request

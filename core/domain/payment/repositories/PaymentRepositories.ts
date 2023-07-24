@@ -18,12 +18,6 @@ export type PayloadPaymentCategory = {
 	transaction_uuid: string;
 };
 
-export type GetPaymentMethodCategorysResult = ResultQuery<PaymentMethodCategorys | undefined> & {
-	pagination: Pagination | undefined;
-};
-
-export type GetPaymentMethodCategoryResult = ResultQuery<PaymentMethodCategory>;
-
 /**
  * Create Payment Request
  */

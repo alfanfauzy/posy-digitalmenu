@@ -30,9 +30,3 @@ export const dateFormatter = (
 
 	return format(date, dateFormat || 'dd MMMM yyyy');
 };
-
-export const toUnix = (date: Date): string => {
-	const unixTimestamp = format(date, 't');
-
-	return unixTimestamp;
-};

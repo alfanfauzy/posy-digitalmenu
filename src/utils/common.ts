@@ -32,10 +32,6 @@ export const calculateOrder = (el: BasketItem) =>
 
 export const calculateOrderBeforeDiscount = (el: BasketItem) =>
 	(calculateAddOn(el.addOnVariant) + el.product.detail.price) * el.quantity;
-export const calculateDiscount = (arr: Array<BasketItem>) =>
-	[...arr]
-		.map(el => (calculateAddOn(el.addOnVariant) + el.product.detail.price_discount) * el.quantity)
-		.reduce((prev, current) => prev + current, 0);
 
 export const renderPrice = (
 	available: boolean,

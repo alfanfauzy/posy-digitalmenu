@@ -16,8 +16,3 @@ export type FilterInputVariables<TSort = unknown, TSearch = unknown> = {
 	limit: number;
 	page: number;
 };
-
-export type ParamsPayload = {
-	id?: string;
-	params: object;
-};
