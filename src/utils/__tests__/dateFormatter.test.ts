@@ -1,4 +1,4 @@
-import {dateFormatter} from 'src/utils/dateFormatter';
+import {dateFormatter, toUnix} from 'src/utils/dateFormatter';
 
 describe('dateFormatter', () => {
 	test('valid', () => {
@@ -12,5 +12,23 @@ describe('dateFormatter', () => {
 			'dd MMM yyyy',
 		);
 		expect(testWithDateFormat).toBe('06 Aug 1988');
+	});
+
+	test('valid with date as string', () => {
+		const timeString = '1988-08-06T07:01:31.240937Z';
+		const testWithDateFormat = dateFormatter(timeString, 'dd MMM yyyy');
+		expect(testWithDateFormat).toBe('06 Aug 1988');
+	});
+
+	test('valid with date as number', () => {
+		const timeNumber = 1690181502;
+		const testWithDateFormat = dateFormatter(timeNumber, 'dd MMM yyyy');
+		expect(testWithDateFormat).toBe('24 Jul 2023');
+	});
+
+	test('valid format to unix time', () => {
+		const dateNow = new Date('24 Jul 2023');
+		const testWithDateFormat = toUnix(dateNow);
+		expect(testWithDateFormat).toBe('1690131600');
 	});
 });
