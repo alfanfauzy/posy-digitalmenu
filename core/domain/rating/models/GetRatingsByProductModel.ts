@@ -3,8 +3,9 @@ type RatingsByProductBased = {
 	product_name: string;
 	rating: number;
 	review: Array<string>;
-	date: number;
+	date: string;
 	customer_name: string;
+	review_note: string;
 };
 
 export type RatingsByProduct = Array<RatingsByProductBased>;

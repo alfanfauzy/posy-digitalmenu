@@ -1,4 +1,4 @@
-import {format, fromUnixTime} from 'date-fns';
+import {format, formatISO, fromUnixTime, parseISO} from 'date-fns';
 
 type DateFormatType =
 	| 'dd LLL yyyy HH:mm:ss'
@@ -20,12 +20,17 @@ type DateFormatType =
 	| 't';
 
 export const dateFormatter = (
-	date: number | Date,
+	date: number | Date | string,
 	dateFormat?: DateFormatType,
 ): string | number => {
 	if (typeof date === 'number') {
 		const formatDate = fromUnixTime(date);
 		return format(formatDate, dateFormat || 'dd MMMM yyyy');
+	}
+
+	if (typeof date === 'string') {
+		const dateIso = parseISO(date);
+		return format(dateIso, dateFormat || 'dd MMMM yyyy');
 	}
 
 	return format(date, dateFormat || 'dd MMMM yyyy');
