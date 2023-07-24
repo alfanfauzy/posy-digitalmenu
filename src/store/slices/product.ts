@@ -1,8 +1,8 @@
+import {ProductMenuDetail} from '@/domain/product/models/ProductMenuDetail';
 import {ProductsMenu} from '@/domain/product/models/ProductsMenu';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {ProductDetail} from 'core/domain/product/models';
 
-export type ProductMenuState = {objs: ProductsMenu; detail: ProductDetail};
+export type ProductMenuState = {objs: ProductsMenu; detail: ProductMenuDetail};
 
 const initialState: ProductMenuState = {
 	objs: [],
@@ -40,6 +40,8 @@ const initialState: ProductMenuState = {
 			avg_rating: 0,
 			total_review: 0,
 			product: {
+				avg_rating: 0,
+				total_review: 0,
 				uuid: '',
 				restaurant_uuid: '',
 				product_name: '',
@@ -58,7 +60,7 @@ export const ProductMenuSlice = createSlice({
 		onChangeProductMenu: (state: ProductMenuState, action: PayloadAction<ProductsMenu>) => {
 			state.objs = action.payload;
 		},
-		setProductDetail: (state: ProductMenuState, action: PayloadAction<ProductDetail>) => {
+		setProductDetail: (state: ProductMenuState, action: PayloadAction<ProductMenuDetail>) => {
 			state.detail = action.payload;
 		},
 	},

@@ -1,16 +1,11 @@
-import {Product} from '@/domain/product/models/ProductsMenu';
-import {GetCategoryListResponse} from 'core/data/category/types';
-import {Addons} from 'core/domain/addon/model';
-
-export type GetProductMenuResponse = {
-	category_uuid: string;
-	category_name: string;
-	products: Array<Product>;
-};
+import {GetCategoryListResponse} from '@/data/category/types';
+import {Addons} from '@/domain/addon/model';
 
 export type GetProductDetailResponse = {
 	detail: {
 		product: {
+			avg_rating: number;
+			total_review: number;
 			uuid: string;
 			restaurant_uuid: string;
 			product_name: string;

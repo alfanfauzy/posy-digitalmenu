@@ -4,6 +4,8 @@ import {Addons} from 'core/domain/addon/model';
 export type ProductDetailBased = {
 	detail: {
 		product: {
+			avg_rating: number;
+			total_review: number;
 			uuid: string;
 			restaurant_uuid: string;
 			product_name: string;
@@ -27,4 +29,4 @@ export type ProductDetailBased = {
 	addons: Addons;
 };
 
-export type ProductDetail = ProductDetailBased;
+export type ProductMenuDetail = ProductDetailBased;

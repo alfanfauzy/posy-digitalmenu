@@ -63,9 +63,11 @@ const PagesMenuDetail: React.FC = () => {
 		);
 	}
 
+	const headerText = productDetail.detail.product.product_name;
+
 	return (
 		<main className="p-4 shadow-md">
-			<MoleculesHeaderNavigation goBack={goBack} text={productDetail.detail.product.product_name} />
+			<MoleculesHeaderNavigation goBack={goBack} text={headerText} />
 			<CardMenuDetail product={productDetail} />
 			<FormOrder add_on={productDetail.addons} />
 			<SectionBottomBar product={productDetail} />

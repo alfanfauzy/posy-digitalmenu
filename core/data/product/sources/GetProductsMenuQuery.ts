@@ -1,4 +1,4 @@
-import {GetProductMenuResponse} from '@/data/product/types';
+import {GetProductMenuResponse} from '@/data/product/types/GetProductsMenuType';
 import {DataObj, Response} from '@/domain/vo/BaseResponse';
 import {UseQueryOptions, useQuery} from '@tanstack/react-query';
 import Get from 'api/get';

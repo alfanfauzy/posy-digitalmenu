@@ -1,4 +1,4 @@
-import {GetProductMenuResponse} from '@/data/product/types';
+import {GetProductMenuResponse} from '@/data/product/types/GetProductsMenuType';
 import {useGetMenuProductsUsecase} from '@/data/product/usecases/GetMenuProductsUsecase';
 import {GetProductsMenuResult} from '@/domain/product/repositories/GetProductsMenuRepository';
 import {DataObj, Response} from '@/domain/vo/BaseResponse';

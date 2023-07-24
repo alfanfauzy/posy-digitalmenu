@@ -1,12 +1,12 @@
+import {ProductMenuDetail} from '@/domain/product/models/ProductMenuDetail';
 import ImageMenu from '@/molecules/image/menu';
-import {ProductDetail} from 'core/domain/product/models';
 import {useRouter} from 'next/router';
 import React from 'react';
 import {AiFillStar, AiOutlineRight} from 'react-icons/ai';
 import {toRupiah} from 'utils/common';
 
 type MoleculesCardMenuDetailProps = {
-	product: ProductDetail;
+	product: ProductMenuDetail;
 };
 
 const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
@@ -18,7 +18,7 @@ const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
 	const {product_name, product_description, product_image_url} = product.detail.product;
 
 	const handleShowRatingList = () => {
-		const isEmptyRating = product.detail.avg_rating === 0;
+		const isEmptyRating = product.detail.product.avg_rating === 0;
 
 		if (!isEmptyRating) {
 			push(`/rating/history/${transaction_uuid}/${product_uuid}`);
@@ -26,7 +26,7 @@ const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
 	};
 
 	const showRatingValue =
-		product.detail.avg_rating === 0 ? '5.0' : product.detail.avg_rating.toFixed(1);
+		product.detail.product.avg_rating === 0 ? '5.0' : product.detail.product.avg_rating.toFixed(1);
 
 	return (
 		<article className="flex gap-4 flex-col">
@@ -42,9 +42,9 @@ const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
 				onClick={handleShowRatingList}
 			>
 				<AiFillStar className="fill-light-yellow" size={30} />
-				<span className="flex gap-1 flex-row border-r-2 px-1">
+				<span className="flex gap-1 flex-row border-r-2 px-2">
 					<p>{showRatingValue}</p>
-					<p className="text-neutral-60">({product.detail.total_review})</p>
+					<p className="text-neutral-60">({product.detail.product.total_review})</p>
 				</span>
 				<span className="flex flex-row justify-between items-center w-full">
 					<p className="px-2">View ratings and reviews</p>
