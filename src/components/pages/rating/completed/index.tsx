@@ -3,12 +3,20 @@ import OrganismsBottomBarRatingAdd from '@/organisms/bottom-bar/rating';
 import Image from 'next/image';
 import {useRouter} from 'next/router';
 import React from 'react';
+import {useAppDispatch} from 'store/hooks';
+import {onResetRating} from 'store/slices/rating';
 
 const ImageRatingCompleted = require('public/rating_completed.svg');
 
 const PagesRatingAddSuccessfull = () => {
+	const dispatch = useAppDispatch();
 	const {query, push} = useRouter();
 	const {transaction_uuid} = query;
+
+	const handleButtonBack = () => {
+		dispatch(onResetRating());
+		push(`/payment/completed/${transaction_uuid}`);
+	};
 
 	return (
 		<main className="mx-auto min-h-screen pt-4 px-5 shadow-md">
@@ -24,7 +32,7 @@ const PagesRatingAddSuccessfull = () => {
 			</aside>
 
 			<OrganismsBottomBarRatingAdd
-				handleSubmit={() => push(`/payment/completed/${transaction_uuid}`)}
+				handleSubmit={handleButtonBack}
 				textButton="Back to Payment Summary"
 			/>
 		</main>

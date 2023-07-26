@@ -1,5 +1,6 @@
 import {useMutation} from '@tanstack/react-query';
 import Post from 'api/post';
+import {AxiosError} from 'axios';
 import {CreateRatingPayload} from 'core/domain/rating/repositories/CreateRatingRepository';
 import {ErrorType} from 'core/domain/vo/BaseError';
 import {MutationOptions} from 'core/domain/vo/BaseMutation';
@@ -24,8 +25,10 @@ export const CreateRatingService = async (
 export const useCreateRatingtMutation = (options?: MutationOptions<CreateRatingResponse>) =>
 	useMutation({
 		mutationFn: (param: CreateRatingPayload) => CreateRatingService(param),
-		onError(error: ErrorType) {
-			toast.error(error.more_info);
+		onError(error: AxiosError<ErrorType>) {
+			if ('review' in (error.response?.data.message as object)) {
+				toast.error('Compliment is a required ');
+			}
 		},
 		...options,
 	});

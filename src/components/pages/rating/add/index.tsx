@@ -9,7 +9,6 @@ import {useGetTransactionStatusViewModel} from 'core/view/transaction/view-modal
 import {useRouter} from 'next/router';
 import {Button, Textarea} from 'posy-fnb-core';
 import React, {useEffect} from 'react';
-import {toast} from 'react-toastify';
 import {validateAddRating} from 'src/common/schemas/rating/add';
 import {useAppSelector} from 'store/hooks';
 
@@ -57,11 +56,7 @@ const PagesRatingAdd = () => {
 
 	const {createRating} = useCreateRatingViewModel({
 		onSuccess() {
-			toast.success('Succesfull save rating.');
 			push(`/rating/completed/${transaction_uuid}`);
-		},
-		onError() {
-			toast.error('Error save rating');
 		},
 	});
 

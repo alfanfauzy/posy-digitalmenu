@@ -9,6 +9,8 @@ import React, {ReactNode, SyntheticEvent, useEffect, useState} from 'react';
 import {toast} from 'react-toastify';
 import Bill from 'src/assets/icons/bill';
 import Menu from 'src/assets/icons/menu';
+import {useAppDispatch, useAppSelector} from 'store/hooks';
+import {onResetRating} from 'store/slices/rating';
 
 type OrganismsLayoutProps = {
 	children: ReactNode;
@@ -35,11 +37,13 @@ const showBottomNavigationRoutes = [
 
 const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 	const router = useRouter();
+	const dispatch = useAppDispatch();
 	const {transaction_uuid} = router.query;
 	const [value, setValue] = useState(0);
 	const [loading, setLoading] = useState(true);
+	const {isShowAddRating} = useAppSelector(state => state.rating);
 
-	useQuery(
+	const {isLoading: isLoadingTransactionStatus} = useQuery(
 		[router.pathname],
 		async () => {
 			const response = await GetTransactionStatus(transaction_uuid as string);
@@ -55,6 +59,11 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 						setLoading(false);
 					}, 500);
 					router.push(`/payment/waiting/${transaction_uuid}`);
+				} else if (data.is_paid && !isShowAddRating) {
+					setTimeout(() => {
+						setLoading(false);
+					}, 500);
+					router.push(`/payment/completed/${transaction_uuid}`);
 				} else {
 					setTimeout(() => {
 						setLoading(false);
@@ -89,6 +98,10 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 			setLoading(false);
 		}
 	}, [router.pathname, transaction_uuid]);
+
+	useEffect(() => {
+		dispatch(onResetRating());
+	}, []);
 
 	if (loading) {
 		return (

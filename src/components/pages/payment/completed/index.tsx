@@ -7,7 +7,7 @@ import Image from 'next/image';
 import {useRouter} from 'next/router';
 import React from 'react';
 import {useAppDispatch} from 'store/hooks';
-import {onChangeRating} from 'store/slices/rating';
+import {onChangeRating, onChangeShowAddRating} from 'store/slices/rating';
 import {generateTransactionCode} from 'utils/UtilsGenerateTransactionCode';
 
 const ImagePaymentCompleted = require('public/check_completed.svg');
@@ -34,6 +34,11 @@ const PagesPaymentCompleted = ({paymentCompleted}: PagesPaymentCompletedProps) =
 	});
 
 	const isReview = data?.is_reviewed;
+
+	const handleAddRating = (val: number) => {
+		dispatch(onChangeShowAddRating(true));
+		handleChangeRating(val);
+	};
 
 	return (
 		<main className="mx-auto min-h-screen pt-4 px-5 shadow-md">
@@ -76,7 +81,7 @@ const PagesPaymentCompleted = ({paymentCompleted}: PagesPaymentCompletedProps) =
 						<h3 className="text-l-bold">How do you like our food/beverages?</h3>
 						<h4 className="text-l-reguler">Rate your order</h4>
 					</span>
-					<Rate className="text-heading-s-bold" onChange={val => handleChangeRating(val)} />
+					<Rate className="text-heading-s-bold" onChange={handleAddRating} />
 				</aside>
 			)}
 		</main>

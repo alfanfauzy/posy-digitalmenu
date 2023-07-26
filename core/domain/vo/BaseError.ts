@@ -1,6 +1,6 @@
 export type ErrorType = {
-	code: string;
+	code: number;
 	data: string;
-	message: string;
+	message: string | object;
 	more_info: string;
 };

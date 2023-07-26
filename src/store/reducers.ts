@@ -12,7 +12,7 @@ import rating from './slices/rating';
 const persistConfig = {
 	key: 'root',
 	version: 1,
-	whitelist: ['basket, rating'],
+	whitelist: ['basket', 'rating'],
 	storage: PersistStorage,
 };
 

@@ -4,7 +4,7 @@ import {CreateRatingRepository} from 'core/domain/rating/repositories/CreateRati
 import {MutationOptions} from 'core/domain/vo/BaseMutation';
 
 export const useCreateRatingViewModel = (
-	options?: MutationOptions<CreateRatingResponse>,
+	options: MutationOptions<CreateRatingResponse>,
 ): CreateRatingRepository => {
 	const result = useCreateRatingUsecase(options);
 
