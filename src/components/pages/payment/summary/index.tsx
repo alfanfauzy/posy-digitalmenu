@@ -15,6 +15,7 @@ import {useRouter} from 'next/router';
 import {Button, Loading, Modal} from 'posy-fnb-core';
 import React, {useMemo, useState} from 'react';
 import Info from 'src/assets/icons/info';
+import {logEvent} from 'utils/UtilsAnalytics';
 
 type PagesPaymentSummaryProps = {
 	paymentSummary: GetPaymentSummaryResponse | undefined;
@@ -62,7 +63,10 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 		{enabled: !!transaction_uuid},
 	);
 
-	const goBack = () => router.push(`/menu/${transaction_uuid}`);
+	const goBack = () => {
+		router.push(`/menu/${transaction_uuid}`);
+		logEvent({category: 'payment', action: 'payment_back_click'});
+	};
 
 	const {createTransactionFinish, isLoading: isLoadingCreate} = useCreateFinishTransactionViewModal(
 		{
@@ -131,6 +135,12 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 		);
 	}
 
+	const handleButtonPayAtCashier = () => {
+		open();
+		setSelectPaymentMethod('cash');
+		logEvent({category: 'payment', action: 'payment_payatcashier_click'});
+	};
+
 	return (
 		<main className="mx-auto pt-4 min-h-screen shadow-md">
 			<div className="px-5">
@@ -149,10 +159,7 @@ const PagesPaymentSummary = ({paymentSummary}: PagesPaymentSummaryProps) => {
 				<p className="mb-4 text-xl-semibold text-neutral-100">Payment option</p>
 				<Button
 					type="button"
-					onClick={() => {
-						open();
-						setSelectPaymentMethod('cash');
-					}}
+					onClick={handleButtonPayAtCashier}
 					className="w-full rounded-[24px] border border-black !bg-white px-5 py-2 text-l-semibold text-neutral-100"
 				>
 					Pay at Cashier

@@ -5,6 +5,7 @@ import {DropdownMobile} from 'posy-fnb-core';
 import React from 'react';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
 import {onChangeCategory} from 'store/slices/menu';
+import {logEvent} from 'utils/UtilsAnalytics';
 
 type MoleculesSectionFilterCategoryProps = {
 	listCategories: Array<Item>;
@@ -20,6 +21,7 @@ const MoleculesSectionFilterCategory = ({
 	const {category} = useAppSelector(state => state.menu);
 
 	const onChange = (e: {label: string; value: string}) => {
+		logEvent({category: 'homepage', action: 'homepage_filteredhomepage_view'});
 		dispatch(onChangeCategory(e));
 		router.push(`#${e.value}`);
 	};

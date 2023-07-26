@@ -16,6 +16,7 @@ import {useRouter} from 'next/router';
 import {Button, Loading} from 'posy-fnb-core';
 import React from 'react';
 import {toRupiah} from 'utils/common';
+import {logEvent} from 'utils/UtilsAnalytics';
 import {generateStatusOrder, generateStatusOrderDetail} from 'utils/UtilsGenerateOrderStatus';
 
 const PagesBill = () => {
@@ -52,7 +53,15 @@ const PagesBill = () => {
 		{enabled: !!transaction_uuid},
 	);
 
-	const goBack = () => router.back();
+	const goBack = () => {
+		router.back();
+		logEvent({category: 'bill', action: 'bill_back_click'});
+	};
+
+	const handleButtonPayment = () => {
+		router.push(`/payment/summary/${transaction_uuid as string}`);
+		logEvent({category: 'bill', action: 'bill_payment_click'});
+	};
 
 	return (
 		<main className="mx-auto min-h-screen overflow-y-auto pt-4 pb-40 shadow-md">
@@ -134,10 +143,7 @@ const PagesBill = () => {
 						}}
 						className="fixed bottom-0 w-full max-w-[576px] rounded-t-2xl bg-neutral-10 px-4 pb-20 pt-6"
 					>
-						<Button
-							fullWidth
-							onClick={() => router.push(`/payment/summary/${transaction_uuid as string}`)}
-						>
+						<Button fullWidth onClick={handleButtonPayment}>
 							Payment
 						</Button>
 					</section>

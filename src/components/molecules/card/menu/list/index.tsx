@@ -9,6 +9,7 @@ import {BiTimeFive} from 'react-icons/bi';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
 import {onChangeQuantity} from 'store/slices/menu';
 import {calculateQuantity, calculateOrder, toRupiah, renderPrice} from 'utils/common';
+import {logEvent} from 'utils/UtilsAnalytics';
 
 const BottomSheet = dynamic(() => import('posy-fnb-core').then(el => el.BottomSheet), {
 	loading: () => <div />,
@@ -33,12 +34,14 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 		setTimeout(() => {
 			router.push(`/menu/${transaction_uuid}/${product.uuid}`);
 		}, 500);
+		logEvent({category: 'menu_detail', action: 'menudetails_makeanother_click'});
 		setOpenBottomBar(false);
 		dispatch(onChangeQuantity({operator: 'plus', value: 1}));
 	};
 
 	const handleClick = () => {
 		if (selected.length > 0) {
+			logEvent({category: 'menu_detail', action: 'menudetails_ordermodal_view'});
 			setOpenBottomBar(true);
 		} else {
 			handleMakesNewOrder();
@@ -46,6 +49,7 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 	};
 
 	const handleClickExisting = (counter: number) => {
+		logEvent({category: 'menu_detail', action: 'menudetails_editmenu_click'});
 		setTimeout(() => {
 			router.push({
 				pathname: `/menu/${transaction_uuid}/${product.uuid}`,
@@ -54,6 +58,10 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 		}, 300);
 		setOpenBottomBar(false);
 	};
+
+	const WordButton = `${
+		selected.length > 0 ? `${quantity} item${quantity > 1 ? 's' : ''}` : 'Add'
+	}`;
 
 	return (
 		<>
@@ -81,6 +89,7 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 								/>
 							</p>
 							{product.is_discount && <Label size="s" title="Discount" />}
+
 							<p className="mt-1 text-m-regular line-clamp-3">{product.product_description}</p>
 
 							{product.cooking_duration !== 0 && (
@@ -111,12 +120,10 @@ const MoleculesCardMenuList = ({product}: MoleculesCardMenuListProps) => {
 								</p>
 							</div>
 						) : (
-							<p>
-								<p className="text-l-medium">{toRupiah(product.price)}</p>
-							</p>
+							<p className="text-l-medium">{toRupiah(product.price)}</p>
 						)}
 						<Button variant="secondary" size="xs">
-							{`${selected.length > 0 ? `${quantity} item${quantity > 1 ? 's' : ''}` : 'Add'}`}
+							{WordButton}
 						</Button>
 					</div>
 				</aside>

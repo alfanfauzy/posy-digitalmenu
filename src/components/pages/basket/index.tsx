@@ -13,7 +13,6 @@ import dynamic from 'next/dynamic';
 import {useRouter} from 'next/router';
 import {Button} from 'posy-fnb-core';
 import React, {useMemo} from 'react';
-import {IoIosArrowBack} from 'react-icons/io';
 import Info from 'src/assets/icons/info';
 import PencilEdit from 'src/assets/icons/pencilEdit';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
@@ -25,6 +24,7 @@ import {
 	calculateTotalBeforeDiscount,
 	toRupiah,
 } from 'utils/common';
+import {logEvent} from 'utils/UtilsAnalytics';
 
 const Modal = dynamic(() => import('posy-fnb-core').then(el => el.Modal), {
 	loading: () => <div />,
@@ -41,7 +41,25 @@ const PagesBasket: React.FC = () => {
 	const subTotal = useMemo(() => calculateTotal(basket), [basket]);
 	const subDiscount = subTotalBeforeDiscount - subTotal;
 
-	const goBack = () => router.back();
+	const goBack = ({type}: {type: 'add' | 'back'}) => {
+		if (type === 'back') {
+			logEvent({category: 'basket', action: 'basket_back_click'});
+		} else {
+			logEvent({category: 'basket', action: 'basket_addmoreoder_click'});
+		}
+
+		router.back();
+	};
+
+	const handleOpenModal = () => {
+		open();
+		logEvent({category: 'basket', action: 'basket_submitorder_click'});
+	};
+
+	const handleCloseModal = () => {
+		open();
+		logEvent({category: 'basket', action: 'basket_confirmationmodal_clickno'});
+	};
 
 	const {createOrder, isLoading: isLoadingCreate} = useCreateOrderViewModal({
 		onSuccess(data) {
@@ -68,10 +86,13 @@ const PagesBasket: React.FC = () => {
 
 		const payload: OrderParam = {id: transaction_uuid as string, payload: {order: orderBasket}};
 
+		logEvent({category: 'basket', action: 'basket_yesconfirmationmodal_click'});
+
 		createOrder(payload);
 	};
 
 	const editOrder = (orderId: string, productId: string) => {
+		logEvent({category: 'basket', action: 'basket_editorder_click'});
 		setTimeout(() => {
 			router.push({
 				pathname: `/menu/${transaction_uuid}/${productId}`,
@@ -83,7 +104,7 @@ const PagesBasket: React.FC = () => {
 	return (
 		<main className="mx-auto min-h-screen overflow-y-auto pt-4 pb-40 shadow-md">
 			<section className="px-5">
-				<MoleculesHeaderNavigation goBack={goBack} text="Your Basket" />
+				<MoleculesHeaderNavigation goBack={() => goBack({type: 'back'})} text="Your Basket" />
 			</section>
 
 			{basket.length === 0 && <EmptyBasketState />}
@@ -147,7 +168,7 @@ const PagesBasket: React.FC = () => {
 					</section>
 
 					<section className="mt-2 px-5">
-						<Button variant="secondary" size="m" fullWidth onClick={goBack}>
+						<Button variant="secondary" size="m" fullWidth onClick={() => goBack({type: 'add'})}>
 							+ Add more order
 						</Button>
 
@@ -174,7 +195,7 @@ const PagesBasket: React.FC = () => {
 						}}
 						className="fixed bottom-0 w-full max-w-[576px] rounded-t-2xl bg-neutral-10 px-4 pb-20 pt-6"
 					>
-						<Button onClick={open} fullWidth>
+						<Button onClick={handleOpenModal} fullWidth>
 							Submit Order
 						</Button>
 					</section>
@@ -189,7 +210,7 @@ const PagesBasket: React.FC = () => {
 					</div>
 					<p className="mt-[10px] text-center text-m-regular">Are you sure you want to proceed?</p>
 					<div className="mt-8 flex gap-2">
-						<Button variant="secondary" size="m" onClick={close}>
+						<Button variant="secondary" size="m" onClick={handleCloseModal}>
 							No
 						</Button>
 						<Button variant="primary" size="m" onClick={handleConfirm} isLoading={isLoadingCreate}>

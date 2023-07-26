@@ -21,7 +21,7 @@ const MoleculesMetaHeader: React.FC<MoleculesMetaHeaderProps> = ({
 		<Head>
 			<title>{title}</title>
 			<meta name="description" content={description} />
-			<link rel="canonical" href={process.env.NEXT_PUBLIC_URL + router.pathname} />
+			<link rel="canonical" href={process.env.NEXT_PUBLIC_API + router.pathname} />
 			<meta name="robots" content="index,follow" />
 			<meta name="keywords" content={keywords} />
 			<meta name="theme-color" content="#0A0A0A" />

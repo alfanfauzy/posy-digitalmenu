@@ -7,10 +7,12 @@ import {GetCategory} from 'core/data/category/sources/GetCategoryQuery';
 import {GetOutletDetail} from 'core/data/outlet/sources/GetOutletDetailQuery';
 import {GetProductMenu} from 'core/data/product/sources/GetProductMenuQuery';
 import {GetServerSideProps} from 'next';
+import {useEffect} from 'react';
 import {useAppDispatch} from 'store/hooks';
 import {onChangeCategoryList} from 'store/slices/category';
 import {onChangeOutletDetail} from 'store/slices/outlet';
 import {onChangeProductMenu} from 'store/slices/product';
+import {logEvent} from 'utils/UtilsAnalytics';
 
 type PageProps = {
 	transaction_uuid: string;
@@ -61,6 +63,10 @@ const Page = ({transaction_uuid}: PageProps) => {
 			},
 		},
 	);
+
+	useEffect(() => {
+		logEvent({category: 'homepage', action: 'homepage_view'});
+	}, []);
 
 	return (
 		<>

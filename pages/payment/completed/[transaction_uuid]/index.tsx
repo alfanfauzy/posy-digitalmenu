@@ -4,7 +4,8 @@ import {dehydrate, QueryClient, useQuery} from '@tanstack/react-query';
 import ContainerPaymentCompleted from 'containers/payment/completed';
 import {GetPaymentCompleted} from 'core/data/payment/sources/GetPaymentCompletedQuery';
 import {GetServerSideProps} from 'next';
-import React from 'react';
+import React, {useEffect} from 'react';
+import {logEvent} from 'utils/UtilsAnalytics';
 
 type PaymentCompletedPageProps = {
 	transaction_uuid: string;
@@ -17,6 +18,10 @@ const Page = ({transaction_uuid}: PaymentCompletedPageProps) => {
 		const dataPaymentCompleted = await response.data;
 		return dataPaymentCompleted;
 	});
+
+	useEffect(() => {
+		logEvent({category: 'payment', action: 'payment_successpayment_view'});
+	}, []);
 
 	return (
 		<>

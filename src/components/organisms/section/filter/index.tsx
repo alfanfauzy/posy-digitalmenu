@@ -2,18 +2,13 @@ import InputSearch from '@/atoms/input/search';
 import useShadowScroll from '@/hooks/shadow-scroll';
 import useDisclosure from '@/hooks/useDisclosure';
 import MoleculesSectionFilterCategory from '@/molecules/section/filter-category';
-import React, {useEffect, useState} from 'react';
+import React, {useMemo} from 'react';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
 import {onChangeSearch, onClearSearch} from 'store/slices/menu';
+import {logEvent} from 'utils/UtilsAnalytics';
 
 const OrganismsSectionFilter = () => {
 	const {objs: menus} = useAppSelector(state => state.product);
-	const [listCategories, setListCategories] = useState([
-		{
-			label: 'All',
-			value: 'all',
-		},
-	]);
 	const dispatch = useAppDispatch();
 	const {category} = useAppSelector(state => state.category);
 	const shadow = useShadowScroll();
@@ -25,20 +20,25 @@ const OrganismsSectionFilter = () => {
 		close();
 	};
 
+	const listCategories = useMemo(() => {
+		const formatCategory = category?.map(cat => ({
+			label: cat.category_name,
+			value: cat.category_name.toLowerCase(),
+		}));
+
+		return [
+			{
+				label: 'All',
+				value: 'all',
+			},
+			...formatCategory,
+		];
+	}, [category]);
+
 	const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+		logEvent({category: 'homepage', action: 'homepage_searchresult_view'});
 		dispatch(onChangeSearch({search: e.target.value, menus}));
 	};
-
-	useEffect(() => {
-		if (category) {
-			const convertCategory = category?.map(cat => ({
-				label: cat.category_name,
-				value: cat.category_name.toLowerCase(),
-			}));
-
-			setListCategories([...convertCategory]);
-		}
-	}, [category]);
 
 	return (
 		<section

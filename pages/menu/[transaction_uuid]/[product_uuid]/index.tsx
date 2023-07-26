@@ -7,6 +7,7 @@ import {GetServerSideProps} from 'next';
 import {useEffect} from 'react';
 import {useAppDispatch} from 'store/hooks';
 import {setProductDetail} from 'store/slices/product';
+import {logEvent} from 'utils/UtilsAnalytics';
 
 type PageDetailProps = {
 	transaction_uuid: string;
@@ -32,6 +33,10 @@ const Page = ({transaction_uuid, product_uuid}: PageDetailProps) => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [productDetail]);
+
+	useEffect(() => {
+		logEvent({category: 'menu_detail', action: 'menudetails_view'});
+	}, []);
 
 	return (
 		<>
