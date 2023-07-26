@@ -30,7 +30,7 @@ const PagesRatingHistory = () => {
 
 	return (
 		<main className="mx-auto min-h-screen py-4 px-5 shadow-md">
-			<MoleculesHeaderNavigation text="Foods Ratings" isWithIcon goBack={handleGoBack} />
+			<MoleculesHeaderNavigation text="Food Ratings" isWithIcon goBack={handleGoBack} />
 
 			{ratingHistory?.map(data => (
 				<aside
