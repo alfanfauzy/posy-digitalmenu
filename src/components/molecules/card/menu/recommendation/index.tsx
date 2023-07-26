@@ -38,7 +38,7 @@ const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendation
 			<div>
 				<aside className="flex flex-col">
 					<ImageMenu
-						onClick={() => handleClick()}
+						onClick={handleClick}
 						label={data.is_discount ? 'Discount' : undefined}
 						timeLabel={cookingDuration}
 						isRecommended={data.is_favourite}
