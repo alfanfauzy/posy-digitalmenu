@@ -4,10 +4,14 @@ import {useGetRatingsByProductViewModel} from '@/view/rating/view-modals/GetRati
 import {Rate} from 'antd';
 import {useRouter} from 'next/router';
 import React from 'react';
+import {useAppDispatch, useAppSelector} from 'store/hooks';
+import {onChangeQuantity} from 'store/slices/menu';
 import {dateFormatter} from 'utils/dateFormatter';
 
 const PagesRatingHistory = () => {
 	const {query, push} = useRouter();
+	const dispatch = useAppDispatch();
+	const quantity = useAppSelector(state => state.menu.orderForm.quantity);
 	const {transaction_uuid, product_uuid} = query;
 
 	const payload: PayloadGetRatingByProduct = {
@@ -25,12 +29,17 @@ const PagesRatingHistory = () => {
 	});
 
 	const handleGoBack = () => {
+		if (quantity === 0) {
+			dispatch(onChangeQuantity({operator: 'plus', value: 1}));
+		} else {
+			dispatch(onChangeQuantity({operator: 'plus', value: quantity}));
+		}
 		push(`/menu/${transaction_uuid}/${product_uuid}`);
 	};
 
 	return (
 		<main className="mx-auto min-h-screen py-4 px-5 shadow-md">
-			<MoleculesHeaderNavigation text="Foods Ratings" isWithIcon goBack={handleGoBack} />
+			<MoleculesHeaderNavigation text="Food Ratings" isWithIcon goBack={handleGoBack} />
 
 			{ratingHistory?.map(data => (
 				<aside

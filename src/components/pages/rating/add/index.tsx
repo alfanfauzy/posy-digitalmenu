@@ -20,10 +20,6 @@ const PagesRatingAdd = () => {
 	const {transaction_uuid} = query;
 	const getRating = useAppSelector(state => state.rating.rating);
 
-	const isGoodRate = getRating === 5;
-	const textTitle = isGoodRate ? 'Share your compliments?' : 'What can be improved?';
-	const listAccomplishment = isGoodRate ? goodAccomplishmentList : badAccomplishmentList;
-
 	const {watch, setValue, getValues, reset} = useForm({
 		mode: 'onChange',
 		schema: validateAddRating,
@@ -36,6 +32,10 @@ const PagesRatingAdd = () => {
 			],
 		},
 	});
+
+	const isGoodRate = watch('rating') === 5;
+	const textTitle = isGoodRate ? 'Share your compliments?' : 'What can be improved?';
+	const listAccomplishment = isGoodRate ? goodAccomplishmentList : badAccomplishmentList;
 
 	const {data: statusTransaction} = useGetTransactionStatusViewModel(transaction_uuid as string, {
 		enabled: !!transaction_uuid,
@@ -109,7 +109,10 @@ const PagesRatingAdd = () => {
 				<Rate
 					className="text-heading-s-bold"
 					defaultValue={getRating}
-					onChange={e => setValue(`rating`, e)}
+					onChange={e => {
+						setValue(`rating`, e);
+						setValue('review', []);
+					}}
 				/>
 			</aside>
 
@@ -123,6 +126,7 @@ const PagesRatingAdd = () => {
 									? 'border-2 border-secondary-main text-secondary-main'
 									: ''
 							}
+							size="m"
 							key={data.toLowerCase()}
 							variant="secondary"
 							onClick={() => handleSelectComplishment(data.toUpperCase().split(' ').join('_'))}
@@ -135,9 +139,10 @@ const PagesRatingAdd = () => {
 					variant="secondary"
 					className={
 						watch('review')?.includes('OTHERS')
-							? 'border-2 border-secondary-main text-secondary-main w-fit'
+							? 'border-2 border-secondary-main text-secondary-main w-fit text-xs'
 							: 'w-fit'
 					}
+					size="m"
 					onClick={() => handleSelectComplishment('OTHERS')}
 				>
 					Others
@@ -163,7 +168,7 @@ const PagesRatingAdd = () => {
 				</section>
 			</aside>
 
-			<div className="mb-16 pb-10">
+			<div className="pb-32">
 				<h3 className="text-xxl-semibold text-center pt-6">How’s the order</h3>
 
 				{Array.isArray(orderDetail) &&
