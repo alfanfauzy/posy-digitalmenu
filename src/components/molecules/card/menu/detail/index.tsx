@@ -18,15 +18,17 @@ const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
 	const {product_name, product_description, product_image_url} = product.detail.product;
 
 	const handleShowRatingList = () => {
-		const isEmptyRating = product.detail.product.avg_rating === 0;
+		const hasAvgRating = 'avg_rating' in product.detail.product;
 
-		if (!isEmptyRating) {
+		if (hasAvgRating) {
 			push(`/rating/history/${transaction_uuid}/${product_uuid}`);
 		}
 	};
 
 	const showRatingValue =
-		product.detail.product.avg_rating === 0 ? '5.0' : product.detail.product.avg_rating.toFixed(1);
+		product.detail.product.avg_rating === undefined
+			? '5.0'
+			: product.detail.product.avg_rating?.toFixed(1);
 
 	return (
 		<article className="flex gap-4 flex-col">
@@ -44,7 +46,7 @@ const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
 				<AiFillStar className="fill-light-yellow" size={30} />
 				<span className="flex gap-1 flex-row border-r-2 px-2">
 					<p>{showRatingValue}</p>
-					<p className="text-neutral-60">({product.detail.product.total_review})</p>
+					<p className="text-neutral-60">({product.detail.product.total_review ?? '0'})</p>
 				</span>
 				<span className="flex flex-row justify-between items-center w-full">
 					<p className="px-2">View ratings and reviews</p>
