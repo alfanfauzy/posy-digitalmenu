@@ -1,5 +1,6 @@
+import {Product} from '@/domain/product/models/ProductsMenu';
 import ImageMenu from '@/molecules/image/menu';
-import {Product} from 'core/domain/product/models';
+import MoleculesRating from '@/molecules/rating';
 import {useRouter} from 'next/router';
 import {Button} from 'posy-fnb-core';
 import React from 'react';
@@ -50,22 +51,23 @@ const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendation
 						className="cursor-pointer"
 					/>
 
-					<div className="mt-3">
+					<div className="flex flex-col mt-2 gap-1">
 						<p className="text-m-semibold">{data.product_name}</p>
-						<div className="mt-1 flex items-center gap-1">
-							{data.is_discount ? (
-								<>
-									<p className="text-l-medium">
-										{renderPrice(data.is_available, data.price_after_discount, data.price)}
-									</p>
-									<p className="text-s-medium text-neutral-80 line-through">
-										{toRupiah(data.price)}
-									</p>
-								</>
-							) : (
-								<p className="text-l-medium">{toRupiah(data.price)}</p>
-							)}
-						</div>
+						{data.is_discount ? (
+							<div className="mt-1 flex justify-start items-center p-0 gap-1">
+								<p className="text-l-medium">
+									{renderPrice(data.is_available, data.price_after_discount, data.price).trim()}
+								</p>
+								<p className="text-s-medium text-neutral-80 line-through">{toRupiah(data.price)}</p>
+							</div>
+						) : (
+							<p className="text-l-medium">{toRupiah(data.price).trim()}</p>
+						)}
+
+						<MoleculesRating
+							ratingValue={Number(data.avg_rating.toFixed(1))}
+							totalReview={data.total_review}
+						/>
 					</div>
 				</aside>
 

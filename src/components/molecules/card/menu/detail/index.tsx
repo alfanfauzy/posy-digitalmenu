@@ -1,19 +1,37 @@
+import {ProductMenuDetail} from '@/domain/product/models/ProductMenuDetail';
 import ImageMenu from '@/molecules/image/menu';
-import {ProductDetail} from 'core/domain/product/models';
+import {useRouter} from 'next/router';
 import React from 'react';
+import {AiFillStar, AiOutlineRight} from 'react-icons/ai';
 import {toRupiah} from 'utils/common';
 
 type MoleculesCardMenuDetailProps = {
-	product: ProductDetail;
+	product: ProductMenuDetail;
 };
 
 const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
+	const {query, push} = useRouter();
+	const {transaction_uuid, product_uuid} = query;
+
 	const {is_favourite, cooking_duration, is_discount, price_after_discount, price} = product.detail;
 
 	const {product_name, product_description, product_image_url} = product.detail.product;
 
+	const handleShowRatingList = () => {
+		const hasAvgRating = 'avg_rating' in product.detail.product;
+
+		if (hasAvgRating) {
+			push(`/rating/history/${transaction_uuid}/${product_uuid}`);
+		}
+	};
+
+	const showRatingValue =
+		product.detail.product.avg_rating === undefined
+			? '5.0'
+			: product.detail.product.avg_rating?.toFixed(1);
+
 	return (
-		<article>
+		<article className="flex gap-4 flex-col">
 			<ImageMenu
 				image={{url: product_image_url, alt: product_name}}
 				timeLabel={`in ${cooking_duration} min`}
@@ -21,6 +39,20 @@ const MoleculesCardMenuDetail = ({product}: MoleculesCardMenuDetailProps) => {
 				size="l"
 				isRecommended={!!is_favourite}
 			/>
+			<aside
+				className="flex flex-row items-center border border-neutral-40 px-2 py-3 rounded-md cursor-pointer"
+				onClick={handleShowRatingList}
+			>
+				<AiFillStar className="fill-light-yellow" size={30} />
+				<span className="flex gap-1 flex-row border-r-2 px-2">
+					<p>{showRatingValue}</p>
+					<p className="text-neutral-60">({product.detail.product.total_review ?? '0'})</p>
+				</span>
+				<span className="flex flex-row justify-between items-center w-full">
+					<p className="px-2">View ratings and reviews</p>
+					<AiOutlineRight size={20} />
+				</span>
+			</aside>
 			<aside className="mt-4 divide-y">
 				<div className="pb-4">
 					<p className="text-xxl-bold">{product_name}</p>

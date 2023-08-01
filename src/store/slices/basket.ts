@@ -4,13 +4,13 @@
  *
  */
 
+import {ProductMenuDetail} from '@/domain/product/models/ProductMenuDetail';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {ProductDetail} from 'core/domain/product/models';
 
 import {AddOnVariant} from './menu';
 
 export type BasketItem = {
-	product: ProductDetail;
+	product: ProductMenuDetail;
 	quantity: number;
 	addOnVariant: Array<AddOnVariant>;
 	counter: number;

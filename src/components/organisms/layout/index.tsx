@@ -1,6 +1,6 @@
 import Transition from '@/atoms/animations/transition';
 import {useQuery} from '@tanstack/react-query';
-import {GetTransactionStatus} from 'core/data/transaction/sources/GetDetailTransactionStatusQuery';
+import {GetTransactionStatus} from 'core/data/transaction/sources/GetTransactionStatusQuery';
 import {Response} from 'core/domain/vo/BaseResponse';
 import {AnimatePresence} from 'framer-motion';
 import {useRouter} from 'next/router';
@@ -9,6 +9,8 @@ import React, {ReactNode, SyntheticEvent, useEffect, useState} from 'react';
 import {toast} from 'react-toastify';
 import Bill from 'src/assets/icons/bill';
 import Menu from 'src/assets/icons/menu';
+import {useAppDispatch, useAppSelector} from 'store/hooks';
+import {onResetRating} from 'store/slices/rating';
 import {logEvent} from 'utils/UtilsAnalytics';
 
 type OrganismsLayoutProps = {
@@ -36,11 +38,13 @@ const showBottomNavigationRoutes = [
 
 const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 	const router = useRouter();
+	const dispatch = useAppDispatch();
 	const {transaction_uuid} = router.query;
 	const [value, setValue] = useState(0);
 	const [loading, setLoading] = useState(true);
+	const {isShowAddRating} = useAppSelector(state => state.rating);
 
-	useQuery(
+	const {isLoading: isLoadingTransactionStatus} = useQuery(
 		[router.pathname],
 		async () => {
 			const response = await GetTransactionStatus(transaction_uuid as string);
@@ -51,21 +55,16 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 		{
 			enabled: !!transaction_uuid,
 			onSuccess: data => {
-				if (!data.is_open && data.is_paid) {
-					setTimeout(() => {
-						setLoading(false);
-					}, 500);
-					router.push(`/payment/completed/${transaction_uuid}`);
-				} else if (!data.is_open) {
-					setTimeout(() => {
-						setLoading(false);
-					}, 500);
-					router.push(`/payment/completed/${transaction_uuid}`);
-				} else if (data.is_waiting_payment) {
+				if (data.is_waiting_payment) {
 					setTimeout(() => {
 						setLoading(false);
 					}, 500);
 					router.push(`/payment/waiting/${transaction_uuid}`);
+				} else if (data.is_paid && !isShowAddRating) {
+					setTimeout(() => {
+						setLoading(false);
+					}, 500);
+					router.push(`/payment/completed/${transaction_uuid}`);
 				} else {
 					setTimeout(() => {
 						setLoading(false);
@@ -101,8 +100,7 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 			el => el.value === router.pathname.slice(1),
 		);
 		setValue(selected);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [router.pathname]);
+	}, [router.pathname, transaction_uuid]);
 
 	useEffect(() => {
 		if (!transaction_uuid) {
@@ -110,7 +108,11 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 		}
 	}, [router.pathname, transaction_uuid]);
 
-	if (loading) {
+	useEffect(() => {
+		dispatch(onResetRating());
+	}, [dispatch]);
+
+	if (loading || isLoadingTransactionStatus) {
 		return (
 			<div className="flex h-screen items-center justify-center overflow-hidden">
 				<Loading size={60} />

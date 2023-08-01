@@ -1,4 +1,4 @@
-import {ProductDetail} from 'core/domain/product/models';
+import {ProductMenuDetail} from '@/domain/product/models/ProductMenuDetail';
 import {useRouter} from 'next/router';
 import {Button} from 'posy-fnb-core';
 import React, {useMemo} from 'react';
@@ -8,7 +8,7 @@ import {calculateAddOn, toRupiah} from 'utils/common';
 import {logEvent} from 'utils/UtilsAnalytics';
 
 type MoleculesSectionAddToBasketProps = {
-	product: ProductDetail;
+	product: ProductMenuDetail;
 };
 
 const MoleculesSectionAddToBasket = ({product}: MoleculesSectionAddToBasketProps) => {

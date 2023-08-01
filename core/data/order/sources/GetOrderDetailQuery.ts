@@ -1,8 +1,11 @@
+import {UseQueryOptions, useQuery} from '@tanstack/react-query';
 import Get from 'api/get';
 import {AxiosError} from 'axios';
 import {DataObj, Response} from 'core/domain/vo/BaseResponse';
 
 import {GetOrderResponse} from '../types';
+
+export const GetOrderDetailKey = 'Orders/list';
 
 export const GetOrderDetail = async (
 	transaction_uuid: string,
@@ -21,3 +24,16 @@ export const GetOrderDetail = async (
 		throw err.response?.data;
 	}
 };
+
+export const useGetOrdersQuery = (
+	transaction_uuid: string,
+	options?: UseQueryOptions<Response<DataObj<GetOrderResponse>>>,
+) =>
+	useQuery<Response<DataObj<GetOrderResponse>>>(
+		[GetOrderDetailKey, JSON.stringify(transaction_uuid)],
+		() => GetOrderDetail(transaction_uuid),
+		{
+			refetchOnWindowFocus: false,
+			...options,
+		},
+	);

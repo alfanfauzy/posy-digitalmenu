@@ -46,6 +46,8 @@ export type GetOrderResponse = {
 	};
 	order_detail: Array<{
 		uuid: string;
+		product_image: string;
+		cancel_reason_other: string;
 		product_uuid: string;
 		product_name: string;
 		product_image_url: string;

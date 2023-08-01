@@ -3,8 +3,8 @@
  * Menu reducer
  *
  */
+import {Products, ProductsMenu} from '@/domain/product/models/ProductsMenu';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Products, ProductsMenu} from 'core/domain/product/models';
 
 export type AddOnVariant = {
 	uuid: string;
