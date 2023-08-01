@@ -4,7 +4,8 @@ import {dehydrate, QueryClient, useQuery} from '@tanstack/react-query';
 import ContainerPaymentSummary from 'containers/payment/summary';
 import {GetPaymentSummary} from 'core/data/payment/sources/GetPaymentSummaryQuery';
 import {GetServerSideProps} from 'next';
-import React from 'react';
+import React, {useEffect} from 'react';
+import {logEvent} from 'utils/UtilsAnalytics';
 
 type SummaryPageProps = {
 	transaction_uuid: string;
@@ -17,6 +18,10 @@ const Page = ({transaction_uuid}: SummaryPageProps) => {
 		const dataOrder = response.data;
 		return dataOrder;
 	});
+
+	useEffect(() => {
+		logEvent({category: 'payment', action: 'payment_view'});
+	}, []);
 
 	return (
 		<>

@@ -6,6 +6,7 @@ import React from 'react';
 import {useAppDispatch} from 'store/hooks';
 import {onChangeQuantity} from 'store/slices/menu';
 import {renderPrice, toRupiah} from 'utils/common';
+import {logEvent} from 'utils/UtilsAnalytics';
 
 type MoleculesCardMenuRecommendationProps = {
 	data: Product;
@@ -22,10 +23,14 @@ const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendation
 			router.push(`/menu/${transaction_uuid}/${uuid}`);
 		}, 500);
 		dispatch(onChangeQuantity({operator: 'plus', value: 1}));
+		logEvent({category: 'homepage', action: 'homepage_recommendationphoto_click'});
+		logEvent({category: 'homepage', action: 'homepage_addrecommendation_click'});
 	};
 
 	const cookingDuration =
 		data.cooking_duration !== 0 ? `in ${data.cooking_duration} min` : undefined;
+
+	const labelDiscout = data.is_discount ? 'Discount' : undefined;
 
 	return (
 		<div className="relative">
@@ -37,11 +42,12 @@ const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendation
 			<div>
 				<aside className="flex flex-col">
 					<ImageMenu
-						onClick={() => handleClick()}
-						label={data.is_discount ? 'Discount' : undefined}
+						onClick={handleClick}
+						label={labelDiscout}
 						timeLabel={cookingDuration}
 						isRecommended={data.is_favourite}
 						image={{url: data.product_image_url, alt: 'menu'}}
+						className="cursor-pointer"
 					/>
 
 					<div className="mt-3">
@@ -57,16 +63,14 @@ const MoleculesCardMenuRecommendation = ({data}: MoleculesCardMenuRecommendation
 									</p>
 								</>
 							) : (
-								<p>
-									<p className="text-l-medium">{toRupiah(data.price)}</p>
-								</p>
+								<p className="text-l-medium">{toRupiah(data.price)}</p>
 							)}
 						</div>
 					</div>
 				</aside>
 
 				<div className="mt-2">
-					<Button variant="secondary" size="m" fullWidth onClick={() => handleClick()}>
+					<Button variant="secondary" size="m" fullWidth onClick={handleClick}>
 						Add
 					</Button>
 				</div>

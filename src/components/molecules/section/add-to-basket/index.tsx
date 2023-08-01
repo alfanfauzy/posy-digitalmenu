@@ -5,6 +5,7 @@ import React, {useMemo} from 'react';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
 import {addToBasket, dropFromBasket, updateBasket} from 'store/slices/basket';
 import {calculateAddOn, toRupiah} from 'utils/common';
+import {logEvent} from 'utils/UtilsAnalytics';
 
 type MoleculesSectionAddToBasketProps = {
 	product: ProductDetail;
@@ -42,6 +43,7 @@ const MoleculesSectionAddToBasket = ({product}: MoleculesSectionAddToBasketProps
 				counter: Math.floor(Math.random() * Date.now()),
 			}),
 		);
+		logEvent({category: 'menu_detail', action: 'menudetails_addtobasket_click'});
 		goBack();
 	};
 

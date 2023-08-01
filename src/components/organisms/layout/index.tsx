@@ -9,6 +9,7 @@ import React, {ReactNode, SyntheticEvent, useEffect, useState} from 'react';
 import {toast} from 'react-toastify';
 import Bill from 'src/assets/icons/bill';
 import Menu from 'src/assets/icons/menu';
+import {logEvent} from 'utils/UtilsAnalytics';
 
 type OrganismsLayoutProps = {
 	children: ReactNode;
@@ -82,6 +83,15 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 	);
 
 	const handleChange = (e: SyntheticEvent, newValue: number) => {
+		switch (newValue) {
+			case 1:
+				logEvent({category: 'homepage', action: 'homepage_bill_click'});
+				break;
+
+			default:
+				logEvent({category: 'homepage', action: 'homepage_order_click'});
+				break;
+		}
 		setValue(newValue);
 		router.push(`/${list(transaction_uuid as string)[newValue].value}`);
 	};

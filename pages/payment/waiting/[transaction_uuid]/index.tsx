@@ -5,7 +5,8 @@ import {dehydrate, QueryClient, useQuery} from '@tanstack/react-query';
 import ContainerWaitingPayment from 'containers/payment/waiting';
 import {GetPaymentSummary} from 'core/data/payment/sources/GetPaymentSummaryQuery';
 import {GetServerSideProps} from 'next';
-import React from 'react';
+import React, {useEffect} from 'react';
+import {logEvent} from 'utils/UtilsAnalytics';
 
 type WaitingPaymentPageProps = {
 	transaction_uuid: string;
@@ -18,6 +19,10 @@ const Page = ({transaction_uuid}: WaitingPaymentPageProps) => {
 		const dataOrder = await response.data;
 		return dataOrder;
 	});
+
+	useEffect(() => {
+		logEvent({category: 'payment', action: 'payment_waitingforpayment_view'});
+	}, []);
 
 	return (
 		<>

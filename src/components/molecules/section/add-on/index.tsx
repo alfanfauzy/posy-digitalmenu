@@ -4,6 +4,7 @@ import React from 'react';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
 import {onChangeAddOn} from 'store/slices/menu';
 import {toRupiah} from 'utils/common';
+import {logEvent} from 'utils/UtilsAnalytics';
 
 type MoleculesSectionAddonProps = {
 	add_on: Addons;
@@ -19,6 +20,12 @@ const MoleculesSectionAddon = ({add_on}: MoleculesSectionAddonProps) => {
 		variants: any,
 		addOn: {addOnName: string; addOnUuid: string},
 	) => {
+		if (type === 'radio') {
+			logEvent({category: 'menu_detail', action: 'menudetails_requiredvariant_click'});
+		} else {
+			logEvent({category: 'menu_detail', action: 'menudetails_addons_click'});
+		}
+
 		dispatch(
 			onChangeAddOn({
 				type,
