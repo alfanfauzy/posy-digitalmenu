@@ -1,12 +1,12 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import Transition from '@/atoms/animations/transition';
+import {useGetGeneralSettingsViewModel} from '@/view/outlet/GetGeneralSettingsViewModel';
 import {useQuery} from '@tanstack/react-query';
 import {GetTransactionStatus} from 'core/data/transaction/sources/GetTransactionStatusQuery';
-import {Response} from 'core/domain/vo/BaseResponse';
 import {AnimatePresence} from 'framer-motion';
 import {useRouter} from 'next/router';
 import {BottomNavigation, Loading} from 'posy-fnb-core';
 import React, {ReactNode, SyntheticEvent, useEffect, useState} from 'react';
-import {toast} from 'react-toastify';
 import Bill from 'src/assets/icons/bill';
 import Menu from 'src/assets/icons/menu';
 import {useAppDispatch, useAppSelector} from 'store/hooks';
@@ -44,7 +44,25 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 	const [loading, setLoading] = useState(true);
 	const {isShowAddRating} = useAppSelector(state => state.rating);
 
-	const {isLoading: isLoadingTransactionStatus} = useQuery(
+	const {data: DataGeneralSettings, isLoading: loadGeneralSettings} =
+		useGetGeneralSettingsViewModel(
+			{
+				'X-Transaction-Uuid': transaction_uuid as string,
+			},
+			{
+				enabled: !!transaction_uuid,
+				onSuccess: data => {
+					if (!data.data.general_setting.use_digital_menu) {
+						router.push(`/404`);
+					}
+				},
+				onError: () => {
+					router.push(`/404`);
+				},
+			},
+		);
+
+	useQuery(
 		[router.pathname],
 		async () => {
 			const response = await GetTransactionStatus(transaction_uuid as string);
@@ -53,7 +71,7 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 			return dataTransaction;
 		},
 		{
-			enabled: !!transaction_uuid,
+			enabled: !!(transaction_uuid && DataGeneralSettings?.use_digital_menu),
 			onSuccess: data => {
 				if (data.is_waiting_payment) {
 					setTimeout(() => {
@@ -71,11 +89,10 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 					}, 500);
 				}
 			},
-			onError: (data: Response) => {
+			onError: () => {
 				setTimeout(() => {
 					setLoading(false);
 				}, 500);
-				toast.error(data.more_info);
 				return router.push(`/404`);
 			},
 		},
@@ -112,10 +129,10 @@ const OrganismsLayout: React.FC<OrganismsLayoutProps> = ({children}) => {
 		dispatch(onResetRating());
 	}, [dispatch]);
 
-	if (loading || isLoadingTransactionStatus) {
+	if (loading || loadGeneralSettings) {
 		return (
 			<div className="flex h-screen items-center justify-center overflow-hidden">
-				<Loading size={60} />
+				<Loading size={75} />
 			</div>
 		);
 	}

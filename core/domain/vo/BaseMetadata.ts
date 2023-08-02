@@ -4,13 +4,13 @@ export type Metadata = {
 	cancel_at?: number;
 };
 
-type BaseTime = {
+export type Timestamp = {
 	seconds: number;
 	nanos: number;
 };
 
-export type MetadataObject = {
-	created_at?: BaseTime;
-	updated_at?: BaseTime;
-	cancel_at?: BaseTime;
+export type MetadataServer = {
+	created_at?: Timestamp;
+	updated_at?: Timestamp;
+	cancel_at?: Timestamp;
 };
