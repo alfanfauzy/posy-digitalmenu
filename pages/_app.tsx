@@ -4,6 +4,7 @@ import Layout from '@/organisms/layout';
 import type {NextPageWithLayout} from '@/types/index';
 import {QueryClientProvider, QueryClient} from '@tanstack/react-query';
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
+import {AxiosError} from 'axios';
 import type {AppProps} from 'next/app';
 import {Suspense, useEffect, useState} from 'react';
 import {Provider} from 'react-redux';
@@ -21,7 +22,21 @@ type AppPropsWithLayout = AppProps & {
 };
 
 const App = ({Component, pageProps, ...rest}: AppPropsWithLayout) => {
-	const [queryClient] = useState(() => new QueryClient());
+	const [queryClient] = useState(
+		new QueryClient({
+			defaultOptions: {
+				queries: {
+					retry(failureCount, error) {
+						const err = error as AxiosError;
+						if (Number(err.code) === 500) {
+							return failureCount < 3;
+						}
+						return false;
+					},
+				},
+			},
+		}),
+	);
 	const {store} = wrapper.useWrappedStore(rest);
 	const {loadingState} = useLoading();
 

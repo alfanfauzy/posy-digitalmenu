@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import Get from 'api/get';
 import {AxiosError} from 'axios';
 import {Response} from 'core/domain/vo/BaseResponse';
