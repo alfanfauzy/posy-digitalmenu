@@ -1,6 +1,6 @@
 {
 	"name": "pvp-posy-fnb",
-	"version": "0.1.0",
+	"version": "1.1.0",
 	"private": true,
 	"author": "zaidanammar",
 	"scripts": {
@@ -22,8 +22,7 @@
 		"formatter": "yarn format:lint && yarn format:prettier",
 		"prepare": "husky install",
 		"run-docker:locally": "docker-compose up",
-		"vercel": "npx vercel build --prod --token=WJqtant93wzvrdrmfrRQ3fjd && npx vercel deploy --prebuilt --prod --token=WJqtant93wzvrdrmfrRQ3fjd",
-		"push:prod": "git push && npm run vercel"
+		"release": "standard-version"
 	},
 	"dependencies": {
 		"@fullhuman/postcss-purgecss": "^5.0.0",
@@ -93,6 +92,7 @@
 		"lint-staged": "^13.1.0",
 		"postcss": "^8.4.18",
 		"prettier": "^2.8.1",
+		"standard-version": "^9.5.0",
 		"tailwindcss": "^3.2.1",
 		"ts-jest": "^29.1.0",
 		"ts-prune": "^0.10.3",
