@@ -64,7 +64,6 @@ const PagesRatingAdd = () => {
 		const selectedAcc = getValues('review') ?? [];
 
 		if (selectedAcc.includes(value)) {
-			if (value === 'OTHERS') setValue('review_note', '');
 			const filterSelected = selectedAcc.filter(item => item !== value);
 
 			setValue('review', filterSelected);
@@ -123,7 +122,7 @@ const PagesRatingAdd = () => {
 						<Button
 							className={
 								watch('review')?.includes(data.toUpperCase().split(' ').join('_'))
-									? 'border-2 border-secondary-main text-secondary-main'
+									? 'border-2 hover:border-secondary-main border-secondary-main text-secondary-main'
 									: ''
 							}
 							size="m"
@@ -135,25 +134,9 @@ const PagesRatingAdd = () => {
 						</Button>
 					))}
 				</div>
-				<Button
-					variant="secondary"
-					className={
-						watch('review')?.includes('OTHERS')
-							? 'border-2 border-secondary-main text-secondary-main w-fit text-xs'
-							: 'w-fit'
-					}
-					size="m"
-					onClick={() => handleSelectComplishment('OTHERS')}
-				>
-					Others
-				</Button>
 			</aside>
 
-			<aside
-				className={`overflow-hidden transition-[max-height] duration-500 ease-in ${
-					watch('review')?.includes('OTHERS') ? 'max-h-52' : 'max-h-0'
-				}`}
-			>
+			<aside className="overflow-hidden transition-[max-height] duration-500 ease-in max-h-52">
 				<section className="mt-4 mb-44">
 					<Textarea
 						className="h-32"
